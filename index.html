@@ -1,0 +1,2254 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>NIVIKO · Calc Importación</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap');
+:root{
+  --bg:#f0f0ec;--white:#fff;--surface:#fafaf7;--border:#e0e0d8;--border2:#c8c8c0;
+  --text:#111110;--muted:#74746a;--dim:#b0b0a6;
+  --red:#be2518;--red-bg:#fef1ef;--red-bdr:#f0b0a8;
+  --green:#186628;--green-bg:#eef7f0;--green-bdr:#9ed0aa;
+  --blue:#1448a0;--blue-bg:#eff4fc;--blue-bdr:#9ab8e8;
+  --amber:#7a4c00;--amber-bg:#fdf5e6;--amber-bdr:#e8c870;
+  --purple:#5b1fa8;--purple-bg:#f3effe;--purple-bdr:#c9b0f0;
+  --orange:#b84800;--orange-bg:#fff3eb;--orange-bdr:#f5c090;
+  --teal:#0e6b6b;--teal-bg:#edfafa;--teal-bdr:#90d4d4;
+  --gray-bg:#eaeae4;
+  --sans:'IBM Plex Sans',sans-serif;--mono:'IBM Plex Mono',monospace;--r:10px;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14px;min-height:100vh}
+
+/* HEADER */
+.hdr{background:var(--white);border-bottom:1.5px solid var(--border);padding:10px 14px 8px;position:sticky;top:0;z-index:100}
+.hdr-row{display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:var(--mono);font-weight:600;font-size:15px;letter-spacing:-.3px}
+.logo em{color:var(--red);font-style:normal}
+.logo-sub{font-size:9px;color:var(--muted);letter-spacing:1.2px;text-transform:uppercase}
+.live{display:flex;align-items:center;gap:5px;background:var(--green-bg);border:1px solid var(--green-bdr);border-radius:20px;padding:3px 9px;font-size:9px;font-family:var(--mono);color:var(--green);font-weight:500}
+.live-dot{width:5px;height:5px;background:var(--green);border-radius:50%;animation:blink 2s ease infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+
+/* TABS */
+.tabs{display:flex;background:var(--white);border-bottom:1.5px solid var(--border);overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:none;padding:9px 12px;font-size:10px;font-family:var(--sans);font-weight:700;color:var(--muted);letter-spacing:.3px;text-transform:uppercase;border:none;background:none;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:all .15s}
+.tab.on{color:var(--red);border-bottom-color:var(--red)}
+.tab.tc.on{color:var(--purple);border-bottom-color:var(--purple)}
+.tab.tm.on{color:var(--orange);border-bottom-color:var(--orange)}
+.tab.tw.on{color:var(--teal);border-bottom-color:var(--teal)}
+.tab.tdb.on{color:var(--green);border-bottom-color:var(--green)}
+.tab.tpv.on{color:#7c3aed;border-bottom-color:#7c3aed}
+
+/* PROVIDER CARDS */
+:root{--indigo:#7c3aed;--indigo-bg:#f5f3ff;--indigo-bdr:#c4b5fd;}
+.pv-grid{display:grid;grid-template-columns:1fr;gap:10px;margin-bottom:10px}
+.pv-card{background:var(--white);border:1.5px solid var(--border);border-radius:var(--r);overflow:hidden;transition:box-shadow .15s}
+.pv-card:active{box-shadow:0 2px 8px rgba(0,0,0,.1)}
+.pv-card-head{display:flex;align-items:center;gap:12px;padding:12px 14px;border-bottom:1px solid var(--border);cursor:pointer}
+.pv-avatar{width:52px;height:52px;border-radius:10px;object-fit:cover;flex-shrink:0;background:var(--gray-bg);border:1.5px solid var(--border)}
+.pv-avatar-placeholder{width:52px;height:52px;border-radius:10px;flex-shrink:0;background:var(--indigo-bg);border:1.5px solid var(--indigo-bdr);display:flex;align-items:center;justify-content:center;font-size:20px}
+.pv-head-info{flex:1;min-width:0}
+.pv-name{font-size:14px;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pv-cat{font-size:10px;color:var(--muted);font-family:var(--mono);letter-spacing:.5px;text-transform:uppercase;margin-top:2px}
+.pv-rating{display:flex;gap:2px;margin-top:3px}
+.pv-star{font-size:12px;color:#f59e0b}
+.pv-star.off{color:var(--border2)}
+.pv-actions{display:flex;gap:6px;flex-shrink:0}
+.pv-btn{width:32px;height:32px;border-radius:8px;border:1.5px solid var(--border2);background:var(--surface);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px}
+.pv-btn:active{background:var(--gray-bg)}
+.pv-btn.del:active{background:var(--red-bg);border-color:var(--red-bdr)}
+.pv-body{padding:12px 14px;display:none}
+.pv-body.open{display:block}
+.pv-photo-row{display:flex;gap:8px;margin-bottom:12px;overflow-x:auto;scrollbar-width:none;padding-bottom:4px}
+.pv-photo-row::-webkit-scrollbar{display:none}
+.pv-photo{width:80px;height:80px;border-radius:8px;object-fit:cover;flex-shrink:0;border:1px solid var(--border);cursor:pointer}
+.pv-photo-add{width:80px;height:80px;border-radius:8px;flex-shrink:0;border:1.5px dashed var(--border2);background:var(--surface);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;gap:4px;color:var(--muted);font-size:10px;font-weight:600}
+.pv-photo-add span{font-size:22px}
+.pv-fields{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.pv-field{display:flex;flex-direction:column;gap:3px}
+.pv-field.full{grid-column:span 2}
+.pv-flbl{font-size:9px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.5px;font-family:var(--mono)}
+.pv-finp{padding:7px 10px;border:1.5px solid var(--border2);border-radius:7px;background:var(--surface);color:var(--text);font-family:var(--sans);font-size:12px;outline:none;transition:border-color .15s;width:100%}
+.pv-finp:focus{border-color:#7c3aed}
+.pv-tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px}
+.pv-tag{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;background:var(--indigo-bg);border:1px solid var(--indigo-bdr);border-radius:20px;font-size:10px;color:#7c3aed;font-weight:600;font-family:var(--mono)}
+.pv-tag-del{cursor:pointer;opacity:.6;font-size:11px}
+.pv-tag-del:hover{opacity:1}
+.pv-notes{width:100%;padding:8px 10px;border:1.5px solid var(--border2);border-radius:7px;background:var(--surface);color:var(--text);font-family:var(--sans);font-size:12px;outline:none;resize:none;min-height:70px;transition:border-color .15s}
+.pv-notes:focus{border-color:#7c3aed}
+.pv-section-lbl{font-size:9px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.5px;font-family:var(--mono);margin-bottom:6px}
+.pv-contact-row{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--border)}
+.pv-contact-row:last-child{border-bottom:none}
+.pv-contact-icon{font-size:16px;width:24px;text-align:center;flex-shrink:0}
+.pv-contact-val{font-size:12px;color:var(--text);font-family:var(--mono);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pv-contact-val.muted{color:var(--muted);font-style:italic}
+.btn-new-prov{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;padding:12px;background:var(--indigo-bg);border:1.5px solid var(--indigo-bdr);border-radius:10px;color:#7c3aed;font-family:var(--sans);font-size:13px;font-weight:700;cursor:pointer;margin-bottom:10px}
+.btn-new-prov:active{background:#7c3aed;color:#fff}
+.pv-empty{text-align:center;padding:40px 20px;color:var(--muted);font-size:13px}
+.pv-empty-icon{font-size:40px;margin-bottom:10px}
+.pv-save-btn{display:flex;align-items:center;justify-content:center;gap:5px;width:100%;padding:9px;background:#7c3aed;color:#fff;border:none;border-radius:8px;font-family:var(--sans);font-size:12px;font-weight:700;cursor:pointer;margin-top:8px}
+.pv-save-btn:active{background:#6d28d9}
+/* Modal foto grande */
+.photo-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:999;align-items:center;justify-content:center;padding:20px}
+.photo-modal.open{display:flex}
+.photo-modal img{max-width:100%;max-height:80vh;border-radius:10px;object-fit:contain}
+.photo-modal-close{position:absolute;top:16px;right:16px;color:#fff;font-size:24px;cursor:pointer;background:rgba(0,0,0,.5);width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+
+/* PANELS */
+.content{padding:10px 10px 120px}
+.panel{display:none}.panel.on{display:block}
+
+/* CARD */
+.card{background:var(--white);border:1.5px solid var(--border);border-radius:var(--r);margin-bottom:10px;overflow:hidden}
+.card-head{padding:9px 14px;display:flex;align-items:center;justify-content:space-between}
+.card-head.dark{background:var(--text)}.card-head.purple{background:var(--purple)}
+.card-head.orange{background:var(--orange)}.card-head.teal{background:var(--teal)}
+.card-head.green{background:var(--green)}
+.ch-title{font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:#fff}
+.ch-tag{font-family:var(--mono);font-size:9px;color:rgba(255,255,255,.4)}
+.card-body{padding:12px 14px 14px}
+
+/* PRODUCT SELECT */
+.sel-wrap{position:relative;margin-bottom:10px}
+.sel-wrap select{width:100%;padding:10px 34px 10px 12px;border:1.5px solid var(--border2);border-radius:8px;background:var(--surface);color:var(--text);font-family:var(--sans);font-size:13px;font-weight:500;outline:none;appearance:none;cursor:pointer;transition:border-color .15s}
+.sel-wrap select:focus{border-color:var(--red)}
+.sel-arrow{position:absolute;right:11px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:13px;pointer-events:none}
+
+/* SELECTED PRODUCT BADGE */
+.prod-sel{display:none;background:var(--gray-bg);border-radius:8px;padding:9px 12px;margin-bottom:10px}
+.ps-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:7px}
+.ps-name{font-size:12px;font-weight:700;color:var(--text)}
+.ps-clr{font-size:11px;color:var(--muted);background:none;border:none;cursor:pointer;font-family:var(--sans)}
+.ps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}
+.ps-box{background:var(--white);border-radius:6px;padding:7px 9px;border:1px solid var(--border)}
+.pb-lbl{font-size:9px;font-family:var(--mono);letter-spacing:.7px;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
+.pb-val{font-size:14px;font-weight:700;font-family:var(--mono)}
+.pb-val.red{color:var(--red)}.pb-val.blue{color:var(--blue)}
+.ps-nota{font-size:10px;color:var(--amber);background:var(--amber-bg);border:1px solid var(--amber-bdr);border-radius:5px;padding:5px 8px;margin-top:7px;line-height:1.5;display:none}
+.ps-ncm{font-size:10px;color:var(--muted);font-family:var(--mono);margin-top:4px}
+
+/* MANUAL */
+.man-label{font-size:11px;color:var(--muted);margin-bottom:5px}
+.man-row{display:grid;grid-template-columns:1fr auto;gap:6px;align-items:center}
+.inp-der{padding:8px 10px;border:1.5px solid var(--border2);border-radius:7px;background:var(--amber-bg);color:var(--amber);font-family:var(--mono);font-size:14px;font-weight:600;outline:none;text-align:center;width:100%}
+.inp-der:focus{border-color:var(--amber)}
+.btn-apply{padding:8px 12px;background:var(--text);color:#fff;border:none;border-radius:7px;font-family:var(--sans);font-size:11px;font-weight:600;cursor:pointer;white-space:nowrap}
+.btn-apply:active{background:#333}
+.afip-lnk{display:flex;align-items:center;justify-content:center;gap:5px;margin-top:9px;padding:7px;background:var(--blue-bg);border:1px solid var(--blue-bdr);border-radius:7px;color:var(--blue);font-size:11px;font-family:var(--sans);font-weight:600;text-decoration:none}
+
+/* SECTIONS */
+.sec{background:var(--white);border:1.5px solid var(--border);border-radius:var(--r);margin-bottom:10px;overflow:hidden}
+.sec-hdr{padding:9px 14px;display:flex;align-items:center;gap:8px;cursor:pointer;background:var(--white);border-bottom:1px solid var(--border)}
+.sec-hdr:active{background:var(--bg)}
+.ic{width:22px;height:22px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;font-family:var(--mono);flex-shrink:0}
+.ic-gy{background:var(--gray-bg);color:var(--muted)}.ic-rd{background:var(--red-bg);color:var(--red)}
+.ic-bl{background:var(--blue-bg);color:var(--blue)}.ic-am{background:var(--amber-bg);color:var(--amber)}
+.ic-pp{background:var(--purple-bg);color:var(--purple)}.ic-or{background:var(--orange-bg);color:var(--orange)}
+.ic-tl{background:var(--teal-bg);color:var(--teal)}.ic-gn{background:var(--green-bg);color:var(--green)}
+.sec-title{font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:.3px;text-transform:uppercase;color:var(--text);flex:1}
+.sec-chev{color:var(--dim);font-size:10px;transition:transform .18s}
+.sec.closed .sec-chev{transform:rotate(-90deg)}.sec.closed .sec-body{display:none}
+
+/* IROW */
+.irow{display:grid;grid-template-columns:1fr 118px;align-items:center;padding:7px 14px;border-bottom:1px solid var(--border);gap:8px;min-height:44px}
+.irow:last-child{border-bottom:none}
+.il{font-size:12px;color:var(--text);line-height:1.3}
+.in{font-size:10px;color:var(--muted);margin-top:1px}
+.irow input,.irow select{width:100%;padding:6px 8px;border:1.5px solid var(--border2);border-radius:6px;font-family:var(--mono);font-size:13px;font-weight:500;text-align:right;outline:none;-moz-appearance:textfield;transition:all .15s;background:var(--amber-bg);color:var(--amber)}
+.irow input::-webkit-outer-spin-button,.irow input::-webkit-inner-spin-button{-webkit-appearance:none}
+.irow input:focus{border-color:var(--amber);background:#fffcf0}
+.irow input.txt{background:var(--surface);color:var(--text);border-color:var(--border2);text-align:left;font-family:var(--sans)}
+.irow input.txt:focus{border-color:var(--blue);background:var(--blue-bg);color:var(--blue)}
+.irow input.pp{background:var(--purple-bg);color:var(--purple);border-color:var(--purple-bdr)}
+.irow input.pp:focus{border-color:var(--purple)}
+.irow input.or{background:var(--orange-bg);color:var(--orange);border-color:var(--orange-bdr)}
+.irow input.or:focus{border-color:var(--orange)}
+.irow input.tl{background:var(--teal-bg);color:var(--teal);border-color:var(--teal-bdr)}
+.irow input.tl:focus{border-color:var(--teal)}
+.irow select{appearance:none;text-align:left;background:var(--surface);color:var(--text);border-color:var(--border2)}
+.nbadge{display:inline-block;font-size:9px;background:var(--green-bg);color:var(--green);border:1px solid var(--green-bdr);border-radius:3px;padding:1px 5px;margin-left:4px;font-family:var(--mono);vertical-align:middle;font-weight:600}
+
+/* RESULT ROW */
+.rrow{display:flex;justify-content:space-between;align-items:center;padding:8px 14px;border-bottom:1px solid var(--border);gap:8px}
+.rrow:last-child{border-bottom:none}
+.rrow.hi{background:var(--gray-bg)}.rrow.hi .rl{color:var(--text);font-weight:600}
+.rrow.hi2{background:var(--red-bg)}.rrow.hi2 .rl{color:var(--red);font-weight:700}
+.rrow.hi3{background:var(--green-bg)}.rrow.hi3 .rl{color:var(--green);font-weight:700}
+.rl{font-size:12px;color:var(--muted);flex:1}
+.rv{font-size:13px;font-weight:600;font-family:var(--mono);color:var(--text);text-align:right}
+.rv.red{color:var(--red)}.rv.blue{color:var(--blue)}.rv.green{color:var(--green)}
+.rv.amber{color:var(--amber)}.rv.purple{color:var(--purple)}.rv.orange{color:var(--orange)}.rv.teal{color:var(--teal)}
+
+/* TOTALS GRID */
+.tgrid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:8px}
+.tcrd{border-radius:var(--r);padding:11px 13px;border:1.5px solid}
+.tcrd .tl{font-size:9px;font-family:var(--mono);letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;font-weight:600}
+.tcrd .tv{font-size:18px;font-weight:700;font-family:var(--mono);line-height:1.1}
+.tcrd .ts{font-size:10px;opacity:.6;margin-top:2px}
+.cg{background:var(--green-bg);border-color:var(--green-bdr);color:var(--green)}
+.cb{background:var(--blue-bg);border-color:var(--blue-bdr);color:var(--blue)}
+.cr{background:var(--red-bg);border-color:var(--red-bdr);color:var(--red)}
+.cp{background:var(--purple-bg);border-color:var(--purple-bdr);color:var(--purple)}
+.co{background:var(--orange-bg);border-color:var(--orange-bdr);color:var(--orange)}
+.ct{background:var(--teal-bg);border-color:var(--teal-bdr);color:var(--teal)}
+.tfull{border-radius:var(--r);padding:12px 14px;border:1.5px solid;margin-bottom:8px}
+.tf-row{display:flex;justify-content:space-between;align-items:flex-end}
+.tf-lbl{font-size:9px;font-family:var(--mono);letter-spacing:.8px;text-transform:uppercase;margin-bottom:3px;font-weight:600}
+.tf-val{font-size:20px;font-weight:700;font-family:var(--mono)}
+.tf-sub{font-size:10px;opacity:.6;margin-top:2px}
+
+/* BOTTOM BAR */
+.bot{position:fixed;bottom:0;left:0;right:0;background:var(--white);border-top:1.5px solid var(--border);padding:7px 10px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;z-index:100;box-shadow:0 -4px 16px rgba(0,0,0,.07)}
+.bk{background:var(--bg);border:1px solid var(--border);border-radius:7px;padding:5px 9px}
+.bk-lbl{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin-bottom:1px;font-family:var(--mono)}
+.bk-val{font-size:12px;font-weight:700;font-family:var(--mono);color:var(--text)}
+.bk-val.red{color:var(--red)}.bk-val.green{color:var(--green)}.bk-val.blue{color:var(--blue)}
+.bk-val.purple{color:var(--purple)}.bk-val.orange{color:var(--orange)}.bk-val.teal{color:var(--teal)}
+
+/* RESET */
+.btn-reset{display:flex;align-items:center;justify-content:center;gap:5px;width:100%;padding:9px;background:var(--white);border:1.5px solid var(--border2);border-radius:8px;color:var(--muted);font-family:var(--sans);font-size:12px;font-weight:600;cursor:pointer;margin-top:8px}
+.btn-reset:active{background:var(--red-bg);color:var(--red);border-color:var(--red-bdr)}
+
+/* NOTICE */
+.notice{border-radius:8px;padding:8px 11px;font-size:11px;margin-bottom:10px;line-height:1.5}
+.na{background:var(--amber-bg);border:1px solid var(--amber-bdr);color:var(--amber)}
+.np{background:var(--purple-bg);border:1px solid var(--purple-bdr);color:var(--purple)}
+.no{background:var(--orange-bg);border:1px solid var(--orange-bdr);color:var(--orange)}
+.nt{background:var(--teal-bg);border:1px solid var(--teal-bdr);color:var(--teal)}
+.ng{background:var(--green-bg);border:1px solid var(--green-bdr);color:var(--green)}
+
+/* ORIGIN PILLS */
+.origin-pills{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:12px}
+.origin-pill{padding:10px 6px;border:2px solid var(--border2);border-radius:9px;background:var(--surface);cursor:pointer;text-align:center;transition:all .15s}
+.origin-pill.on{border-color:var(--purple);background:var(--purple-bg)}
+.op-flag{font-size:20px;margin-bottom:3px}
+.op-name{font-size:11px;font-weight:700;color:var(--text)}
+.op-rate{font-size:10px;font-family:var(--mono);color:var(--muted);margin-top:1px}
+.origin-pill.on .op-name{color:var(--purple)}.origin-pill.on .op-rate{color:var(--purple)}
+
+/* MULTI CONTAINER */
+.prod-row{background:var(--white);border:1.5px solid var(--border);border-radius:8px;margin-bottom:8px;overflow:hidden}
+.pr-head{padding:8px 12px;background:var(--gray-bg);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.pr-title{font-size:11px;font-weight:700;color:var(--text);font-family:var(--mono)}
+.pr-del{background:var(--red-bg);color:var(--red);border:1px solid var(--red-bdr);border-radius:4px;padding:2px 8px;font-size:10px;font-weight:600;cursor:pointer;font-family:var(--sans)}
+.pr-del:active{background:var(--red);color:#fff}
+.pr-body{padding:8px 0}
+.pr-result{background:var(--gray-bg);border-top:1px solid var(--border);padding:8px 12px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px}
+.pr-kpi{background:var(--white);border-radius:6px;padding:6px 8px;border:1px solid var(--border)}
+.prk-lbl{font-size:9px;color:var(--muted);font-family:var(--mono);text-transform:uppercase;letter-spacing:.6px}
+.prk-val{font-size:13px;font-weight:600;font-family:var(--mono)}
+.prk-val.red{color:var(--red)}.prk-val.blue{color:var(--blue)}.prk-val.green{color:var(--green)}
+
+/* DATABASE TABLE */
+.db-table{width:100%;border-collapse:collapse;font-size:11px;background:var(--white);border-radius:var(--r);overflow:hidden;border:1.5px solid var(--border)}
+.db-table th{padding:7px 10px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);background:var(--gray-bg);border-bottom:1px solid var(--border)}
+.db-table td{padding:7px 10px;border-bottom:1px solid var(--border);vertical-align:top;color:var(--text)}
+.db-table tr:last-child td{border-bottom:none}
+.db-table tr:hover td{background:var(--surface)}
+.db-empty{text-align:center;padding:24px;font-size:12px;color:var(--muted);font-style:italic}
+.db-del{background:none;border:none;color:var(--red);cursor:pointer;font-size:13px;padding:0 4px}
+.db-badge{display:inline-block;padding:1px 6px;border-radius:3px;font-size:9px;font-weight:600;font-family:var(--mono)}
+.db-container{background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-bdr)}
+.db-courier{background:var(--purple-bg);color:var(--purple);border:1px solid var(--purple-bdr)}
+.db-meli{background:var(--orange-bg);color:var(--orange);border:1px solid var(--orange-bdr)}
+.db-may{background:var(--teal-bg);color:var(--teal);border:1px solid var(--teal-bdr)}
+.db-kgonly{background:var(--green-bg);color:var(--green);border:1px solid var(--green-bdr)}
+.db-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.db-count{font-size:11px;color:var(--muted);font-family:var(--mono)}
+.btn-db-clear{padding:5px 10px;background:var(--red-bg);color:var(--red);border:1px solid var(--red-bdr);border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;font-family:var(--sans)}
+.btn-save{display:flex;align-items:center;justify-content:center;gap:5px;width:100%;padding:10px;background:var(--green-bg);border:1.5px solid var(--green-bdr);border-radius:8px;color:var(--green);font-family:var(--sans);font-size:12px;font-weight:700;cursor:pointer;margin-top:8px}
+.btn-save:active{background:var(--green);color:#fff}
+.btn-save.purple{background:var(--purple-bg);border-color:var(--purple-bdr);color:var(--purple)}
+.btn-save.purple:active{background:var(--purple);color:#fff}
+.btn-save.orange{background:var(--orange-bg);border-color:var(--orange-bdr);color:var(--orange)}
+.btn-save.orange:active{background:var(--orange);color:#fff}
+.btn-save.teal{background:var(--teal-bg);border-color:var(--teal-bdr);color:var(--teal)}
+.btn-save.teal:active{background:var(--teal);color:#fff}
+
+/* PROVEEDOR */
+.prov-row{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px}
+.prov-field{display:flex;flex-direction:column;gap:3px}
+.prov-lbl{font-size:10px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+.prov-inp{padding:7px 10px;border:1.5px solid var(--border2);border-radius:7px;background:var(--surface);color:var(--text);font-family:var(--sans);font-size:12px;outline:none;transition:border-color .15s}
+.prov-inp:focus{border-color:var(--blue)}
+.prov-field.full{grid-column:span 2}
+
+/* GANANCIA DISPLAY */
+.gan-row{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:8px}
+.gan-box{border-radius:8px;padding:10px 12px;border:1.5px solid;text-align:center}
+.gan-lbl{font-size:9px;font-family:var(--mono);letter-spacing:.8px;text-transform:uppercase;margin-bottom:4px;opacity:.8}
+.gan-val{font-size:20px;font-weight:700;font-family:var(--mono)}
+
+/* MELI CATEGORY SELECT */
+.meli-cat-info{background:var(--gray-bg);border-radius:6px;padding:8px 10px;margin-bottom:8px;font-size:11px;color:var(--muted);display:flex;align-items:center;justify-content:space-between}
+.meli-com-val{font-size:14px;font-weight:700;color:var(--orange);font-family:var(--mono)}
+
+/* KG ONLY */
+.kgo-switch{display:flex;gap:6px;margin-bottom:10px}
+.kgo-pill{flex:1;padding:8px;border:1.5px solid var(--border2);border-radius:8px;background:var(--surface);text-align:center;cursor:pointer;font-size:11px;font-weight:600;color:var(--muted);transition:all .15s}
+.kgo-pill.on{border-color:var(--green);background:var(--green-bg);color:var(--green)}
+
+/* ANIMS */
+.panel.on>*{animation:up .16s ease both}
+.panel.on>*:nth-child(1){animation-delay:0s}
+.panel.on>*:nth-child(2){animation-delay:.03s}
+.panel.on>*:nth-child(3){animation-delay:.06s}
+.panel.on>*:nth-child(4){animation-delay:.09s}
+.panel.on>*:nth-child(5){animation-delay:.12s}
+@keyframes up{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+.offline-bar{display:none;position:fixed;top:0;left:0;right:0;z-index:999;background:var(--amber);color:#fff;font-size:11px;font-family:var(--mono);font-weight:600;text-align:center;padding:5px;letter-spacing:.5px}
+</style>
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#111110">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="NIVIKO">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="apple-touch-startup-image" href="icon-512.png">
+</head>
+<body>
+
+<div class="offline-bar" id="offline-bar">📵 SIN CONEXIÓN — Modo offline</div>
+<div class="hdr">
+  <div class="hdr-row">
+    <div><div class="logo">NIVIKO <em>·</em> CHINA</div><div class="logo-sub">Calc. Importación v7</div></div>
+    <div style="display:flex;align-items:center;gap:7px">
+      <button id="install-btn" onclick="installApp()" style="display:none;align-items:center;gap:5px;padding:4px 10px;background:var(--blue-bg);border:1px solid var(--blue-bdr);border-radius:20px;color:var(--blue);font-size:9px;font-family:var(--mono);font-weight:600;cursor:pointer;letter-spacing:.5px">⬇ INSTALAR</button>
+      <div class="live"><div class="live-dot"></div>LIVE</div>
+    </div>
+  </div>
+</div>
+
+<div class="tabs">
+  <button class="tab on"  onclick="showTab('cont',this)">🚢 Container</button>
+  <button class="tab tc"  onclick="showTab('multi',this)">📦 Multi</button>
+  <button class="tab tc"  onclick="showTab('cour',this)">✈ Courier</button>
+  <button class="tab tc"  onclick="showTab('kgo',this)">⚖ Solo kg</button>
+  <button class="tab tm"  onclick="showTab('meli',this)">🛒 ML</button>
+  <button class="tab tw"  onclick="showTab('may',this)">🏪 Mayor.</button>
+  <button class="tab tdb" onclick="showTab('db',this)">🗂 Historial</button>
+  <button class="tab tpv"  onclick="showTab('prov',this)">👥 Proveedores</button>
+</div>
+
+<div class="content">
+
+<!-- ══════════════════════ CONTAINER (unificado) ══════════════════════ -->
+<div id="panel-cont" class="panel on">
+
+  <!-- PROVEEDOR -->
+  <div class="sec">
+    <div class="sec-hdr" onclick="toggleSec(this)"><div class="ic ic-gy">👤</div><div class="sec-title">Proveedor</div><div class="sec-chev">▾</div></div>
+    <div class="sec-body">
+      <div class="prov-row" style="padding:10px 14px">
+        <div class="prov-field"><div class="prov-lbl">Nombre proveedor</div><input class="prov-inp" id="prov_nombre" type="text" placeholder="Ej: Shenzhen Electronics Co."></div>
+        <div class="prov-field"><div class="prov-lbl">Contacto / WeChat</div><input class="prov-inp" id="prov_contacto" type="text" placeholder="Contacto"></div>
+        <div class="prov-field full"><div class="prov-lbl">Notas del proveedor</div><input class="prov-inp" id="prov_notas" type="text" placeholder="Observaciones, condiciones de pago, etc."></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SELECTOR NCM -->
+  <div class="card">
+    <div class="card-head dark"><div class="ch-title">Producto · D. Importación</div><div class="ch-tag">NIVIKO 2025</div></div>
+    <div class="card-body">
+      <div class="sel-wrap">
+        <select id="prod-select" onchange="selectProd(this.value,'cont')">
+          <option value="">— Seleccioná un producto —</option>
+          <!-- opciones generadas por JS -->
+        </select>
+        <span class="sel-arrow">▾</span>
+      </div>
+      <div class="prod-sel" id="prod-selected">
+        <div class="ps-top"><div class="ps-name" id="ps-name">—</div><button class="ps-clr" onclick="clearProd('cont')">✕ cambiar</button></div>
+        <div class="ps-grid">
+          <div class="ps-box"><div class="pb-lbl">D. Import.</div><div class="pb-val red" id="ps-der">—</div></div>
+          <div class="ps-box"><div class="pb-lbl">IVA</div><div class="pb-val blue" id="ps-iva">—</div></div>
+          <div class="ps-box"><div class="pb-lbl">IVA Adic.</div><div class="pb-val blue" id="ps-ivaad">—</div></div>
+        </div>
+        <div class="ps-nota" id="ps-nota"></div>
+        <div class="ps-ncm" id="ps-ncm"></div>
+      </div>
+      <div class="man-label">O ingresá el derecho manualmente:</div>
+      <div class="man-row">
+        <input class="inp-der" id="manual-der" type="number" min="0" max="100" step="0.5" placeholder="%" onkeydown="if(event.key==='Enter')applyManual('cont')">
+        <button class="btn-apply" onclick="applyManual('cont')">Aplicar %</button>
+      </div>
+      <a class="afip-lnk" href="https://www.afip.gob.ar/aduana/arancelintegrado/" target="_blank">🔗 Arancel Integrado ARCA</a>
+    </div>
+  </div>
+
+  <!-- DATOS GENERALES -->
+  <div class="sec">
+    <div class="sec-hdr" onclick="toggleSec(this)"><div class="ic ic-gy">⚙</div><div class="sec-title">Datos generales</div><div class="sec-chev">▾</div></div>
+    <div class="sec-body">
+      <div class="irow"><div><div class="il">Producto</div></div><input class="txt" id="producto" type="text" placeholder="Nombre" oninput="recalc()"></div>
+      <div class="irow"><div><div class="il">Cantidad (unidades)</div></div><input type="number" id="cantidad" placeholder="0" min="1" oninput="recalc()"></div>
+      <div class="irow"><div><div class="il">Dólar BNA</div><div class="in">Para totales ARS</div></div><input type="number" id="dolar_bna" placeholder="0" oninput="recalc()"></div>
+      <div class="irow"><div><div class="il">Dólar Blue</div><div class="in">Para Parte B</div></div><input type="number" id="dolar_blue" placeholder="0" oninput="recalc()"></div>
+    </div>
+  </div>
+
+  <!-- FOB -->
+  <div class="sec">
+    <div class="sec-hdr" onclick="toggleSec(this)"><div class="ic ic-am">$</div><div class="sec-title">Costos FOB</div><div class="sec-chev">▾</div></div>
+    <div class="sec-body">
+      <div class="irow"><div><div class="il">FOB Flete total (USD)</div><div class="in">Total del container</div></div><input type="number" id="fob_flete" placeholder="0" oninput="recalc()"></div>
+      <div class="irow"><div><div class="il">FOB Producto (USD/u)</div><div class="in">Precio real pagado</div></div><input type="number" id="fob_producto" placeholder="0" oninput="recalc()"></div>
+      <div class="irow"><div><div class="il">FOB Invoice (USD/u)</div><div class="in">Precio declarado</div></div><input type="number" id="fob_invoice" placeholder="0" oninput="recalc()"></div>
+    </div>
+  </div>
+
+  <!-- IMPUESTOS -->
+  <div class="sec">
+    <div class="sec-hdr" onclick="toggleSec(this)"><div class="ic ic-rd">%</div><div class="sec-title">Impuestos y aranceles</div><div class="sec-chev">▾</div></div>
+    <div class="sec-body">
+      <div class="irow"><div><div class="il">Maury</div><div class="in">Diferencia FOB prod − invoice</div></div><input type="number" id="t_maury" placeholder="0" step=".5" oninput="recalc()"></div>
+      <div class="irow"><div><div class="il">Derecho importación <span class="nbadge" id="der-badge" style="display:none">AUTO</span></div></div><input type="number" id="t_derecho" placeholder="0" step=".5" oninput="recalc()"></div>
+      <div class="irow"><div><div class="il">Estadística <span class="nbadge" id="estad-badge" style="display:none">AUTO</span></div><div class="in" id="estad-note"></div></div><input type="number" id="t_estadistica" placeholder="0" step=".5" oninput="recalc()"></div>
+      <div class="irow"><div><div class="il">IVA <span class="nbadge" id="iva-badge" style="display:none">AUTO</span></div></div><input type="number" id="t_iva" placeholder="0" step=".5" oninput="recalc()"></div>
+      <div class="irow"><div><div class="il">IVA Adicional <span class="nbadge" id="ivaad-badge" style="display:none">AUTO</span></div></div><input type="number" id="t_iva_ad" placeholder="0" step=".5" oninput="recalc()"></div>
+      <div class="irow"><div><div class="il">Imp. a las Ganancias</div></div><input type="number" id="t_ganancias" placeholder="0" step=".5" oninput="recalc()"></div>
+    </div>
+  </div>
+
+  <!-- LOGÍSTICA -->
+  <div class="sec">
+    <div class="sec-hdr" onclick="toggleSec(this)"><div class="ic ic-bl">🚢</div><div class="sec-title">Logística local</div><div class="sec-chev">▾</div></div>
+    <div class="sec-body">
+      <div class="irow"><div><div class="il">CBM total container (m³)</div></div><input type="number" id="cbm_total" placeholder="0" step="1" oninput="recalc()"></div>
+      <div class="irow"><div><div class="il">Costo flete total (USD)</div></div><input type="number" id="costo_flete" placeholder="0" step="50" oninput="recalc()"></div>
+      <div class="irow"><div><div class="il">Terminal / Puerto (USD)</div><div class="in">Total container</div></div><input type="number" id="terminal" placeholder="0" step="50" oninput="recalc()"></div>
+      <div class="irow"><div><div class="il">Despachante (USD)</div><div class="in">Total container</div></div><input type="number" id="despachante" placeholder="0" step="50" oninput="recalc()"></div>
+      <div class="irow"><div><div class="il">Gastos extra 1 (USD)</div><div class="in">Monto fijo en USD</div></div><input type="number" id="gasto_extra1" placeholder="0" oninput="recalc()"></div>
+      <div class="irow"><div><div class="il">Gastos extra 2 (%)</div><div class="in">Porcentaje sobre FOB</div></div><input type="number" id="gasto_extra2" placeholder="0" step=".5" oninput="recalc()"></div>
+    </div>
+  </div>
+
+  <!-- RESULTADO CONTAINER COMPLETO -->
+  <div class="sec">
+    <div class="sec-hdr" onclick="toggleSec(this)"><div class="ic ic-rd">≡</div><div class="sec-title">Resultado · Por unidad</div><div class="sec-chev">▾</div></div>
+    <div class="sec-body">
+      <!-- FOB -->
+      <div class="rrow"><div class="rl">FOB flete asignado</div><div class="rv amber" id="d_fob_flete">—</div></div>
+      <div class="rrow"><div class="rl">FOB Invoice</div><div class="rv amber" id="d_fob_inv">—</div></div>
+      <div class="rrow hi"><div class="rl">FOB Total</div><div class="rv amber" id="d_fob_total">—</div></div>
+      <!-- Impuestos -->
+      <div class="rrow"><div class="rl">Maury</div><div class="rv" id="d_maury">—</div></div>
+      <div class="rrow"><div class="rl">Derecho importación</div><div class="rv amber" id="d_derecho">—</div></div>
+      <div class="rrow"><div class="rl">Estadística</div><div class="rv amber" id="d_estadistica">—</div></div>
+      <div class="rrow"><div class="rl">IVA</div><div class="rv blue" id="d_iva">—</div></div>
+      <div class="rrow"><div class="rl">IVA Adicional</div><div class="rv blue" id="d_ivaad">—</div></div>
+      <div class="rrow"><div class="rl">Imp. Ganancias</div><div class="rv" id="d_gcias">—</div></div>
+      <!-- Logística -->
+      <div class="rrow"><div class="rl">CBM / m³ asignado</div><div class="rv" id="d_cbm">—</div></div>
+      <div class="rrow"><div class="rl">Flete logístico</div><div class="rv blue" id="d_flete_log">—</div></div>
+      <div class="rrow"><div class="rl">Terminal</div><div class="rv" id="d_term">—</div></div>
+      <div class="rrow"><div class="rl">Despachante</div><div class="rv" id="d_desp">—</div></div>
+      <div class="rrow"><div class="rl">Gastos extra 1</div><div class="rv" id="d_ge1">—</div></div>
+      <div class="rrow"><div class="rl">Gastos extra 2</div><div class="rv" id="d_ge2">—</div></div>
+      <!-- Parte B -->
+      <div class="rrow"><div class="rl">Diferencia (prod − invoice)</div><div class="rv" id="d_dif">—</div></div>
+      <div class="rrow"><div class="rl">Parte B (× 1.05)</div><div class="rv" id="d_pb_usd">—</div></div>
+      <div class="rrow"><div class="rl">Parte B ARS (blue)</div><div class="rv" id="d_pb_ars">—</div></div>
+      <!-- Totales -->
+      <div class="rrow hi"><div class="rl">TOTAL sin IVA (USD)</div><div class="rv green" id="d_siva_usd">—</div></div>
+      <div class="rrow hi"><div class="rl">TOTAL sin IVA (ARS)</div><div class="rv green" id="d_siva_ars">—</div></div>
+      <div class="rrow hi"><div class="rl">TOTAL con IVA (USD)</div><div class="rv blue" id="d_civa_usd">—</div></div>
+      <div class="rrow hi"><div class="rl">TOTAL con IVA (ARS)</div><div class="rv blue" id="d_civa_ars">—</div></div>
+      <div class="rrow hi3"><div class="rl">TOTAL A+B sin IVA — costo (USD)</div><div class="rv green" id="d_ab_siva_usd">—</div></div>
+      <div class="rrow hi3"><div class="rl">TOTAL A+B sin IVA — costo (ARS)</div><div class="rv green" id="d_ab_siva_ars">—</div></div>
+      <div class="rrow hi2"><div class="rl">TOTAL A+B con IVA — costo (USD)</div><div class="rv red" id="d_ab_usd">—</div></div>
+      <div class="rrow hi2"><div class="rl">TOTAL A+B con IVA — costo (ARS)</div><div class="rv red" id="d_ab_ars">—</div></div>
+    </div>
+  </div>
+
+  <!-- LOTE -->
+  <div class="tfull cr">
+    <div class="tf-lbl">🏭 LOTE COMPLETO · PUESTO ACÁ</div>
+    <div class="tf-val" style="font-size:24px;margin:5px 0" id="t_lote">—</div>
+    <div class="tf-sub" id="t_lote_sub">—</div>
+  </div>
+
+  <button class="btn-save" onclick="saveToDb('container')">💾 &nbsp;Guardar en historial</button>
+  <button class="btn-reset" onclick="resetAll()">✕ &nbsp;Limpiar campos</button>
+</div>
+
+
+<!-- ══════════════════════ MULTI CONTAINER ══════════════════════ -->
+<div id="panel-multi" class="panel">
+  <div class="notice na">📦 <strong>Container mixto.</strong> Cargá múltiples productos. Los gastos fijos (flete, terminal, despachante) se distribuyen proporcionalmente por CBM.</div>
+
+  <!-- Proveedor Multi -->
+  <div class="sec">
+    <div class="sec-hdr" onclick="toggleSec(this)"><div class="ic ic-gy">👤</div><div class="sec-title">Proveedor</div><div class="sec-chev">▾</div></div>
+    <div class="sec-body">
+      <div class="prov-row" style="padding:10px 14px">
+        <div class="prov-field"><div class="prov-lbl">Nombre proveedor</div><input class="prov-inp" id="m_prov_nombre" type="text" placeholder="Proveedor"></div>
+        <div class="prov-field"><div class="prov-lbl">Contacto</div><input class="prov-inp" id="m_prov_contacto" type="text" placeholder="Contacto / WeChat"></div>
+        <div class="prov-field full"><div class="prov-lbl">Notas</div><input class="prov-inp" id="m_prov_notas" type="text" placeholder="Condiciones, notas"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gastos fijos del container -->
+  <div class="sec">
+    <div class="sec-hdr" onclick="toggleSec(this)"><div class="ic ic-bl">🚢</div><div class="sec-title">Gastos fijos del container</div><div class="sec-chev">▾</div></div>
+    <div class="sec-body">
+      <div class="irow"><div><div class="il">CBM total container (m³)</div></div><input type="number" id="m_cbm_total" placeholder="68" step="1" oninput="recalcMulti()"></div>
+      <div class="irow"><div><div class="il">FOB Flete total (USD)</div><div class="in">Costo total de flete del container</div></div><input type="number" id="m_flete" placeholder="0" step="50" oninput="recalcMulti()"></div>
+      <div class="irow"><div><div class="il">Terminal / Puerto (USD)</div></div><input type="number" id="m_terminal" placeholder="0" step="50" oninput="recalcMulti()"></div>
+      <div class="irow"><div><div class="il">Despachante (USD)</div></div><input type="number" id="m_despachante" placeholder="0" step="50" oninput="recalcMulti()"></div>
+      <div class="irow"><div><div class="il">Gastos extra 1 (USD fijo)</div></div><input type="number" id="m_ge1" placeholder="0" oninput="recalcMulti()"></div>
+      <div class="irow"><div><div class="il">Gastos extra 2 (%)</div></div><input type="number" id="m_ge2" placeholder="0" step="0.5" oninput="recalcMulti()"></div>
+      <div class="irow"><div><div class="il">Dólar BNA</div></div><input type="number" id="m_bna" placeholder="0" oninput="recalcMulti()"></div>
+      <div class="irow"><div><div class="il">Dólar Blue</div><div class="in">Para Parte B</div></div><input type="number" id="m_blue" placeholder="0" oninput="recalcMulti()"></div>
+    </div>
+  </div>
+
+  <!-- Lista de productos -->
+  <div id="multi-products"></div>
+
+  <button onclick="addMultiProduct()" style="display:flex;align-items:center;justify-content:center;gap:5px;width:100%;padding:10px;background:var(--blue-bg);border:1.5px solid var(--blue-bdr);border-radius:8px;color:var(--blue);font-family:var(--sans);font-size:12px;font-weight:700;cursor:pointer;margin-bottom:8px">
+    + Agregar producto
+  </button>
+
+  <!-- Resumen total container -->
+  <div class="sec" id="multi-summary" style="display:none">
+    <div class="sec-hdr" onclick="toggleSec(this)"><div class="ic ic-rd">≡</div><div class="sec-title">Resumen container</div><div class="sec-chev">▾</div></div>
+    <div class="sec-body" id="multi-summary-body"></div>
+  </div>
+
+  <button class="btn-reset" onclick="resetMulti()">✕ &nbsp;Limpiar container mixto</button>
+</div>
+
+
+<!-- ══════════════════════ COURIER ══════════════════════ -->
+<div id="panel-cour" class="panel">
+  <div class="notice np">✈ <strong>Courier aéreo.</strong> Máx. FOB US$3.000 por envío. Lógica Parte A (con impuestos) + Parte B (solo USD). Sin IIBB.</div>
+
+  <!-- ORIGEN -->
+  <div class="card">
+    <div class="card-head purple"><div class="ch-title">Origen del envío</div><div class="ch-tag">tarifa / kg</div></div>
+    <div class="card-body">
+      <div class="origin-pills">
+        <div class="origin-pill on" id="pill-china" onclick="setOrigen('china')">
+          <div class="op-flag">🇨🇳</div><div class="op-name">China</div><div class="op-rate" id="rate-china-lbl">US$ 16 / kg</div>
+        </div>
+        <div class="origin-pill" id="pill-miami" onclick="setOrigen('miami')">
+          <div class="op-flag">🇺🇸</div><div class="op-name">Miami</div><div class="op-rate" id="rate-miami-lbl">US$ 12 / kg</div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+        <div class="prov-field"><div class="prov-lbl">Tarifa China (USD/kg)</div><input class="prov-inp" id="c_rate_china" type="number" value="16" step="0.5" oninput="updateRateLabels();recalcCourier()"></div>
+        <div class="prov-field"><div class="prov-lbl">Tarifa Miami (USD/kg)</div><input class="prov-inp" id="c_rate_miami" type="number" value="12" step="0.5" oninput="updateRateLabels();recalcCourier()"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROVEEDOR COURIER -->
+  <div class="sec">
+    <div class="sec-hdr" onclick="toggleSec(this)"><div class="ic ic-gy">👤</div><div class="sec-title">Proveedor</div><div class="sec-chev">▾</div></div>
+    <div class="sec-body">
+      <div class="prov-row" style="padding:10px 14px">
+        <div class="prov-field full"><div class="prov-lbl">Nombre proveedor</div><input class="prov-inp" id="c_prov" type="text" placeholder="Proveedor / courier"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRODUCTO COURIER -->
+  <div class="card">
+    <div class="card-head dark"><div class="ch-title">Producto · Aranceles</div><div class="ch-tag">NIVIKO 2025</div></div>
+    <div class="card-body">
+      <div class="sel-wrap">
+        <select id="c_prod_select" onchange="selectProd(this.value,'cour')">
+          <option value="">— Seleccioná un producto —</option>
+        </select>
+        <span class="sel-arrow">▾</span>
+      </div>
+      <div class="prod-sel" id="c_prod_selected">
+        <div class="ps-top"><div class="ps-name" id="c_ps_name">—</div><button class="ps-clr" onclick="clearProd('cour')">✕</button></div>
+        <div class="ps-grid">
+          <div class="ps-box"><div class="pb-lbl">D. Import.</div><div class="pb-val red" id="c_ps_der">—</div></div>
+          <div class="ps-box"><div class="pb-lbl">IVA</div><div class="pb-val blue" id="c_ps_iva">—</div></div>
+          <div class="ps-box"><div class="pb-lbl">IVA Adic.</div><div class="pb-val blue" id="c_ps_ivaad">—</div></div>
+        </div>
+        <div class="ps-nota" id="c_ps_nota" style="display:none"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DATOS -->
+  <div class="sec">
+    <div class="sec-hdr" onclick="toggleSec(this)"><div class="ic ic-pp">✈</div><div class="sec-title">Datos del envío</div><div class="sec-chev">▾</div></div>
+    <div class="sec-body">
+      <div class="irow"><div><div class="il">Producto</div></div><input class="txt" id="c_producto" type="text" placeholder="Nombre" oninput="recalcCourier()"></div>
+      <div class="irow"><div><div class="il">Cantidad (unidades)</div></div><input class="pp" type="number" id="c_cantidad" placeholder="0" min="1" oninput="recalcCourier()"></div>
+      <div class="irow"><div><div class="il">Peso por unidad (kg)</div></div><input class="pp" type="number" id="c_peso" placeholder="0" step="0.1" oninput="recalcCourier()"></div>
+      <div class="irow"><div><div class="il">FOB Producto real (USD/u)</div><div class="in">Precio real pagado</div></div><input class="pp" type="number" id="c_fob_real" placeholder="0" oninput="recalcCourier()"></div>
+      <div class="irow"><div><div class="il">FOB Invoice / declarado (USD/u)</div><div class="in">Precio declarado al courier</div></div><input class="pp" type="number" id="c_fob_inv" placeholder="0" oninput="recalcCourier()"></div>
+      <div class="irow"><div><div class="il">Dólar BNA</div></div><input class="pp" type="number" id="c_bna" placeholder="0" oninput="recalcCourier()"></div>
+      <div class="irow"><div><div class="il">Dólar Blue</div><div class="in">Para Parte B</div></div><input class="pp" type="number" id="c_blue" placeholder="0" oninput="recalcCourier()"></div>
+    </div>
+  </div>
+
+  <!-- IMPUESTOS COURIER -->
+  <div class="sec">
+    <div class="sec-hdr" onclick="toggleSec(this)"><div class="ic ic-rd">%</div><div class="sec-title">Impuestos</div><div class="sec-chev">▾</div></div>
+    <div class="sec-body">
+      <div class="irow"><div><div class="il">Derecho importación <span class="nbadge" id="c_der_badge" style="display:none">AUTO</span></div></div><input type="number" id="c_derecho" placeholder="0" step=".5" oninput="recalcCourier()"></div>
+      <div class="irow"><div><div class="il">Estadística <span class="nbadge" id="c_estad_badge" style="display:none">AUTO</span></div><div class="in" id="c_estad_note"></div></div><input type="number" id="c_estadistica" placeholder="0" step=".5" oninput="recalcCourier()"></div>
+      <div class="irow"><div><div class="il">IVA <span class="nbadge" id="c_iva_badge" style="display:none">AUTO</span></div></div><input type="number" id="c_iva" placeholder="0" step=".5" oninput="recalcCourier()"></div>
+      <div class="irow"><div><div class="il">IVA Adicional <span class="nbadge" id="c_ivaad_badge" style="display:none">AUTO</span></div></div><input type="number" id="c_iva_ad" placeholder="0" step=".5" oninput="recalcCourier()"></div>
+      <div class="irow"><div><div class="il">Imp. a las Ganancias (%)</div><div class="in">Opcional — dejá 0 si no aplica</div></div><input type="number" id="c_ganancias" value="0" placeholder="0" step=".5" oninput="recalcCourier()"></div>
+      <div class="irow"><div><div class="il">Gastos grales. (%)</div><div class="in">Reemplaza terminal/despachante</div></div><input type="number" id="c_gg" value="5" placeholder="5" step=".5" oninput="recalcCourier()"></div>
+    </div>
+  </div>
+
+  <!-- RESULTADO COURIER -->
+  <div class="sec">
+    <div class="sec-hdr" onclick="toggleSec(this)"><div class="ic ic-pp">≡</div><div class="sec-title">Resultado · Por unidad</div><div class="sec-chev">▾</div></div>
+    <div class="sec-body">
+      <div class="rrow"><div class="rl">Flete aéreo (USD/u)</div><div class="rv purple" id="cr_flete">—</div></div>
+      <div class="rrow"><div class="rl">FOB declarado</div><div class="rv purple" id="cr_fob_inv">—</div></div>
+      <div class="rrow"><div class="rl">Derecho importación</div><div class="rv red" id="cr_derecho">—</div></div>
+      <div class="rrow"><div class="rl">Estadística</div><div class="rv red" id="cr_estadistica">—</div></div>
+      <div class="rrow"><div class="rl">IVA</div><div class="rv blue" id="cr_iva">—</div></div>
+      <div class="rrow"><div class="rl">IVA Adicional</div><div class="rv blue" id="cr_ivaad">—</div></div>
+      <div class="rrow"><div class="rl">Imp. Ganancias (opc.)</div><div class="rv" id="cr_gcias">—</div></div>
+      <div class="rrow"><div class="rl">Gastos generales</div><div class="rv" id="cr_gg">—</div></div>
+      <div class="rrow hi"><div class="rl">TOTAL sin IVA (USD)</div><div class="rv green" id="cr_siva_usd">—</div></div>
+      <div class="rrow hi"><div class="rl">TOTAL sin IVA (ARS)</div><div class="rv green" id="cr_siva_ars">—</div></div>
+      <div class="rrow hi"><div class="rl">TOTAL con IVA (USD)</div><div class="rv blue" id="cr_civa_usd">—</div></div>
+      <div class="rrow hi"><div class="rl">TOTAL con IVA (ARS)</div><div class="rv blue" id="cr_civa_ars">—</div></div>
+      <!-- Parte B -->
+      <div class="rrow"><div class="rl">Diferencia (real − declarado)</div><div class="rv" id="cr_dif">—</div></div>
+      <div class="rrow"><div class="rl">Parte B (× 1.05)</div><div class="rv purple" id="cr_pb_usd">—</div></div>
+      <div class="rrow"><div class="rl">Parte B ARS (blue)</div><div class="rv purple" id="cr_pb_ars">—</div></div>
+      <div class="rrow hi3"><div class="rl">TOTAL A+B sin IVA — costo (USD)</div><div class="rv green" id="cr_ab_siva_usd">—</div></div>
+      <div class="rrow hi3"><div class="rl">TOTAL A+B sin IVA — costo (ARS)</div><div class="rv green" id="cr_ab_siva_ars">—</div></div>
+      <div class="rrow hi2"><div class="rl">TOTAL A+B con IVA — costo (USD)</div><div class="rv red" id="cr_ab_usd">—</div></div>
+      <div class="rrow hi2"><div class="rl">TOTAL A+B con IVA — costo (ARS)</div><div class="rv red" id="cr_ab_ars">—</div></div>
+    </div>
+  </div>
+
+  <!-- FOB check -->
+  <div class="notice np" id="c_fob_warning" style="display:none">⚠ <strong>FOB supera US$3.000</strong> — límite por envío courier. Dividí el pedido en múltiples envíos.</div>
+
+  <div class="tfull cp">
+    <div class="tf-lbl">✈ TOTAL LOTE COURIER</div>
+    <div class="tf-val" style="font-size:22px;margin:5px 0" id="ct_lote">—</div>
+    <div class="tf-sub" id="ct_lote_sub">—</div>
+  </div>
+
+  <button class="btn-save purple" onclick="saveToDb('courier')">💾 &nbsp;Guardar en historial</button>
+  <button class="btn-reset" onclick="resetCourier()">✕ &nbsp;Limpiar</button>
+</div>
+
+
+<!-- ══════════════════════ SOLO KG (sin impuestos) ══════════════════════ -->
+<div id="panel-kgo" class="panel">
+  <div class="notice nt">⚖ <strong>Importación solo por kg.</strong> Sin impuestos de importación. Sólo costo de flete por kg.</div>
+
+  <div class="kgo-switch">
+    <div class="kgo-pill on" id="kgo-cn" onclick="setKgoOrigen('china')">🇨🇳 China</div>
+    <div class="kgo-pill" id="kgo-us" onclick="setKgoOrigen('miami')">🇺🇸 Miami</div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-hdr" onclick="toggleSec(this)"><div class="ic ic-tl">⚖</div><div class="sec-title">Datos</div><div class="sec-chev">▾</div></div>
+    <div class="sec-body">
+      <div class="irow"><div><div class="il">Producto</div></div><input class="txt" id="k_producto" type="text" placeholder="Nombre" oninput="recalcKgo()"></div>
+      <div class="irow"><div><div class="il">Cantidad (unidades)</div></div><input class="tl" type="number" id="k_cant" placeholder="0" oninput="recalcKgo()"></div>
+      <div class="irow"><div><div class="il">Peso por unidad (kg)</div></div><input class="tl" type="number" id="k_peso" placeholder="0" step="0.1" oninput="recalcKgo()"></div>
+      <div class="irow"><div><div class="il">Precio unitario (USD)</div></div><input class="tl" type="number" id="k_precio" placeholder="0" oninput="recalcKgo()"></div>
+      <div class="irow"><div><div class="il">Tarifa kg (USD/kg)</div><div class="in" id="k_rate_hint">China: $16/kg</div></div><input class="tl" type="number" id="k_rate" value="16" step="0.5" oninput="recalcKgo()"></div>
+      <div class="irow"><div><div class="il">Dólar BNA</div></div><input class="tl" type="number" id="k_bna" placeholder="0" oninput="recalcKgo()"></div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-hdr" onclick="toggleSec(this)"><div class="ic ic-tl">≡</div><div class="sec-title">Resultado</div><div class="sec-chev">▾</div></div>
+    <div class="sec-body">
+      <div class="rrow"><div class="rl">Flete por unidad (USD)</div><div class="rv teal" id="k_flete_u">—</div></div>
+      <div class="rrow"><div class="rl">Costo total (producto + flete)</div><div class="rv teal" id="k_total_u">—</div></div>
+      <div class="rrow hi"><div class="rl">Total en ARS</div><div class="rv teal" id="k_total_ars">—</div></div>
+      <div class="rrow hi2"><div class="rl">Total lote (USD)</div><div class="rv teal" id="k_lote_usd">—</div></div>
+    </div>
+  </div>
+
+  <button class="btn-save teal" onclick="saveToDb('kgonly')">💾 &nbsp;Guardar en historial</button>
+  <button class="btn-reset" onclick="resetKgo()">✕ &nbsp;Limpiar</button>
+</div>
+
+
+<!-- ══════════════════════ MERCADO LIBRE ══════════════════════ -->
+<div id="panel-meli" class="panel">
+  <div class="notice no">🛒 <strong>Calculadora MercadoLibre.</strong> Basado en tu hoja MELI. Todos los valores en ARS.</div>
+
+  <!-- INFO PRODUCTO -->
+  <div class="sec">
+    <div class="sec-hdr" onclick="toggleSec(this)"><div class="ic ic-or">📋</div><div class="sec-title">Producto</div><div class="sec-chev">▾</div></div>
+    <div class="sec-body">
+      <div class="irow"><div><div class="il">Descripción</div></div><input class="txt" id="ml_desc" type="text" placeholder="Nombre del producto" oninput="recalcMeli()"></div>
+      <div class="irow"><div><div class="il">Costo total (ARS)</div><div class="in">Sin IVA ni impuestos internos</div></div><input type="number" id="ml_costo" placeholder="0" oninput="recalcMeli()"></div>
+      <div style="padding:6px 14px 8px;border-bottom:1px solid var(--border)">
+        <div style="font-size:9px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px;font-family:var(--mono)">O importar desde historial de importación</div>
+        <div style="display:flex;gap:6px">
+          <select id="ml_import_sel" style="flex:1;padding:7px 10px;border:1.5px solid var(--border2);border-radius:7px;background:var(--surface);color:var(--text);font-family:var(--sans);font-size:11px;outline:none;appearance:none">
+            <option value="">— Seleccioná un cálculo guardado —</option>
+          </select>
+          <button onclick="importCostoToMeli()" style="padding:7px 12px;background:var(--orange-bg);color:var(--orange);border:1.5px solid var(--orange-bdr);border-radius:7px;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:var(--sans)">Importar</button>
+        </div>
+      </div>
+      <div class="irow"><div><div class="il">Precio publicación ML (c/IVA)</div></div><input type="number" id="ml_pvp" placeholder="0" oninput="recalcMeli()"></div>
+      <div class="irow"><div><div class="il">Dólar BNA (para conversión)</div><div class="in">Al importar costo desde historial</div></div><input type="number" id="ml_bna_override" placeholder="0" oninput="recalcMeli()"></div>
+      <div class="irow"><div><div class="il">IVA del producto</div><div class="in">21% general / 10,5% informática</div></div>
+        <select id="ml_iva_tipo" onchange="recalcMeli()" style="text-align:left;appearance:none;background:var(--surface);color:var(--text);font-family:var(--sans);font-size:12px;padding:6px 8px;border:1.5px solid var(--border2);border-radius:6px;width:100%;outline:none">
+          <option value="1.21">21%</option>
+          <option value="1.105">10.5%</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- CATEGORÍA Y COMISIÓN -->
+  <div class="sec">
+    <div class="sec-hdr" onclick="toggleSec(this)"><div class="ic ic-or">%</div><div class="sec-title">Categoría y comisión ML</div><div class="sec-chev">▾</div></div>
+    <div class="sec-body">
+      <div class="irow"><div><div class="il">Categoría ML</div></div>
+        <select id="ml_cat" onchange="applyMeliCat()" style="appearance:none;background:var(--surface);color:var(--text);font-family:var(--sans);font-size:11px;padding:6px 8px;border:1.5px solid var(--border2);border-radius:6px;width:100%;outline:none;text-align:left">
+          <option value="0">— Seleccioná —</option>
+          <option value="13.5">Amoladoras — 13.5%</option>
+          <option value="15.5">Auriculares — 15.5%</option>
+          <option value="13.5">Bicicletas — 13.5%</option>
+          <option value="14">Bombas centrif. — 14%</option>
+          <option value="14">Bordeadora — 13.5%</option>
+          <option value="15">Cámara seguridad — 15%</option>
+          <option value="12">Celulares — 12%</option>
+          <option value="13.5">Cochecitos bebé — 13.5%</option>
+          <option value="15.5">Discos SSD — 15.5%</option>
+          <option value="14">Escaleras — 14%</option>
+          <option value="16">Fundas/repuestos cel. — 16%</option>
+          <option value="14.15">Heladera — 14.15%</option>
+          <option value="14">Horno/Anafe/Cocina — 14%</option>
+          <option value="13.5">Inflables pileta — 13.5%</option>
+          <option value="13.5">Kindle — 13.5%</option>
+          <option value="14.15">Lavarropas — 14.15%</option>
+          <option value="15">Media Streaming — 15%</option>
+          <option value="15.5">Memoria RAM — 15.5%</option>
+          <option value="16">Memorias SD — 16%</option>
+          <option value="14">Mesa plegable — 14%</option>
+          <option value="12">Notebooks — 12%</option>
+          <option value="15.5">Parlante portátil — 15.5%</option>
+          <option value="14">Parrillas — 14%</option>
+          <option value="14">Pava eléctrica — 14%</option>
+          <option value="15.5">Pendrive — 15.5%</option>
+          <option value="14">Piletas estructurales — 14%</option>
+          <option value="14">Pisos SPC — 14%</option>
+          <option value="13.5">Pistola de calor — 13.5%</option>
+          <option value="13.5">Practicuna — 13.5%</option>
+          <option value="12.5">Reloj Smartwatch — 12.5%</option>
+          <option value="13.5">Roto martillo — 13.5%</option>
+          <option value="14.5">Silla de oficina — 14.5%</option>
+          <option value="14.5">Sillas de hogar — 14.5%</option>
+          <option value="16">Soporte de TV — 16%</option>
+          <option value="13.5">Tablets — 13.5%</option>
+        </select>
+      </div>
+      <div class="irow"><div><div class="il">Comisión ML (%)</div><div class="in">Auto desde categoría o manual</div></div><input type="number" id="ml_com" placeholder="0" step="0.5" oninput="recalcMeli()"></div>
+      <div class="irow"><div><div class="il">Cuotas</div></div>
+        <select id="ml_cuotas" onchange="recalcMeli()" style="appearance:none;background:var(--surface);color:var(--text);font-family:var(--sans);font-size:12px;padding:6px 8px;border:1.5px solid var(--border2);border-radius:6px;width:100%;outline:none">
+          <option value="0">Sin cuotas — 0%</option>
+          <option value="9">3 cuotas — 9%</option>
+          <option value="14.2">6 cuotas — 14.2%</option>
+          <option value="16.5">9 cuotas — 16.5%</option>
+          <option value="21">12 cuotas — 21%</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- GASTOS MELI -->
+  <div class="sec">
+    <div class="sec-hdr" onclick="toggleSec(this)"><div class="ic ic-or">$</div><div class="sec-title">Gastos y envío</div><div class="sec-chev">▾</div></div>
+    <div class="sec-body">
+      <div class="irow"><div><div class="il">Envío gratis (ARS)</div><div class="in">Costo del envío que absorbés</div></div><input type="number" id="ml_envio" placeholder="0" oninput="recalcMeli()"></div>
+      <div class="irow"><div><div class="il">Publicidad (%)</div></div><input type="number" id="ml_pub" placeholder="5" value="5" step="0.5" oninput="recalcMeli()"></div>
+      <div class="irow"><div><div class="il">IIBB (%)</div></div><input type="number" id="ml_iibb" placeholder="5" value="5" step="0.5" oninput="recalcMeli()"></div>
+    </div>
+  </div>
+
+  <!-- RESULTADO MELI -->
+  <div class="sec">
+    <div class="sec-hdr" onclick="toggleSec(this)"><div class="ic ic-or">≡</div><div class="sec-title">Resultado — paso a paso</div><div class="sec-chev">▾</div></div>
+    <div class="sec-body">
+      <div class="rrow"><div class="rl">① Precio publicado c/IVA (PVP)</div><div class="rv" id="ml_r_pvp">—</div></div>
+      <div class="rrow"><div class="rl">② ÷ IVA → Precio neto s/IVA</div><div class="rv" id="ml_pvp_siva">—</div></div>
+      <div class="rrow"><div class="rl">③ − IVA (diferencia)</div><div class="rv red" id="ml_r_iva">—</div></div>
+      <div class="rrow"><div class="rl">④ − Comisión ML</div><div class="rv red" id="ml_r_com">—</div></div>
+      <div class="rrow"><div class="rl">⑤ − Costo cuotas</div><div class="rv red" id="ml_r_cuotas">—</div></div>
+      <div class="rrow"><div class="rl">⑥ − Envío gratis</div><div class="rv red" id="ml_r_envio">—</div></div>
+      <div class="rrow"><div class="rl">⑦ − Publicidad</div><div class="rv red" id="ml_r_pub">—</div></div>
+      <div class="rrow"><div class="rl">⑧ − IIBB</div><div class="rv red" id="ml_r_iibb">—</div></div>
+      <div class="rrow hi"><div class="rl">= Ingreso neto disponible</div><div class="rv orange" id="ml_ingreso_neto">—</div></div>
+      <div class="rrow"><div class="rl">⑨ − Costo del producto</div><div class="rv red" id="ml_r_costo">—</div></div>
+      <div class="rrow hi"><div class="rl">Total costos de venta (③ a ⑧)</div><div class="rv red" id="ml_r_costos">—</div></div>
+    </div>
+  </div>
+
+  <div class="gan-row">
+    <div class="gan-box cg"><div class="gan-lbl">Ganancia</div><div class="gan-val" id="ml_ganancia">—</div></div>
+    <div class="gan-box co"><div class="gan-lbl">Margen / costo</div><div class="gan-val" id="ml_m_costo">—</div></div>
+  </div>
+  <div class="gan-row">
+    <div class="gan-box cb"><div class="gan-lbl">Margen / precio vta</div><div class="gan-val" id="ml_m_pvp">—</div></div>
+    <div class="gan-box cr"><div class="gan-lbl">ROI</div><div class="gan-val" id="ml_roi">—</div></div>
+  </div>
+
+  <button class="btn-save orange" onclick="saveToDb('meli')">💾 &nbsp;Guardar en historial</button>
+  <button class="btn-reset" onclick="resetMeli()">✕ &nbsp;Limpiar</button>
+</div>
+
+
+<!-- ══════════════════════ MAYORISTA ══════════════════════ -->
+<div id="panel-may" class="panel">
+  <div class="notice nt">🏪 <strong>Calculadora Mayorista.</strong> Basado en tu hoja MAYORISTA. En ARS.</div>
+
+  <div class="sec">
+    <div class="sec-hdr" onclick="toggleSec(this)"><div class="ic ic-tl">📋</div><div class="sec-title">Producto</div><div class="sec-chev">▾</div></div>
+    <div class="sec-body">
+      <div class="irow"><div><div class="il">Descripción</div></div><input class="txt" id="w_desc" type="text" placeholder="Nombre del producto" oninput="recalcMay()"></div>
+      <div class="irow"><div><div class="il">Costo total (USD)</div><div class="in">Sin IVA ni impuestos</div></div><input type="number" id="w_costo_usd" placeholder="0" step="0.01" oninput="recalcMay()"></div>
+      <div style="padding:6px 14px 8px;border-bottom:1px solid var(--border)">
+        <div style="font-size:9px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px;font-family:var(--mono)">O importar desde historial de importación</div>
+        <div style="display:flex;gap:6px">
+          <select id="may_import_sel" style="flex:1;padding:7px 10px;border:1.5px solid var(--border2);border-radius:7px;background:var(--surface);color:var(--text);font-family:var(--sans);font-size:11px;outline:none;appearance:none">
+            <option value="">— Seleccioná un cálculo guardado —</option>
+          </select>
+          <button onclick="importCostoToMay()" style="padding:7px 12px;background:var(--teal-bg);color:var(--teal);border:1.5px solid var(--teal-bdr);border-radius:7px;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:var(--sans)">Importar</button>
+        </div>
+      </div>
+      <div class="irow"><div><div class="il">Dólar BNA</div></div><input type="number" id="w_bna" placeholder="0" oninput="recalcMay()"></div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-hdr" onclick="toggleSec(this)"><div class="ic ic-tl">$</div><div class="sec-title">Precio y descuentos</div><div class="sec-chev">▾</div></div>
+    <div class="sec-body">
+      <div class="irow"><div><div class="il">Precio venta sin IVA (ARS)</div><div class="in">Precio de publicación / lista</div></div><input type="number" id="w_pvp_siva" placeholder="0" oninput="recalcMay()"></div>
+      <div class="irow"><div><div class="il">IVA producto</div></div>
+        <select id="w_iva_tipo" onchange="recalcMay()" style="appearance:none;background:var(--surface);color:var(--text);font-family:var(--sans);font-size:12px;padding:6px 8px;border:1.5px solid var(--border2);border-radius:6px;width:100%;outline:none">
+          <option value="0.21">21%</option>
+          <option value="0.105">10.5%</option>
+        </select>
+      </div>
+      <div class="irow"><div><div class="il">Descuento comercial (%)</div><div class="in">Por volumen, cliente habitual</div></div><input type="number" id="w_dco" placeholder="0" step="0.5" oninput="recalcMay()"></div>
+      <div class="irow"><div><div class="il">Descuento oferta (%)</div></div><input type="number" id="w_dof" placeholder="0" step="0.5" oninput="recalcMay()"></div>
+      <div class="irow"><div><div class="il">Modalidad de pago (%)</div><div class="in">Contado 10% / 30-60-90 0%</div></div><input type="number" id="w_dpago" placeholder="0" step="0.5" oninput="recalcMay()"></div>
+    </div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-hdr" onclick="toggleSec(this)"><div class="ic ic-tl">%</div><div class="sec-title">Gastos e impuestos</div><div class="sec-chev">▾</div></div>
+    <div class="sec-body">
+      <div class="irow"><div><div class="il">IIBB (%)</div></div><input type="number" id="w_iibb" placeholder="5" value="5" step="0.5" oninput="recalcMay()"></div>
+      <div class="irow"><div><div class="il">Comisión vendedor (%)</div></div><input type="number" id="w_com" placeholder="5" value="5" step="0.5" oninput="recalcMay()"></div>
+    </div>
+  </div>
+
+  <!-- RESULTADO MAYORISTA -->
+  <div class="sec">
+    <div class="sec-hdr" onclick="toggleSec(this)"><div class="ic ic-tl">≡</div><div class="sec-title">Resultado — paso a paso</div><div class="sec-chev">▾</div></div>
+    <div class="sec-body">
+      <div class="rrow"><div class="rl">① Precio s/IVA (precio lista)</div><div class="rv" id="w_pvp_siva_disp">—</div></div>
+      <div class="rrow"><div class="rl">② + IVA → Precio c/IVA</div><div class="rv teal" id="w_pvp_civa">—</div></div>
+      <div class="rrow"><div class="rl">③ − Descuento comercial</div><div class="rv red" id="w_r_dco">—</div></div>
+      <div class="rrow"><div class="rl">= Precio tras desc. comercial</div><div class="rv" id="w_tras_dco">—</div></div>
+      <div class="rrow"><div class="rl">④ − Descuento oferta</div><div class="rv red" id="w_r_dof">—</div></div>
+      <div class="rrow"><div class="rl">= Precio tras desc. oferta</div><div class="rv" id="w_tras_dof">—</div></div>
+      <div class="rrow"><div class="rl">⑤ − Descuento pago</div><div class="rv red" id="w_r_dpago">—</div></div>
+      <div class="rrow hi"><div class="rl">= Precio neto efectivo cobrado</div><div class="rv teal" id="w_neto">—</div></div>
+      <div class="rrow"><div class="rl">⑥ − IVA (del precio neto)</div><div class="rv red" id="w_r_iva">—</div></div>
+      <div class="rrow"><div class="rl">⑦ − IIBB</div><div class="rv red" id="w_r_iibb">—</div></div>
+      <div class="rrow"><div class="rl">⑧ − Comisión vendedor</div><div class="rv red" id="w_r_com">—</div></div>
+      <div class="rrow"><div class="rl">⑨ − Costo del producto (ARS)</div><div class="rv red" id="w_costo_ars">—</div></div>
+      <div class="rrow hi"><div class="rl">Total descuentos + costos</div><div class="rv red" id="w_r_total_costos">—</div></div>
+    </div>
+  </div>
+
+  <div class="gan-row">
+    <div class="gan-box cg"><div class="gan-lbl">Ganancia</div><div class="gan-val" id="w_ganancia">—</div></div>
+    <div class="gan-box ct"><div class="gan-lbl">Margen / costo</div><div class="gan-val" id="w_m_costo">—</div></div>
+  </div>
+  <div class="gan-row">
+    <div class="gan-box cb"><div class="gan-lbl">Margen / precio vta</div><div class="gan-val" id="w_m_pvp">—</div></div>
+    <div class="gan-box cr"><div class="gan-lbl">ROI</div><div class="gan-val" id="w_roi">—</div></div>
+  </div>
+
+  <button class="btn-save teal" onclick="saveToDb('mayorista')">💾 &nbsp;Guardar en historial</button>
+  <button class="btn-reset" onclick="resetMay()">✕ &nbsp;Limpiar</button>
+</div>
+
+
+<!-- ══════════════════════ HISTORIAL / DB ══════════════════════ -->
+<div id="panel-db" class="panel">
+  <div class="db-top">
+    <div class="db-count" id="db-count">0 registros guardados</div>
+    <button class="btn-db-clear" onclick="clearDb()">✕ Limpiar todo</button>
+  </div>
+  <div style="overflow-x:auto;margin-bottom:10px">
+    <table class="db-table" id="db-table">
+      <thead>
+        <tr>
+          <th>Tipo</th>
+          <th>Producto</th>
+          <th>Proveedor</th>
+          <th>Costo s/IVA (USD)</th>
+          <th>ARS / Ganancia</th>
+          <th>Fecha</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody id="db-body">
+        <tr><td colspan="7" class="db-empty">Todavía no guardaste ningún cálculo.<br>Usá el botón "Guardar en historial" en cada pestaña.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="notice ng">💡 Los datos se guardan localmente en este dispositivo. Exportalos copiando la tabla.</div>
+</div>
+
+
+<!-- ══════════════════════ PROVEEDORES ══════════════════════ -->
+<div id="panel-prov" class="panel">
+
+  <button class="btn-new-prov" onclick="openNewProvForm()">+ Agregar proveedor</button>
+
+  <!-- FORM NUEVO / EDITAR PROVEEDOR -->
+  <div id="prov-form" style="display:none" class="sec">
+    <div class="sec-hdr" onclick="toggleSec(this)">
+      <div class="ic" style="background:var(--indigo-bg);color:#7c3aed">👤</div>
+      <div class="sec-title" id="prov-form-title">Nuevo proveedor</div>
+      <div class="sec-chev">▾</div>
+    </div>
+    <div class="sec-body" style="padding:14px">
+
+      <!-- Avatar / foto principal -->
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
+        <div id="pf-avatar-wrap" style="position:relative;cursor:pointer" onclick="document.getElementById('pf-avatar-inp').click()">
+          <div class="pv-avatar-placeholder" id="pf-avatar-placeholder">🏭</div>
+          <img id="pf-avatar-img" class="pv-avatar" style="display:none" src="" alt="">
+          <div style="position:absolute;bottom:-4px;right:-4px;background:#7c3aed;color:#fff;border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:11px">📷</div>
+        </div>
+        <input type="file" id="pf-avatar-inp" accept="image/*" style="display:none" onchange="loadAvatar(this)">
+        <div style="flex:1">
+          <div class="pv-flbl" style="margin-bottom:4px">Logo / foto del proveedor</div>
+          <div style="font-size:11px;color:var(--muted)">Tocá para cambiar</div>
+        </div>
+      </div>
+
+      <!-- Datos básicos -->
+      <div class="pv-fields">
+        <div class="pv-field full"><div class="pv-flbl">Nombre del proveedor *</div><input class="pv-finp" id="pf-nombre" type="text" placeholder="Ej: Shenzhen Electronics Co."></div>
+        <div class="pv-field full"><div class="pv-flbl">Empresa / Fábrica</div><input class="pv-finp" id="pf-empresa" type="text" placeholder="Nombre de la empresa"></div>
+        <div class="pv-field"><div class="pv-flbl">Ciudad / Región</div><input class="pv-finp" id="pf-ciudad" type="text" placeholder="Ej: Guangzhou"></div>
+        <div class="pv-field"><div class="pv-flbl">País</div><input class="pv-finp" id="pf-pais" type="text" placeholder="China" value="China"></div>
+      </div>
+
+      <!-- Contacto -->
+      <div class="pv-section-lbl" style="margin-top:4px">📞 Contacto</div>
+      <div class="pv-fields">
+        <div class="pv-field full"><div class="pv-flbl">Nombre del contacto</div><input class="pv-finp" id="pf-contacto" type="text" placeholder="Ej: Mr. Wang"></div>
+        <div class="pv-field full"><div class="pv-flbl">WeChat / WhatsApp</div><input class="pv-finp" id="pf-wechat" type="text" placeholder="ID de WeChat o número"></div>
+        <div class="pv-field full"><div class="pv-flbl">Email</div><input class="pv-finp" id="pf-email" type="email" placeholder="contacto@empresa.com"></div>
+        <div class="pv-field full"><div class="pv-flbl">Teléfono / WhatsApp</div><input class="pv-finp" id="pf-tel" type="tel" placeholder="+86 ..."></div>
+        <div class="pv-field full"><div class="pv-flbl">Alibaba / Web</div><input class="pv-finp" id="pf-web" type="text" placeholder="URL o perfil de Alibaba"></div>
+      </div>
+
+      <!-- Categorías / productos -->
+      <div class="pv-section-lbl" style="margin-top:4px">📦 Productos que vende</div>
+      <div style="display:flex;gap:6px;margin-bottom:8px">
+        <input class="pv-finp" id="pf-tag-inp" type="text" placeholder="Ej: Sillas, Muebles..." style="flex:1" onkeydown="if(event.key==='Enter'){addProvTag();event.preventDefault()}">
+        <button onclick="addProvTag()" style="padding:7px 12px;background:#7c3aed;color:#fff;border:none;border-radius:7px;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap">+ Add</button>
+      </div>
+      <div class="pv-tags" id="pf-tags"></div>
+
+      <!-- Valoración -->
+      <div class="pv-section-lbl" style="margin-top:4px">⭐ Valoración personal</div>
+      <div style="display:flex;gap:6px;margin-bottom:12px" id="pf-stars">
+        <span style="font-size:28px;cursor:pointer" onclick="setRating(1)">☆</span>
+        <span style="font-size:28px;cursor:pointer" onclick="setRating(2)">☆</span>
+        <span style="font-size:28px;cursor:pointer" onclick="setRating(3)">☆</span>
+        <span style="font-size:28px;cursor:pointer" onclick="setRating(4)">☆</span>
+        <span style="font-size:28px;cursor:pointer" onclick="setRating(5)">☆</span>
+      </div>
+      <input type="hidden" id="pf-rating" value="0">
+
+      <!-- Feria / Origen -->
+      <div class="pv-section-lbl" style="margin-top:4px">🏭 Dónde lo encontré</div>
+      <div class="pv-fields">
+        <div class="pv-field full"><div class="pv-flbl">Feria / Exposición</div><input class="pv-finp" id="pf-feria" type="text" placeholder="Ej: Canton Fair, Yiwu"></div>
+        <div class="pv-field"><div class="pv-flbl">Pabellón / Stand</div><input class="pv-finp" id="pf-stand" type="text" placeholder="Ej: Hall 5 - B23"></div>
+        <div class="pv-field"><div class="pv-flbl">Fecha de visita</div><input class="pv-finp" id="pf-visita" type="text" placeholder="Ej: Oct 2025"></div>
+      </div>
+
+      <!-- Condiciones -->
+      <div class="pv-section-lbl">💰 Condiciones comerciales</div>
+      <div class="pv-fields">
+        <div class="pv-field"><div class="pv-flbl">MOQ (unidades)</div><input class="pv-finp" id="pf-moq" type="text" placeholder="Ej: 100"></div>
+        <div class="pv-field"><div class="pv-flbl">Plazo entrega</div><input class="pv-finp" id="pf-plazo" type="text" placeholder="Ej: 30 días"></div>
+        <div class="pv-field full"><div class="pv-flbl">Condición de pago</div><input class="pv-finp" id="pf-pago" type="text" placeholder="Ej: 30% depósito, 70% antes de embarque"></div>
+      </div>
+
+      <!-- Fotos del catálogo -->
+      <div class="pv-section-lbl" style="margin-top:4px">🖼 Fotos / Catálogo</div>
+      <div class="pv-photo-row" id="pf-photos-row">
+        <div class="pv-photo-add" onclick="document.getElementById('pf-photos-inp').click()">
+          <span>📷</span>
+          <span>Agregar</span>
+        </div>
+      </div>
+      <input type="file" id="pf-photos-inp" accept="image/*" multiple style="display:none" onchange="loadProvPhotos(this)">
+
+      <!-- Notas -->
+      <div class="pv-section-lbl" style="margin-top:4px">📝 Notas</div>
+      <textarea class="pv-notes" id="pf-notas" placeholder="Observaciones, historial de pedidos, detalles importantes..."></textarea>
+
+      <input type="hidden" id="pf-edit-id" value="">
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px">
+        <button onclick="cancelProvForm()" style="padding:10px;background:var(--surface);border:1.5px solid var(--border2);border-radius:8px;color:var(--muted);font-family:var(--sans);font-size:12px;font-weight:600;cursor:pointer">Cancelar</button>
+        <button class="pv-save-btn" onclick="saveProvider()" style="margin-top:0">💾 Guardar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- LISTA DE PROVEEDORES -->
+  <div id="prov-list"></div>
+
+</div><!-- /prov -->
+
+</div><!-- /content -->
+
+<!-- BOTTOM BAR -->
+<div class="bot">
+  <div class="bk"><div class="bk-lbl" id="bar1_lbl">Sin IVA</div><div class="bk-val green" id="bar_siva">—</div></div>
+  <div class="bk"><div class="bk-lbl" id="bar2_lbl">Con IVA</div><div class="bk-val blue" id="bar_civa">—</div></div>
+  <div class="bk"><div class="bk-lbl" id="bar3_lbl">A+B / u</div><div class="bk-val red" id="bar_ab">—</div></div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════════════════
+//  BASE DE PRODUCTOS — NIVIKO 2025
+// ══════════════════════════════════════════════════════════
+const PRODUCTOS = [
+  {nombre:'Notebooks',ncm:'8471.30.11',der:5,iva:10.5,ivaad:0,estad:false,nota:'IVA 10.5% — sin estadística (Dto. 908/24).'},
+  {nombre:'Tablets',ncm:'8471.30.12',der:5,iva:10.5,ivaad:0,estad:false,nota:'IVA 10.5% — sin estadística.'},
+  {nombre:'Kindle',ncm:'8543.70.99',der:5,iva:10.5,ivaad:0,estad:false,nota:'IVA 10.5% — sin estadística.'},
+  {nombre:'Pendrives / Micro SD',ncm:'8523.51.00',der:10,iva:21,ivaad:10,estad:true},
+  {nombre:'TV Streaming (sticks)',ncm:'8528.71.11',der:10,iva:21,ivaad:10,estad:true},
+  {nombre:'Parlantes portátiles',ncm:'8518.22.00',der:10,iva:21,ivaad:10,estad:true},
+  {nombre:'Parlantes hogar',ncm:'8518.29.00',der:35,iva:21,ivaad:10,estad:true},
+  {nombre:'Soporte de TV',ncm:'8529.90.29',der:35,iva:21,ivaad:10,estad:true},
+  {nombre:'Pequeño Electro (gadgets USB)',ncm:'8509.80.00',der:20,iva:21,ivaad:10,estad:true},
+  {nombre:'Horno / Anafe eléctrico',ncm:'8516.60.00',der:20,iva:21,ivaad:10,estad:true},
+  {nombre:'Silla hogar patas de madera',ncm:'9401.61.00',der:18,iva:21,ivaad:10,estad:true},
+  {nombre:'Silla hogar estructura metal',ncm:'9401.69.00',der:35,iva:21,ivaad:10,estad:true},
+  {nombre:'Silla de oficina',ncm:'9401.30.00',der:35,iva:21,ivaad:10,estad:true},
+  {nombre:'Silla Gamer',ncm:'9401.30.00',der:35,iva:21,ivaad:10,estad:true,nota:'Misma NCM que silla de oficina.'},
+  {nombre:'Tolix',ncm:'9401.69.00',der:35,iva:21,ivaad:10,estad:true},
+  {nombre:'Mesa plegable / Silla plegable',ncm:'9401.79.00',der:35,iva:21,ivaad:10,estad:true},
+  {nombre:'Muebles (escritorio/placard/alacena/mesa)',ncm:'9403.30.00',der:18,iva:21,ivaad:10,estad:true},
+  {nombre:'Racks / Pallets metálicos',ncm:'9403.20.00',der:35,iva:21,ivaad:10,estad:true},
+  {nombre:'Escalera de aluminio',ncm:'7616.99.10',der:13,iva:21,ivaad:10,estad:true},
+  {nombre:'Piso SPC',ncm:'3918.10.00',der:16,iva:21,ivaad:10,estad:true,nota:'PVC/SPC — cap. 39.'},
+  {nombre:'Reposeras',ncm:'9401.79.00',der:35,iva:21,ivaad:10,estad:true},
+  {nombre:'Moto',ncm:'8711.20.00',der:35,iva:21,ivaad:10,estad:true,nota:'Requiere SIM + cert. INTI.'},
+  {nombre:'Piso porcelanato',ncm:'6908.90.00',der:null,iva:21,ivaad:10,estad:true,nota:'Confirmar con despachante.'},
+  {nombre:'Receptáculo de ducha',ncm:'3922.10.00',der:null,iva:21,ivaad:10,estad:true,nota:'Confirmar.'},
+  {nombre:'Inodoro / Bidet',ncm:'6910.10.00',der:null,iva:21,ivaad:10,estad:true,nota:'Confirmar.'},
+  {nombre:'Lavabo / Bacha de mano',ncm:'6910.10.00',der:null,iva:21,ivaad:10,estad:true,nota:'Confirmar.'},
+  {nombre:'Puerta',ncm:'4418.20.00',der:null,iva:21,ivaad:10,estad:true,nota:'Confirmar.'},
+  {nombre:'Carpintería',ncm:'4418.99.00',der:null,iva:21,ivaad:10,estad:true,nota:'Confirmar.'},
+  {nombre:'Muebles balcón / exterior',ncm:'9401.79.00',der:null,iva:21,ivaad:10,estad:true,nota:'Confirmar.'},
+  {nombre:'Gazebo / Sombrilla jardín',ncm:'6306.22.00',der:null,iva:21,ivaad:10,estad:true,nota:'Confirmar.'},
+  {nombre:'Camping (sillas, mesas)',ncm:'9401.79.00',der:null,iva:21,ivaad:10,estad:true,nota:'Confirmar.'},
+  {nombre:'Cama elástica',ncm:'9506.91.00',der:null,iva:21,ivaad:10,estad:true,nota:'Confirmar.'},
+  {nombre:'Carro playero',ncm:'8716.80.00',der:null,iva:21,ivaad:10,estad:true,nota:'Confirmar.'},
+  {nombre:'Seca platos',ncm:'7323.99.00',der:null,iva:21,ivaad:10,estad:true,nota:'Confirmar.'},
+  {nombre:'Perchero / Organizador lavadero',ncm:'7326.90.90',der:null,iva:21,ivaad:10,estad:true,nota:'Confirmar.'},
+  {nombre:'Tacho de basura eléctrico',ncm:'3924.90.00',der:null,iva:21,ivaad:10,estad:true,nota:'Confirmar.'},
+  {nombre:'Decoración',ncm:'6913.90.00',der:null,iva:21,ivaad:10,estad:true,nota:'Confirmar.'},
+  {nombre:'Bicicleta rodado 29',ncm:'8712.00.10',der:null,iva:21,ivaad:10,estad:true,nota:'Confirmar.'},
+  {nombre:'Caja de seguridad',ncm:'8303.00.00',der:null,iva:21,ivaad:10,estad:true,nota:'Confirmar.'},
+  {nombre:'Valija',ncm:'4202.12.00',der:null,iva:21,ivaad:10,estad:true,nota:'Confirmar.'},
+  {nombre:'Carretilla',ncm:'8716.80.00',der:null,iva:21,ivaad:10,estad:true,nota:'Confirmar.'},
+  {nombre:'Accesorios de perro',ncm:'4201.00.00',der:null,iva:21,ivaad:10,estad:true,nota:'Confirmar.'},
+];
+
+// ── Build select options ──
+function buildOptions(selectId){
+  const cats=[
+    ['💻 Tecnología',[0,1,2,3,4,5,6,7,8,9]],
+    ['🪑 Sillas y Muebles',[10,11,12,13,14,15,16,17]],
+    ['🏠 Hogar y Exterior',[18,19,20,21]],
+    ['🛁 Construcción/Baño',[22,23,24,25,26,27]],
+    ['🏕️ Exterior/Camping',[28,29,30,31,32]],
+    ['🧹 Organización',[33,34,35,36]],
+    ['❓ A confirmar',[37,38,39,40,41]],
+  ];
+  const sel=document.getElementById(selectId);if(!sel)return;
+  sel.innerHTML='<option value="">— Seleccioná un producto —</option>';
+  cats.forEach(([cat,idxs])=>{
+    const og=document.createElement('optgroup');og.label=cat;
+    idxs.forEach(i=>{
+      const p=PRODUCTOS[i],opt=document.createElement('option');
+      opt.value=i;opt.textContent=p.nombre+(p.der!==null?' — '+p.der+'%':' — confirmar');
+      og.appendChild(opt);
+    });
+    sel.appendChild(og);
+  });
+}
+
+// ── Helpers ──
+function g(id){const v=parseFloat(document.getElementById(id)?.value);return isNaN(v)?0:v;}
+function gs(id){return document.getElementById(id)?.value?.trim()||'';}
+function st(id,v){const e=document.getElementById(id);if(e)e.textContent=v;}
+function fU(n){if(!n&&n!==0)return'—';if(Math.abs(n)>=10000)return'US$'+Math.round(n).toLocaleString('es-AR');return'US$'+n.toFixed(2);}
+function fA(n){if(!n&&n!==0)return'—';if(Math.abs(n)>=1000000)return'$'+(n/1000000).toFixed(2)+'M';return'$'+Math.round(n).toLocaleString('es-AR');}
+function fP(n){if(!n&&n!==0)return'—';return(n*100).toFixed(1)+'%';}
+
+// ── Apply product to fields ──
+function applyProductFields(p, prefix){
+  // prefix = '' for container, 'c_' for courier, 'mp_N_' for multi
+  const fieldPfx = (prefix==='c_')?'c_':'t_';
+  const setV=(id,v)=>{const e=document.getElementById(id);if(e)e.value=v;};
+  const setBdg=(id,show)=>{const e=document.getElementById(id);if(e)e.style.display=show?'':'none';};
+  const setSt=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v;};
+
+  // Card display
+  setSt(prefix+'ps-name',p.nombre);
+  setSt(prefix+'ps-der',p.der!==null?p.der+'%':'? — ingresá manualmente');
+  setSt(prefix+'ps-iva',p.iva+'%');
+  setSt(prefix+'ps-ivaad',p.ivaad+'%');
+  setSt(prefix+'ps-ncm','NCM: '+(p.ncm||'—'));
+  const nota=document.getElementById(prefix+'ps-nota');
+  if(nota){nota.textContent=p.nota||'';nota.style.display=p.nota?'':'none';}
+  const ps=document.getElementById(prefix+'prod-selected')||document.getElementById(prefix.replace(/[_]$/,'')+'-prod-selected');
+  if(ps)ps.style.display='';
+
+  // Fields
+  if(p.der!==null){setV(fieldPfx+'derecho',p.der);setBdg(prefix+'der-badge',true);}
+  else{setV(fieldPfx+'derecho','');setBdg(prefix+'der-badge',false);}
+  setV(fieldPfx+'iva',p.iva);setBdg(prefix+'iva-badge',true);
+  setV(fieldPfx+'iva_ad',p.ivaad);setBdg(prefix+'ivaad-badge',true);
+  if(!p.estad){
+    setV(fieldPfx+'estadistica',0);setBdg(prefix+'estad-badge',true);
+    const en=document.getElementById(prefix+'estad-note');if(en)en.textContent='No aplica para este producto';
+  } else {
+    setV(fieldPfx+'estadistica',3);setBdg(prefix+'estad-badge',true);
+    const en=document.getElementById(prefix+'estad-note');if(en)en.textContent='';
+  }
+  if(!g(fieldPfx+'ganancias')&&prefix!=='c_') setV(fieldPfx+'ganancias',6);
+  if(prefix!=='c_'&&!g('t_maury')) setV('t_maury',5);
+}
+
+function selectProd(idx, mode){
+  if(idx===''||idx===undefined){clearProd(mode);return;}
+  const p=PRODUCTOS[parseInt(idx)];if(!p)return;
+  if(mode==='cont'){
+    applyProductFields(p,'');
+    document.getElementById('prod-selected').style.display='';
+    if(!gs('producto'))document.getElementById('producto').value=p.nombre;
+    recalc();
+  } else if(mode==='cour'){
+    applyProductFields(p,'c_');
+    document.getElementById('c_prod_selected').style.display='';
+    if(!gs('c_producto'))document.getElementById('c_producto').value=p.nombre;
+    recalcCourier();
+  }
+}
+
+function clearProd(mode){
+  if(mode==='cont'){
+    document.getElementById('prod-selected').style.display='none';
+    document.getElementById('prod-select').value='';
+    ['der-badge','iva-badge','ivaad-badge','estad-badge'].forEach(id=>{const e=document.getElementById(id);if(e)e.style.display='none';});
+  } else {
+    document.getElementById('c_prod_selected').style.display='none';
+    document.getElementById('c_prod_select').value='';
+    ['c_der-badge','c_iva-badge','c_ivaad-badge','c_estad-badge'].forEach(id=>{const e=document.getElementById(id);if(e)e.style.display='none';});
+  }
+}
+
+function applyManual(){
+  const v=parseFloat(document.getElementById('manual-der').value);
+  if(isNaN(v)){alert('Ingresá un valor');return;}
+  document.getElementById('t_derecho').value=v;
+  if(!g('t_iva'))document.getElementById('t_iva').value=21;
+  if(!g('t_iva_ad'))document.getElementById('t_iva_ad').value=10;
+  if(!g('t_estadistica'))document.getElementById('t_estadistica').value=3;
+  if(!g('t_ganancias'))document.getElementById('t_ganancias').value=6;
+  if(!g('t_maury'))document.getElementById('t_maury').value=5;
+  recalc();
+}
+
+// ══════════════════════════════════════════════════════════
+//  CÁLCULO CONTAINER
+//  Lógica:
+//  - Parte A (declarada): FOB invoice + impuestos + logística → costo con/sin IVA
+//  - Parte B (diferencia): (FOB real − FOB invoice) × 1.05 → sólo en USD/ARS blue
+//  - Total A+B = Parte A (con IVA) + Parte B → costo total real
+//  - Derecho e estadística SÍ suman al costo (son gastos reales)
+// ══════════════════════════════════════════════════════════
+function calcContainer(cant, bna, blue, fflet, fprod, finv,
+                        maury_pct, der_pct, estad_pct,
+                        iva_pct, ivaad_pct, gcias_pct,
+                        cbm_tot, flete_tot, term_tot, desp_tot,
+                        ge1_total_usd, ge2_pct) {
+  cant = cant||1;
+  const fob_flete_u = fflet/cant;
+  const ftot        = finv + fob_flete_u;          // FOB total (invoice + flete)
+
+  // Impuestos sobre FOB total
+  const maury_u  = (fprod - finv) * maury_pct;
+  const der_u    = ftot * der_pct;                 // ✓ suma al costo
+  const estad_u  = ftot * estad_pct;               // ✓ suma al costo
+  const tsuma    = ftot + der_u + estad_u;         // base para IVA
+
+  const iva_u    = tsuma * iva_pct;
+  const ivaad_u  = tsuma * ivaad_pct;
+  const gcias_u  = tsuma * gcias_pct;
+
+  // Logística proporcional por unidad
+  const cbm_u     = (cbm_tot||1)/cant;
+  const vm3       = flete_tot/(cbm_tot||1);
+  const flete_u   = cbm_u * vm3;
+  const term_u    = term_tot/cant;
+  const desp_u    = desp_tot/cant;
+
+  // Gastos extra
+  const ge1_u     = ge1_total_usd/cant;            // USD fijo → por unidad
+  const ge2_u     = finv * ge2_pct;                // % sobre FOB invoice
+
+  // COSTO SIN IVA (todo lo que pagás menos el IVA recuperable)
+  const siva_u = finv + maury_u + der_u + estad_u + gcias_u + flete_u + term_u + desp_u + ge1_u + ge2_u;
+
+  // COSTO CON IVA (incluye IVA + IVA adicional)
+  const civa_u = siva_u + iva_u + ivaad_u;
+
+  // PARTE B — diferencia FOB real vs declarado, × 1.05
+  const pb_usd = (fprod - finv) * 1.05;
+  const pb_ars = pb_usd * blue;
+
+  // TOTAL A+B
+  const ab_siva_usd = siva_u + pb_usd;             // sin IVA + Parte B
+  const ab_siva_ars = siva_u*bna + pb_ars;
+  const ab_civa_usd = civa_u + pb_usd;             // con IVA + Parte B
+  const ab_civa_ars = civa_u*bna + pb_ars;
+
+  return {fob_flete_u, ftot, maury_u, der_u, estad_u, tsuma,
+          iva_u, ivaad_u, gcias_u, cbm_u, vm3, flete_u,
+          term_u, desp_u, ge1_u, ge2_u,
+          siva_u, civa_u, pb_usd, pb_ars,
+          ab_siva_usd, ab_siva_ars, ab_civa_usd, ab_civa_ars};
+}
+
+function recalc(){
+  const cant  = g('cantidad')||1;
+  const bna   = g('dolar_bna'), blue=g('dolar_blue');
+  const fflet = g('fob_flete'), fprod=g('fob_producto'), finv=g('fob_invoice');
+  const r = calcContainer(
+    cant, bna, blue, fflet, fprod, finv,
+    g('t_maury')/100, g('t_derecho')/100, g('t_estadistica')/100,
+    g('t_iva')/100, g('t_iva_ad')/100, g('t_ganancias')/100,
+    g('cbm_total'), g('costo_flete'), g('terminal'), g('despachante'),
+    g('gasto_extra1'), g('gasto_extra2')/100
+  );
+  const prod=gs('producto');
+
+  st('d_fob_flete',fU(r.fob_flete_u)); st('d_fob_inv',fU(finv)); st('d_fob_total',fU(r.ftot));
+  st('d_maury',fU(r.maury_u)); st('d_derecho',fU(r.der_u)); st('d_estadistica',fU(r.estad_u));
+  st('d_iva',fU(r.iva_u)); st('d_ivaad',fU(r.ivaad_u)); st('d_gcias',fU(r.gcias_u));
+  st('d_cbm',r.cbm_u?r.cbm_u.toFixed(4)+' m³':'—'); st('d_flete_log',fU(r.flete_u));
+  st('d_term',fU(r.term_u)); st('d_desp',fU(r.desp_u));
+  st('d_ge1',fU(r.ge1_u)); st('d_ge2',fU(r.ge2_u));
+  st('d_dif',fU(fprod-finv)); st('d_pb_usd',fU(r.pb_usd)); st('d_pb_ars',fA(r.pb_ars));
+  st('d_siva_usd',fU(r.siva_u)); st('d_siva_ars',fA(r.siva_u*bna));
+  st('d_civa_usd',fU(r.civa_u)); st('d_civa_ars',fA(r.civa_u*bna));
+  st('d_ab_siva_usd',fU(r.ab_siva_usd)); st('d_ab_siva_ars',fA(r.ab_siva_ars));
+  st('d_ab_usd',fU(r.ab_civa_usd)); st('d_ab_ars',fA(r.ab_civa_ars));
+  st('t_lote',fU(r.ab_civa_usd*cant));
+  st('t_lote_sub',Math.round(cant)+' u · '+(prod||'—'));
+  st('bar_siva',fU(r.ab_siva_usd)); st('bar_civa',fU(r.ab_civa_usd)); st('bar_ab',fU(r.ab_civa_usd));
+}
+
+function resetAll(){
+  ['producto','cantidad','dolar_bna','dolar_blue','fob_flete','fob_producto','fob_invoice',
+   't_maury','t_derecho','t_estadistica','t_iva','t_iva_ad','t_ganancias',
+   'cbm_total','costo_flete','terminal','despachante','gasto_extra1','gasto_extra2',
+   'manual-der','prov_nombre','prov_contacto','prov_notas'
+  ].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});
+  document.getElementById('prod-select').value='';
+  clearProd('cont'); recalc();
+}
+
+// ══════════════════════════════════════════════════════════
+//  MULTI CONTAINER — misma lógica que container, por producto
+// ══════════════════════════════════════════════════════════
+let multiCount=0;
+function addMultiProduct(){
+  multiCount++;
+  const idx=multiCount;
+  const div=document.createElement('div');
+  div.className='prod-row'; div.id='mp-'+idx;
+  div.innerHTML=`
+    <div class="pr-head">
+      <div class="pr-title">Producto #${idx}</div>
+      <button class="pr-del" onclick="removeMultiProd(${idx})">✕ Quitar</button>
+    </div>
+    <div class="pr-body">
+      <!-- Selector NCM -->
+      <div style="padding:8px 12px;border-bottom:1px solid var(--border)">
+        <div style="font-size:10px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px">Producto / NCM</div>
+        <div class="sel-wrap" style="margin-bottom:0">
+          <select onchange="selectMultiProd(${idx},this.value)" style="width:100%;padding:8px 30px 8px 10px;border:1.5px solid var(--border2);border-radius:7px;background:var(--surface);color:var(--text);font-family:var(--sans);font-size:12px;font-weight:500;outline:none;appearance:none;cursor:pointer" id="mp_sel_${idx}">
+            <option value="">— Seleccioná producto —</option>
+          </select>
+          <span class="sel-arrow">▾</span>
+        </div>
+        <div id="mp_prod_info_${idx}" style="display:none;margin-top:6px;background:var(--gray-bg);border-radius:6px;padding:7px 10px">
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px">
+            <div class="ps-box"><div class="pb-lbl">D. Import.</div><div class="pb-val red" id="mp_pi_der_${idx}">—</div></div>
+            <div class="ps-box"><div class="pb-lbl">IVA</div><div class="pb-val blue" id="mp_pi_iva_${idx}">—</div></div>
+            <div class="ps-box"><div class="pb-lbl">IVA Adic.</div><div class="pb-val blue" id="mp_pi_ivaad_${idx}">—</div></div>
+          </div>
+          <div style="font-size:10px;color:var(--muted);font-family:var(--mono);margin-top:4px" id="mp_pi_ncm_${idx}"></div>
+          <div style="font-size:10px;color:var(--amber);margin-top:4px;display:none" id="mp_pi_nota_${idx}"></div>
+        </div>
+      </div>
+      <!-- Campos -->
+      <div class="irow"><div><div class="il">Nombre / descripción</div></div><input class="txt" id="mp_name_${idx}" type="text" placeholder="Producto" oninput="recalcMulti()"></div>
+      <div class="irow"><div><div class="il">FOB Producto real (USD/u)</div><div class="in">Precio real pagado</div></div><input type="number" id="mp_fprod_${idx}" placeholder="0" oninput="recalcMulti()"></div>
+      <div class="irow"><div><div class="il">FOB Invoice (USD/u)</div><div class="in">Precio declarado</div></div><input type="number" id="mp_fob_${idx}" placeholder="0" oninput="recalcMulti()"></div>
+      <div class="irow"><div><div class="il">Cantidad (unidades)</div></div><input type="number" id="mp_cant_${idx}" placeholder="0" min="1" oninput="recalcMulti()"></div>
+      <div class="irow"><div><div class="il">CBM por unidad (m³)</div><div class="in">Espacio que ocupa c/u</div></div><input type="number" id="mp_cbm_${idx}" placeholder="0" step="0.0001" oninput="recalcMulti()"></div>
+      <div class="irow"><div><div class="il">Maury (%)</div></div><input type="number" id="mp_maury_${idx}" placeholder="5" value="5" step=".5" oninput="recalcMulti()"></div>
+      <div class="irow"><div><div class="il">Derecho importación (%)</div></div><input type="number" id="mp_der_${idx}" placeholder="0" step=".5" oninput="recalcMulti()"></div>
+      <div class="irow"><div><div class="il">Estadística (%)</div></div><input type="number" id="mp_estad_${idx}" placeholder="3" value="3" step=".5" oninput="recalcMulti()"></div>
+      <div class="irow"><div><div class="il">IVA (%)</div></div><input type="number" id="mp_iva_${idx}" placeholder="21" value="21" step=".5" oninput="recalcMulti()"></div>
+      <div class="irow"><div><div class="il">IVA Adicional (%)</div></div><input type="number" id="mp_ivaad_${idx}" placeholder="10" value="10" step=".5" oninput="recalcMulti()"></div>
+      <div class="irow"><div><div class="il">Ganancias (%)</div></div><input type="number" id="mp_gcias_${idx}" placeholder="6" value="6" step=".5" oninput="recalcMulti()"></div>
+    </div>
+    <div class="pr-result" id="mp_result_${idx}">
+      <div class="pr-kpi"><div class="prk-lbl">CBM total</div><div class="prk-val" id="mp_r_cbm_${idx}">—</div></div>
+      <div class="pr-kpi"><div class="prk-lbl">A+B s/IVA</div><div class="prk-val green" id="mp_r_siva_${idx}">—</div></div>
+      <div class="pr-kpi"><div class="prk-lbl">A+B c/IVA</div><div class="prk-val blue" id="mp_r_civa_${idx}">—</div></div>
+    </div>`;
+  document.getElementById('multi-products').appendChild(div);
+  buildOptions('mp_sel_'+idx);
+  recalcMulti();
+}
+
+function selectMultiProd(rowIdx, prodIdx){
+  if(prodIdx===''||prodIdx===undefined) return;
+  const p=PRODUCTOS[parseInt(prodIdx)]; if(!p) return;
+  const setV=(id,v)=>{const e=document.getElementById(id);if(e)e.value=v;};
+  const setSt=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v;};
+  // Fill fields
+  if(p.der!==null) setV('mp_der_'+rowIdx, p.der);
+  setV('mp_iva_'+rowIdx, p.iva);
+  setV('mp_ivaad_'+rowIdx, p.ivaad);
+  setV('mp_estad_'+rowIdx, p.estad?3:0);
+  if(!document.getElementById('mp_name_'+rowIdx).value) setV('mp_name_'+rowIdx, p.nombre);
+  // Info badge
+  document.getElementById('mp_prod_info_'+rowIdx).style.display='';
+  setSt('mp_pi_der_'+rowIdx, p.der!==null?p.der+'%':'? — manual');
+  setSt('mp_pi_iva_'+rowIdx, p.iva+'%');
+  setSt('mp_pi_ivaad_'+rowIdx, p.ivaad+'%');
+  setSt('mp_pi_ncm_'+rowIdx, 'NCM: '+(p.ncm||'—'));
+  const notaEl=document.getElementById('mp_pi_nota_'+rowIdx);
+  if(notaEl){notaEl.textContent=p.nota||'';notaEl.style.display=p.nota?'':'none';}
+  recalcMulti();
+}
+
+function removeMultiProd(idx){const el=document.getElementById('mp-'+idx);if(el)el.remove();recalcMulti();}
+
+function recalcMulti(){
+  const cbm_total = g('m_cbm_total')||68;
+  const flete_tot = g('m_flete'), term_tot=g('m_terminal'), desp_tot=g('m_despachante');
+  const ge1_tot   = g('m_ge1'), ge2_pct=g('m_ge2')/100;
+  const bna=g('m_bna'), blue=g('m_blue');
+
+  // Gather products
+  const rows=[];
+  let totalCBM=0;
+  document.querySelectorAll('[id^="mp_fob_"]').forEach(el=>{
+    const i=el.id.split('_').pop();
+    const cant=g('mp_cant_'+i)||1, cbm_u=g('mp_cbm_'+i);
+    const cbm_prod=cbm_u*cant; totalCBM+=cbm_prod;
+    rows.push({i, cant, cbm_u, cbm_prod,
+      fprod:g('mp_fprod_'+i), finv:g('mp_fob_'+i),
+      maury:g('mp_maury_'+i)/100, der:g('mp_der_'+i)/100,
+      estad:g('mp_estad_'+i)/100, iva:g('mp_iva_'+i)/100,
+      ivaad:g('mp_ivaad_'+i)/100, gcias:g('mp_gcias_'+i)/100});
+  });
+
+  let summaryHtml='';
+  rows.forEach(r=>{
+    // Share of container costs proportional to CBM
+    const prop=totalCBM>0?r.cbm_prod/totalCBM:0;
+    const flete_share = flete_tot*prop;
+    const term_share  = term_tot*prop;
+    const desp_share  = desp_tot*prop;
+    const ge1_share   = ge1_tot*prop;
+
+    const result = calcContainer(
+      r.cant, bna, blue,
+      flete_share, r.fprod, r.finv,
+      r.maury, r.der, r.estad,
+      r.iva, r.ivaad, r.gcias,
+      cbm_total, flete_tot, term_tot, desp_tot,
+      ge1_tot*prop, ge2_pct
+    );
+    // Override flete: already passed as share
+    st('mp_r_cbm_'+r.i, r.cbm_prod.toFixed(3)+' m³');
+    st('mp_r_siva_'+r.i, fU(result.ab_siva_usd));
+    st('mp_r_civa_'+r.i, fU(result.ab_civa_usd));
+    const nm=gs('mp_name_'+r.i)||'Prod #'+r.i;
+    summaryHtml+=`<div class="rrow"><div class="rl">${nm} × ${r.cant}u</div><div class="rv blue">${fU(result.ab_civa_usd)}/u · s/IVA <span style="color:var(--green)">${fU(result.ab_siva_usd)}</span></div></div>`;
+  });
+
+  const sum_sec=document.getElementById('multi-summary');
+  const sum_body=document.getElementById('multi-summary-body');
+  if(rows.length>0){
+    sum_sec.style.display='';
+    sum_body.innerHTML=summaryHtml+`<div class="rrow hi"><div class="rl">CBM total usado / container</div><div class="rv">${totalCBM.toFixed(3)} / ${cbm_total} m³</div></div>`;
+  } else sum_sec.style.display='none';
+}
+
+function resetMulti(){
+  ['m_cbm_total','m_flete','m_terminal','m_despachante','m_ge1','m_ge2','m_bna','m_blue',
+   'm_prov_nombre','m_prov_contacto','m_prov_notas'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});
+  document.getElementById('multi-products').innerHTML='';
+  multiCount=0;
+  document.getElementById('multi-summary').style.display='none';
+}
+
+// ══════════════════════════════════════════════════════════
+//  COURIER
+//  - Sin imp. a las ganancias
+//  - Parte A (sobre FOB declarado) con impuestos
+//  - Parte B (diferencia real − declarado) × 1.05, solo USD/ARS
+//  - Total A+B sin IVA y con IVA
+// ══════════════════════════════════════════════════════════
+let origenCourier='china';
+function setOrigen(o){
+  origenCourier=o;
+  document.getElementById('pill-china').classList.toggle('on',o==='china');
+  document.getElementById('pill-miami').classList.toggle('on',o==='miami');
+  recalcCourier();
+}
+function updateRateLabels(){
+  document.getElementById('rate-china-lbl').textContent='US$ '+g('c_rate_china')+' / kg';
+  document.getElementById('rate-miami-lbl').textContent='US$ '+g('c_rate_miami')+' / kg';
+}
+function recalcCourier(){
+  const cant=g('c_cantidad')||1, peso=g('c_peso');
+  const fob_real=g('c_fob_real'), fob_inv=g('c_fob_inv');
+  const bna=g('c_bna'), blue=g('c_blue');
+  const rate=origenCourier==='china'?g('c_rate_china'):g('c_rate_miami');
+  const der=g('c_derecho')/100, estad=g('c_estadistica')/100;
+  const iva=g('c_iva')/100, ivaad=g('c_iva_ad')/100;
+  const gcias=g('c_ganancias')/100;
+  const gg=g('c_gg')/100;
+  const prod=gs('c_producto');
+
+  const flete_u  = peso*rate;
+  const base     = fob_inv + flete_u;               // base imponible
+  const der_u    = base*der;
+  const estad_u  = base*estad;
+  const tsuma    = base + der_u + estad_u;
+  const iva_u    = tsuma*iva;
+  const ivaad_u  = tsuma*ivaad;
+  const gcias_u  = tsuma*gcias;
+  const gg_u     = base*gg;
+
+  // Parte A: sin IVA y con IVA
+  const siva_u   = base + der_u + estad_u + gcias_u + gg_u;
+  const civa_u   = base + der_u + estad_u + iva_u + ivaad_u + gcias_u + gg_u;
+
+  // Parte B: diferencia
+  const pb_usd   = (fob_real - fob_inv)*1.05;
+  const pb_ars   = pb_usd*blue;
+
+  // Total A+B
+  const ab_siva_usd = siva_u + pb_usd;
+  const ab_siva_ars = siva_u*bna + pb_ars;
+  const ab_civa_usd = civa_u + pb_usd;
+  const ab_civa_ars = civa_u*bna + pb_ars;
+
+  st('cr_flete',fU(flete_u)); st('cr_fob_inv',fU(fob_inv));
+  st('cr_derecho',fU(der_u)); st('cr_estadistica',fU(estad_u));
+  st('cr_iva',fU(iva_u)); st('cr_ivaad',fU(ivaad_u));
+  st('cr_gcias',fU(gcias_u));
+  st('cr_gg',fU(gg_u));
+  st('cr_siva_usd',fU(siva_u)); st('cr_siva_ars',fA(siva_u*bna));
+  st('cr_civa_usd',fU(civa_u)); st('cr_civa_ars',fA(civa_u*bna));
+  st('cr_dif',fU(fob_real-fob_inv)); st('cr_pb_usd',fU(pb_usd)); st('cr_pb_ars',fA(pb_ars));
+  st('cr_ab_siva_usd',fU(ab_siva_usd)); st('cr_ab_siva_ars',fA(ab_siva_ars));
+  st('cr_ab_usd',fU(ab_civa_usd)); st('cr_ab_ars',fA(ab_civa_ars));
+  st('ct_lote',fU(ab_civa_usd*cant));
+  st('ct_lote_sub',cant+' u · '+peso+' kg/u · '+(origenCourier==='china'?'🇨🇳 China':'🇺🇸 Miami')+' · '+(prod||'—'));
+
+  // FOB check 3000
+  const fob_total=fob_inv*cant;
+  const warn=document.getElementById('c_fob_warning');
+  if(warn) warn.style.display=(fob_total>3000&&fob_inv>0)?'':'none';
+
+  if(document.getElementById('panel-cour').classList.contains('on')){
+    st('bar_siva',fU(ab_siva_usd)); st('bar_civa',fU(ab_civa_usd)); st('bar_ab',fU(ab_civa_usd));
+    document.getElementById('bar1_lbl').textContent='A+B s/IVA';
+    document.getElementById('bar2_lbl').textContent='A+B c/IVA';
+    document.getElementById('bar3_lbl').textContent='Total/u';
+  }
+}
+function resetCourier(){
+  ['c_producto','c_cantidad','c_peso','c_fob_real','c_fob_inv','c_bna','c_blue',
+   'c_derecho','c_estadistica','c_iva','c_iva_ad','c_ganancias','c_prov'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});
+  document.getElementById('c_gg').value=5;
+  document.getElementById('c_prod_select').value='';
+  clearProd('cour'); recalcCourier();
+}
+
+// ══════════════════════════════════════════════════════════
+//  KG ONLY
+// ══════════════════════════════════════════════════════════
+let kgoOrigen='china';
+function setKgoOrigen(o){
+  kgoOrigen=o;
+  document.getElementById('kgo-cn').classList.toggle('on',o==='china');
+  document.getElementById('kgo-us').classList.toggle('on',o==='miami');
+  const hint=document.getElementById('k_rate_hint');
+  if(hint)hint.textContent=o==='china'?'Sugerido: $16/kg':'Sugerido: $12/kg';
+  const rf=document.getElementById('k_rate');if(rf)rf.value=o==='china'?16:12;
+  recalcKgo();
+}
+function recalcKgo(){
+  const cant=g('k_cant')||1,peso=g('k_peso'),precio=g('k_precio'),rate=g('k_rate'),bna=g('k_bna');
+  const flete_u=peso*rate,total_u=precio+flete_u;
+  st('k_flete_u',fU(flete_u));st('k_total_u',fU(total_u));
+  st('k_total_ars',fA(total_u*bna));st('k_lote_usd',fU(total_u*cant));
+  if(document.getElementById('panel-kgo').classList.contains('on')){
+    st('bar_siva',fU(precio));st('bar_civa',fU(total_u));st('bar_ab',fU(total_u*cant));
+  }
+}
+function resetKgo(){
+  ['k_producto','k_cant','k_peso','k_precio','k_bna'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});
+  document.getElementById('k_rate').value=16;recalcKgo();
+}
+
+// ══════════════════════════════════════════════════════════
+//  MERCADO LIBRE — paso a paso explícito
+//  PVP c/IVA → ÷ IVA → neto s/IVA
+//  − Comisión ML  − Cuotas  − Envío  − Publicidad  − IIBB
+//  = Ingreso neto  − Costo producto = Ganancia
+// ══════════════════════════════════════════════════════════
+function applyMeliCat(){
+  const v=parseFloat(document.getElementById('ml_cat').value);
+  if(!isNaN(v)&&v>0) document.getElementById('ml_com').value=v;
+  recalcMeli();
+}
+function recalcMeli(){
+  const costo  = g('ml_costo');
+  const pvp    = g('ml_pvp');                        // precio publicado c/IVA
+  const iva_m  = parseFloat(document.getElementById('ml_iva_tipo').value)||1.21;
+  const pvp_siva = pvp/iva_m;                        // precio neto s/IVA
+  const iva_dif  = pvp - pvp_siva;                   // diferencia de IVA
+  const com_pct  = g('ml_com')/100;
+  const cuotas_pct = parseFloat(document.getElementById('ml_cuotas').value)||0;
+  const com_ml   = pvp_siva*com_pct;
+  const com_cuotas = pvp_siva*(cuotas_pct/100);
+  const envio    = g('ml_envio');
+  const pub      = pvp_siva*(g('ml_pub')/100);
+  const iibb     = pvp_siva*(g('ml_iibb')/100);
+  const total_costos_vta = iva_dif+com_ml+com_cuotas+envio+pub+iibb;
+  const ingreso_neto = pvp - total_costos_vta;       // lo que queda en tu bolsillo
+  const ganancia = ingreso_neto - costo;
+  const m_costo  = costo>0?ganancia/costo:0;
+  const m_pvp    = pvp>0?ganancia/pvp:0;
+
+  st('ml_r_pvp',fA(pvp));
+  st('ml_pvp_siva',fA(pvp_siva));
+  st('ml_r_iva',fA(iva_dif));
+  st('ml_r_com',fA(com_ml));
+  st('ml_r_cuotas',fA(com_cuotas));
+  st('ml_r_envio',fA(envio));
+  st('ml_r_pub',fA(pub));
+  st('ml_r_iibb',fA(iibb));
+  st('ml_ingreso_neto',fA(ingreso_neto));
+  st('ml_r_costo',fA(costo));
+  st('ml_r_costos',fA(total_costos_vta));
+  st('ml_ganancia',fA(ganancia));
+  st('ml_m_costo',fP(m_costo));
+  st('ml_m_pvp',fP(m_pvp));
+  st('ml_roi',fP(costo>0?ganancia/costo:0));
+
+  const ganEl=document.getElementById('ml_ganancia');
+  if(ganEl)ganEl.style.color=ganancia>=0?'var(--green)':'var(--red)';
+
+  if(document.getElementById('panel-meli').classList.contains('on')){
+    st('bar_siva',fA(pvp_siva));st('bar_civa',fA(ingreso_neto));st('bar_ab',fA(ganancia));
+    document.getElementById('bar1_lbl').textContent='S/IVA';
+    document.getElementById('bar2_lbl').textContent='Ingreso neto';
+    document.getElementById('bar3_lbl').textContent='Ganancia';
+  }
+}
+function resetMeli(){
+  ['ml_desc','ml_costo','ml_pvp','ml_envio','ml_pub','ml_iibb','ml_com'].forEach(id=>{
+    const e=document.getElementById(id);if(e)e.value='';
+  });
+  document.getElementById('ml_pub').value=5;
+  document.getElementById('ml_iibb').value=5;
+  document.getElementById('ml_cat').value=0;
+  recalcMeli();
+}
+
+// ══════════════════════════════════════════════════════════
+//  MAYORISTA — paso a paso explícito
+//  Precio lista s/IVA → c/IVA
+//  − Dco comercial → precio tras dco comercial
+//  − Dco oferta    → precio tras dco oferta
+//  − Dco pago      → precio neto cobrado
+//  − IVA (del neto) − IIBB − Comisión vendedor
+//  − Costo producto = Ganancia
+// ══════════════════════════════════════════════════════════
+function recalcMay(){
+  const costo_usd=g('w_costo_usd'), bna=g('w_bna');
+  const costo_ars = costo_usd*bna;
+  const pvp_siva  = g('w_pvp_siva');
+  const iva_rate  = parseFloat(document.getElementById('w_iva_tipo').value)||0.21;
+  const pvp_civa  = pvp_siva*(1+iva_rate);
+  const dco_pct   = g('w_dco')/100, dof_pct=g('w_dof')/100, dpago_pct=g('w_dpago')/100;
+
+  const dco_m     = pvp_siva*dco_pct;
+  const tras_dco  = pvp_siva - dco_m;
+  const dof_m     = tras_dco*dof_pct;
+  const tras_dof  = tras_dco - dof_m;
+  const dpago_m   = tras_dof*dpago_pct;
+  const neto      = tras_dof - dpago_m;             // precio neto cobrado
+
+  const iva_m     = neto * iva_rate/(1+iva_rate);   // IVA incluido en el neto
+  const iibb_m    = neto*(g('w_iibb')/100);
+  const com_m     = neto*(g('w_com')/100);
+  const total_costos = dco_m+dof_m+dpago_m+iva_m+iibb_m+com_m+costo_ars;
+  const ganancia  = neto - iva_m - iibb_m - com_m - costo_ars;
+  const m_costo   = costo_ars>0?ganancia/costo_ars:0;
+  const m_pvp     = neto>0?ganancia/neto:0;
+
+  st('w_pvp_siva_disp',fA(pvp_siva));
+  st('w_pvp_civa',fA(pvp_civa));
+  st('w_r_dco',fA(dco_m));
+  st('w_tras_dco',fA(tras_dco));
+  st('w_r_dof',fA(dof_m));
+  st('w_tras_dof',fA(tras_dof));
+  st('w_r_dpago',fA(dpago_m));
+  st('w_neto',fA(neto));
+  st('w_r_iva',fA(iva_m));
+  st('w_r_iibb',fA(iibb_m));
+  st('w_r_com',fA(com_m));
+  st('w_costo_ars',fA(costo_ars));
+  st('w_r_total_costos',fA(total_costos));
+  st('w_ganancia',fA(ganancia));
+  st('w_m_costo',fP(m_costo));
+  st('w_m_pvp',fP(m_pvp));
+  st('w_roi',fP(costo_ars>0?ganancia/costo_ars:0));
+
+  const ganEl=document.getElementById('w_ganancia');
+  if(ganEl)ganEl.style.color=ganancia>=0?'var(--green)':'var(--red)';
+
+  if(document.getElementById('panel-may').classList.contains('on')){
+    st('bar_siva',fA(neto));st('bar_civa',fA(pvp_civa));st('bar_ab',fA(ganancia));
+    document.getElementById('bar1_lbl').textContent='Neto cobrado';
+    document.getElementById('bar2_lbl').textContent='PVP c/IVA';
+    document.getElementById('bar3_lbl').textContent='Ganancia';
+  }
+}
+function resetMay(){
+  ['w_desc','w_costo_usd','w_bna','w_pvp_siva','w_dco','w_dof','w_dpago'].forEach(id=>{
+    const e=document.getElementById(id);if(e)e.value='';
+  });
+  document.getElementById('w_iibb').value=5;
+  document.getElementById('w_com').value=5;
+  recalcMay();
+}
+
+// ══════════════════════════════════════════════════════════
+//  DATABASE / HISTORIAL
+// ══════════════════════════════════════════════════════════
+// ── Persistent DB via localStorage ──
+let DB = [];
+function loadDb(){
+  try { const s=localStorage.getItem('niviko_db'); if(s) DB=JSON.parse(s); } catch(e){}
+}
+function saveDb(){
+  try { localStorage.setItem('niviko_db', JSON.stringify(DB)); } catch(e){}
+}
+// Snapshot all input field values
+function snapshotFields(ids){ const o={}; ids.forEach(id=>{ const e=document.getElementById(id); if(e) o[id]=e.value; }); return o; }
+function restoreFields(snap){ if(!snap) return; Object.entries(snap).forEach(([id,v])=>{ const e=document.getElementById(id); if(e) e.value=v; }); }
+
+function saveToDb(tipo){
+  let rec={id:Date.now(), fecha:new Date().toLocaleDateString('es-AR')};
+  if(tipo==='container'){
+    const snap=snapshotFields(['producto','cantidad','dolar_bna','dolar_blue','fob_flete','fob_producto','fob_invoice',
+      't_maury','t_derecho','t_estadistica','t_iva','t_iva_ad','t_ganancias',
+      'cbm_total','costo_flete','terminal','despachante','gasto_extra1','gasto_extra2',
+      'prov_nombre','prov_contacto','prov_notas']);
+    rec={...rec,tipo:'container',badge:'db-container',label:'Container',
+      producto:gs('producto')||'—',proveedor:gs('prov_nombre')||'—',
+      display_usd:document.getElementById('d_ab_usd')?.textContent||'—',
+      display_ars:document.getElementById('d_ab_ars')?.textContent||'—',
+      extra:'s/IVA: '+(document.getElementById('d_ab_siva_usd')?.textContent||'—'),
+      snap, costo_u_usd: parseFloat(document.getElementById('d_ab_siva_usd')?.textContent?.replace(/[^0-9.]/g,'')||0)};
+  } else if(tipo==='courier'){
+    const snap=snapshotFields(['c_producto','c_cantidad','c_peso','c_fob_real','c_fob_inv','c_bna','c_blue',
+      'c_derecho','c_estadistica','c_iva','c_iva_ad','c_ganancias','c_gg','c_prov','c_rate_china','c_rate_miami']);
+    snap._origen=origenCourier;
+    rec={...rec,tipo:'courier',badge:'db-courier',label:'Courier',
+      producto:gs('c_producto')||'—',proveedor:gs('c_prov')||'—',
+      display_usd:document.getElementById('cr_ab_usd')?.textContent||'—',
+      display_ars:document.getElementById('cr_ab_ars')?.textContent||'—',
+      extra:'s/IVA: '+(document.getElementById('cr_ab_siva_usd')?.textContent||'—'),
+      snap, costo_u_usd: parseFloat(document.getElementById('cr_ab_siva_usd')?.textContent?.replace(/[^0-9.]/g,'')||0)};
+  } else if(tipo==='meli'){
+    const snap=snapshotFields(['ml_desc','ml_costo','ml_pvp','ml_com','ml_envio','ml_pub','ml_iibb','ml_iva_tipo','ml_cuotas']);
+    rec={...rec,tipo:'meli',badge:'db-meli',label:'ML',
+      producto:gs('ml_desc')||'—',proveedor:'—',
+      display_usd:'—',display_ars:document.getElementById('ml_ganancia')?.textContent||'—',
+      extra:'Margen: '+(document.getElementById('ml_m_pvp')?.textContent||'—')+' / PVP', snap};
+  } else if(tipo==='mayorista'){
+    const snap=snapshotFields(['w_desc','w_costo_usd','w_bna','w_pvp_siva','w_dco','w_dof','w_dpago','w_iibb','w_com','w_iva_tipo']);
+    rec={...rec,tipo:'mayorista',badge:'db-may',label:'Mayor.',
+      producto:gs('w_desc')||'—',proveedor:'—',
+      display_usd:'—',display_ars:document.getElementById('w_ganancia')?.textContent||'—',
+      extra:'Margen: '+(document.getElementById('w_m_pvp')?.textContent||'—')+' / PVP', snap};
+  } else if(tipo==='kgonly'){
+    const snap=snapshotFields(['k_producto','k_cant','k_peso','k_precio','k_rate','k_bna']);
+    snap._origen=kgoOrigen;
+    rec={...rec,tipo:'kgonly',badge:'db-kgonly',label:'Solo kg',
+      producto:gs('k_producto')||'—',proveedor:'—',
+      display_usd:document.getElementById('k_total_u')?.textContent||'—',
+      display_ars:document.getElementById('k_total_ars')?.textContent||'—', snap};
+  }
+  DB.push(rec);
+  saveDb();
+  renderDb();
+  refreshImportSelectors();
+  const btn=event.target, orig=btn.textContent;
+  btn.textContent='✓ Guardado';
+  setTimeout(()=>{btn.textContent=orig;},1500);
+}
+
+// Load a record back into its tab for editing
+function loadDbRecord(id){
+  const rec=DB.find(r=>r.id===id); if(!rec||!rec.snap) return;
+  if(rec.tipo==='container'){
+    restoreFields(rec.snap);
+    document.getElementById('prod-select').value='';
+    showTab('cont', document.querySelector('.tab'));
+    recalc();
+  } else if(rec.tipo==='courier'){
+    restoreFields(rec.snap);
+    if(rec.snap._origen) { origenCourier=rec.snap._origen; setOrigen(rec.snap._origen); }
+    document.getElementById('c_prod_select').value='';
+    showTab('cour', document.querySelectorAll('.tab')[2]);
+    recalcCourier();
+  } else if(rec.tipo==='meli'){
+    restoreFields(rec.snap);
+    showTab('meli', document.querySelectorAll('.tab')[4]);
+    recalcMeli();
+  } else if(rec.tipo==='mayorista'){
+    restoreFields(rec.snap);
+    showTab('may', document.querySelectorAll('.tab')[5]);
+    recalcMay();
+  } else if(rec.tipo==='kgonly'){
+    restoreFields(rec.snap);
+    if(rec.snap._origen) setKgoOrigen(rec.snap._origen);
+    showTab('kgo', document.querySelectorAll('.tab')[3]);
+    recalcKgo();
+  }
+  // Scroll to top
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function renderDb(){
+  const tbody=document.getElementById('db-body');
+  const count=document.getElementById('db-count');
+  count.textContent=DB.length+' registro'+(DB.length!==1?'s':'')+' guardado'+(DB.length!==1?'s':'');
+  if(DB.length===0){
+    tbody.innerHTML='<tr><td colspan="8" class="db-empty">Todavía no guardaste ningún cálculo.<br>Usá el botón "Guardar en historial" en cada pestaña.</td></tr>';return;
+  }
+  tbody.innerHTML=DB.slice().reverse().map(r=>`
+    <tr>
+      <td><span class="db-badge ${r.badge}">${r.label}</span></td>
+      <td style="font-weight:600;min-width:100px">${r.producto}</td>
+      <td style="font-size:11px;color:var(--muted)">${r.proveedor||'—'}</td>
+      <td style="font-family:var(--mono);font-size:11px">${r.display_usd}</td>
+      <td style="font-family:var(--mono);font-size:11px">${r.display_ars}${r.extra?'<br><span style="font-size:9px;color:var(--muted)">'+r.extra+'</span>':''}</td>
+      <td style="font-size:11px;color:var(--muted);white-space:nowrap">${r.fecha}</td>
+      <td style="white-space:nowrap">
+        ${r.snap?`<button style="background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-bdr);border-radius:5px;padding:3px 7px;font-size:10px;font-weight:600;cursor:pointer;font-family:var(--sans);margin-right:4px" onclick="loadDbRecord(${r.id})">✏ Editar</button>`:''}
+        <button class="db-del" onclick="deleteDb(${r.id})">✕</button>
+      </td>
+    </tr>`).join('');
+}
+function deleteDb(id){DB=DB.filter(r=>r.id!==id);saveDb();renderDb();}
+function clearDb(){if(confirm('¿Borrar todo el historial?')){DB=[];saveDb();renderDb();}}
+
+// Populate the "import from history" selectors in ML and Mayorista
+function refreshImportSelectors(){
+  const importable = DB.filter(r => r.snap && (r.tipo==='container'||r.tipo==='courier'||r.tipo==='kgonly'));
+  ['ml_import_sel','may_import_sel'].forEach(selId => {
+    const sel = document.getElementById(selId); if(!sel) return;
+    const cur = sel.value;
+    sel.innerHTML = '<option value="">— Seleccioná un cálculo guardado —</option>';
+    importable.forEach(r => {
+      const opt = document.createElement('option');
+      opt.value = r.id;
+      opt.textContent = `[${r.label}] ${r.producto} — ${r.display_usd} (${r.fecha})`;
+      sel.appendChild(opt);
+    });
+    if(cur) sel.value = cur;
+  });
+}
+
+// Import costo into ML (converts USD s/IVA to ARS using current BNA or stored BNA)
+function importCostoToMeli(){
+  const selId = 'ml_import_sel';
+  const id = parseInt(document.getElementById(selId)?.value);
+  if(!id){ alert('Seleccioná un cálculo del historial'); return; }
+  const rec = DB.find(r=>r.id===id); if(!rec||!rec.snap) return;
+  // Get costo s/IVA in USD from snap
+  let costo_usd = 0;
+  if(rec.tipo==='container'){
+    // reconstruct from snap
+    const s=rec.snap;
+    const cant=parseFloat(s.cantidad)||1, bna=parseFloat(s.dolar_bna)||1;
+    const r=calcContainer(cant,bna,parseFloat(s.dolar_blue)||0,
+      parseFloat(s.fob_flete)||0,parseFloat(s.fob_producto)||0,parseFloat(s.fob_invoice)||0,
+      (parseFloat(s.t_maury)||0)/100,(parseFloat(s.t_derecho)||0)/100,(parseFloat(s.t_estadistica)||0)/100,
+      (parseFloat(s.t_iva)||0)/100,(parseFloat(s.t_iva_ad)||0)/100,(parseFloat(s.t_ganancias)||0)/100,
+      parseFloat(s.cbm_total)||1,parseFloat(s.costo_flete)||0,parseFloat(s.terminal)||0,parseFloat(s.despachante)||0,
+      parseFloat(s.gasto_extra1)||0,(parseFloat(s.gasto_extra2)||0)/100);
+    costo_usd = r.ab_siva_usd;
+  } else if(rec.tipo==='courier'){
+    const s=rec.snap;
+    const rate=rec.snap._origen==='miami'?(parseFloat(s.c_rate_miami)||12):(parseFloat(s.c_rate_china)||16);
+    const flete_u=(parseFloat(s.c_peso)||0)*rate;
+    const base=(parseFloat(s.c_fob_inv)||0)+flete_u;
+    const der_u=base*(parseFloat(s.c_derecho)||0)/100;
+    const estad_u=base*(parseFloat(s.c_estadistica)||0)/100;
+    const gcias_u=(base+der_u+estad_u)*(parseFloat(s.c_ganancias)||0)/100;
+    const gg_u=base*(parseFloat(s.c_gg)||5)/100;
+    costo_usd=(base+der_u+estad_u+gcias_u+gg_u)+((parseFloat(s.c_fob_real)||0)-(parseFloat(s.c_fob_inv)||0))*1.05;
+  } else if(rec.tipo==='kgonly'){
+    const s=rec.snap;
+    costo_usd=(parseFloat(s.k_precio)||0)+(parseFloat(s.k_peso)||0)*(parseFloat(s.k_rate)||16);
+  }
+  // Convert to ARS using ml_bna field or stored BNA
+  const bna_field = document.getElementById('ml_bna_override');
+  const bna = bna_field ? parseFloat(bna_field.value)||parseFloat(rec.snap?.dolar_bna||rec.snap?.c_bna||rec.snap?.k_bna)||1 : parseFloat(rec.snap?.dolar_bna||rec.snap?.c_bna||rec.snap?.k_bna)||1;
+  const costo_ars = Math.round(costo_usd * bna);
+  document.getElementById('ml_costo').value = costo_ars;
+  if(!gs('ml_desc')) document.getElementById('ml_desc').value = rec.producto;
+  recalcMeli();
+  // Visual feedback
+  const btn=event.target, orig=btn.textContent;
+  btn.textContent='✓';
+  setTimeout(()=>{ btn.textContent=orig; },1200);
+}
+
+// Import costo into Mayorista (keeps in USD)
+function importCostoToMay(){
+  const selId = 'may_import_sel';
+  const id = parseInt(document.getElementById(selId)?.value);
+  if(!id){ alert('Seleccioná un cálculo del historial'); return; }
+  const rec = DB.find(r=>r.id===id); if(!rec||!rec.snap) return;
+  let costo_usd = 0;
+  if(rec.tipo==='container'){
+    const s=rec.snap;
+    const cant=parseFloat(s.cantidad)||1, bna=parseFloat(s.dolar_bna)||1;
+    const r=calcContainer(cant,bna,parseFloat(s.dolar_blue)||0,
+      parseFloat(s.fob_flete)||0,parseFloat(s.fob_producto)||0,parseFloat(s.fob_invoice)||0,
+      (parseFloat(s.t_maury)||0)/100,(parseFloat(s.t_derecho)||0)/100,(parseFloat(s.t_estadistica)||0)/100,
+      (parseFloat(s.t_iva)||0)/100,(parseFloat(s.t_iva_ad)||0)/100,(parseFloat(s.t_ganancias)||0)/100,
+      parseFloat(s.cbm_total)||1,parseFloat(s.costo_flete)||0,parseFloat(s.terminal)||0,parseFloat(s.despachante)||0,
+      parseFloat(s.gasto_extra1)||0,(parseFloat(s.gasto_extra2)||0)/100);
+    costo_usd = r.ab_siva_usd;
+  } else if(rec.tipo==='courier'){
+    const s=rec.snap;
+    const rate=rec.snap._origen==='miami'?(parseFloat(s.c_rate_miami)||12):(parseFloat(s.c_rate_china)||16);
+    const flete_u=(parseFloat(s.c_peso)||0)*rate;
+    const base=(parseFloat(s.c_fob_inv)||0)+flete_u;
+    const der_u=base*(parseFloat(s.c_derecho)||0)/100;
+    const estad_u=base*(parseFloat(s.c_estadistica)||0)/100;
+    const gcias_u=(base+der_u+estad_u)*(parseFloat(s.c_ganancias)||0)/100;
+    const gg_u=base*(parseFloat(s.c_gg)||5)/100;
+    costo_usd=(base+der_u+estad_u+gcias_u+gg_u)+((parseFloat(s.c_fob_real)||0)-(parseFloat(s.c_fob_inv)||0))*1.05;
+  } else if(rec.tipo==='kgonly'){
+    const s=rec.snap;
+    costo_usd=(parseFloat(s.k_precio)||0)+(parseFloat(s.k_peso)||0)*(parseFloat(s.k_rate)||16);
+  }
+  document.getElementById('w_costo_usd').value = costo_usd.toFixed(2);
+  // Also carry BNA if available
+  const bna = parseFloat(rec.snap?.dolar_bna||rec.snap?.c_bna||rec.snap?.k_bna)||0;
+  if(bna && !document.getElementById('w_bna').value) document.getElementById('w_bna').value = bna;
+  if(!gs('w_desc')) document.getElementById('w_desc').value = rec.producto;
+  recalcMay();
+  const btn=event.target, orig=btn.textContent;
+  btn.textContent='✓';
+  setTimeout(()=>{ btn.textContent=orig; },1200);
+}
+
+// ══════════════════════════════════════════════════════════
+//  NAVEGACIÓN
+// ══════════════════════════════════════════════════════════
+function showTab(name,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  document.getElementById('panel-'+name).classList.add('on');
+  btn.classList.add('on');
+  document.getElementById('bar1_lbl').textContent='Sin IVA';
+  document.getElementById('bar2_lbl').textContent='Con IVA';
+  document.getElementById('bar3_lbl').textContent='A+B / u';
+  if(name==='cont') recalc();
+  else if(name==='cour'){recalcCourier();document.getElementById('bar1_lbl').textContent='A+B s/IVA';document.getElementById('bar2_lbl').textContent='A+B c/IVA';}
+  else if(name==='kgo') recalcKgo();
+  else if(name==='meli'){recalcMeli();document.getElementById('bar1_lbl').textContent='S/IVA';document.getElementById('bar2_lbl').textContent='Ingreso neto';document.getElementById('bar3_lbl').textContent='Ganancia';}
+  else if(name==='may'){recalcMay();document.getElementById('bar1_lbl').textContent='Neto cobrado';document.getElementById('bar2_lbl').textContent='PVP c/IVA';document.getElementById('bar3_lbl').textContent='Ganancia';}
+  else if(name==='db') renderDb();
+  if(name==='meli'||name==='may') refreshImportSelectors();
+  else if(name==='prov'){ renderProviders(); document.getElementById('prov-form').style.display='none'; }
+}
+function toggleSec(hdr){hdr.parentElement.classList.toggle('closed');}
+
+// ── INIT ──
+loadDb();
+loadProviders();
+buildOptions('prod-select');
+buildOptions('c_prod_select');
+recalc(); recalcCourier(); recalcKgo();
+
+// Register Service Worker (PWA offline support)
+if('serviceWorker' in navigator){
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js')
+      .then(r => console.log('SW registered:', r.scope))
+      .catch(e => console.log('SW error:', e));
+  });
+}
+// Online/offline indicator
+window.addEventListener('offline', () => { const b=document.getElementById('offline-bar'); if(b)b.style.display='block'; });
+window.addEventListener('online',  () => { const b=document.getElementById('offline-bar'); if(b)b.style.display='none';  });
+if(!navigator.onLine){ const b=document.getElementById('offline-bar'); if(b)b.style.display='block'; }
+
+// PWA install prompt
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  deferredPrompt = e;
+  const btn = document.getElementById('install-btn');
+  if(btn) btn.style.display = 'flex';
+});
+window.addEventListener('appinstalled', () => {
+  const btn = document.getElementById('install-btn');
+  if(btn) btn.style.display = 'none';
+  deferredPrompt = null;
+});
+function installApp(){
+  if(!deferredPrompt) return;
+  deferredPrompt.prompt();
+  deferredPrompt.userChoice.then(() => { deferredPrompt = null; });
+}
+
+// ══════════════════════════════════════════════════════════
+//  PROVEEDORES
+// ══════════════════════════════════════════════════════════
+let PROVEEDORES = [];
+let provFormTags = [];
+let provFormPhotos = []; // base64
+let provFormAvatar = '';  // base64
+
+function loadProviders(){
+  try{ const s=localStorage.getItem('niviko_proveedores'); if(s) PROVEEDORES=JSON.parse(s); } catch(e){}
+}
+function saveProviders(){
+  try{ localStorage.setItem('niviko_proveedores', JSON.stringify(PROVEEDORES)); } catch(e){}
+}
+
+function openNewProvForm(){
+  provFormTags=[];
+  provFormPhotos=[];
+  provFormAvatar='';
+  document.getElementById('pf-edit-id').value='';
+  document.getElementById('prov-form-title').textContent='Nuevo proveedor';
+  ['pf-nombre','pf-empresa','pf-ciudad','pf-wechat','pf-email','pf-tel','pf-web',
+   'pf-moq','pf-plazo','pf-pago','pf-notas','pf-tag-inp','pf-contacto',
+   'pf-feria','pf-stand','pf-visita'].forEach(id=>{
+    const e=document.getElementById(id); if(e)e.value='';
+  });
+  document.getElementById('pf-pais').value='China';
+  document.getElementById('pf-rating').value='0';
+  document.getElementById('pf-avatar-img').style.display='none';
+  document.getElementById('pf-avatar-placeholder').style.display='flex';
+  document.getElementById('pf-tags').innerHTML='';
+  renderFormPhotos();
+  setRating(0);
+  const form=document.getElementById('prov-form');
+  form.style.display='';
+  // Make sure sec-body is open
+  const body=form.querySelector('.sec-body');
+  if(body) body.style.display='';
+  form.scrollIntoView({behavior:'smooth'});
+}
+
+function cancelProvForm(){
+  document.getElementById('prov-form').style.display='none';
+  provFormTags=[];provFormPhotos=[];provFormAvatar='';
+}
+
+function loadAvatar(input){
+  if(!input.files||!input.files[0]) return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    provFormAvatar=e.target.result;
+    document.getElementById('pf-avatar-img').src=e.target.result;
+    document.getElementById('pf-avatar-img').style.display='';
+    document.getElementById('pf-avatar-placeholder').style.display='none';
+  };
+  reader.readAsDataURL(input.files[0]);
+}
+
+function loadProvPhotos(input){
+  if(!input.files) return;
+  Array.from(input.files).forEach(file=>{
+    const reader=new FileReader();
+    reader.onload=e=>{ provFormPhotos.push(e.target.result); renderFormPhotos(); };
+    reader.readAsDataURL(file);
+  });
+}
+
+function renderFormPhotos(){
+  const row=document.getElementById('pf-photos-row');
+  if(!row) return;
+  row.innerHTML='';
+  provFormPhotos.forEach((src,i)=>{
+    const img=document.createElement('img');
+    img.className='pv-photo'; img.src=src;
+    img.onclick=()=>openPhotoModal(src);
+    const wrap=document.createElement('div');
+    wrap.style.position='relative'; wrap.style.flexShrink='0';
+    const del=document.createElement('div');
+    del.style.cssText='position:absolute;top:-5px;right:-5px;background:var(--red);color:#fff;border-radius:50%;width:18px;height:18px;display:flex;align-items:center;justify-content:center;font-size:10px;cursor:pointer;font-weight:700';
+    del.textContent='✕';
+    del.onclick=(ev)=>{ ev.stopPropagation(); provFormPhotos.splice(i,1); renderFormPhotos(); };
+    wrap.appendChild(img); wrap.appendChild(del);
+    row.appendChild(wrap);
+  });
+  const addBtn=document.createElement('div');
+  addBtn.className='pv-photo-add';
+  addBtn.innerHTML='<span>📷</span><span>Agregar</span>';
+  addBtn.onclick=()=>document.getElementById('pf-photos-inp').click();
+  row.appendChild(addBtn);
+}
+
+function addProvTag(){
+  const inp=document.getElementById('pf-tag-inp');
+  const val=inp.value.trim(); if(!val) return;
+  provFormTags.push(val); inp.value='';
+  renderFormTags();
+}
+
+function renderFormTags(){
+  const container=document.getElementById('pf-tags');
+  container.innerHTML=provFormTags.map((t,i)=>
+    `<span class="pv-tag">${t}<span class="pv-tag-del" onclick="removeProvTag(${i})">✕</span></span>`
+  ).join('');
+}
+
+function removeProvTag(i){ provFormTags.splice(i,1); renderFormTags(); }
+
+function setRating(n){
+  document.getElementById('pf-rating').value=n;
+  const stars=document.getElementById('pf-stars');
+  if(!stars) return;
+  Array.from(stars.children).forEach((s,i)=>{
+    s.textContent=i<n?'⭐':'☆';
+  });
+}
+
+function saveProvider(){
+  const nombre=document.getElementById('pf-nombre').value.trim();
+  if(!nombre){ alert('El nombre es obligatorio'); return; }
+  const editId=document.getElementById('pf-edit-id').value;
+  const prov={
+    id: editId||Date.now().toString(),
+    nombre, 
+    empresa:document.getElementById('pf-empresa').value.trim(),
+    ciudad:document.getElementById('pf-ciudad').value.trim(),
+    pais:document.getElementById('pf-pais').value.trim()||'China',
+    contacto:document.getElementById('pf-contacto').value.trim(),
+    wechat:document.getElementById('pf-wechat').value.trim(),
+    email:document.getElementById('pf-email').value.trim(),
+    tel:document.getElementById('pf-tel').value.trim(),
+    web:document.getElementById('pf-web').value.trim(),
+    moq:document.getElementById('pf-moq').value.trim(),
+    plazo:document.getElementById('pf-plazo').value.trim(),
+    pago:document.getElementById('pf-pago').value.trim(),
+    notas:document.getElementById('pf-notas').value.trim(),
+    feria:document.getElementById('pf-feria')?.value.trim()||'',
+    stand:document.getElementById('pf-stand')?.value.trim()||'',
+    visita:document.getElementById('pf-visita')?.value.trim()||'',
+    rating:parseInt(document.getElementById('pf-rating').value)||0,
+    tags:[...provFormTags],
+    avatar:provFormAvatar,
+    photos:[...provFormPhotos],
+    fecha:new Date().toLocaleDateString('es-AR')
+  };
+  if(editId){ const idx=PROVEEDORES.findIndex(p=>p.id===editId); if(idx>=0) PROVEEDORES[idx]=prov; else PROVEEDORES.push(prov); }
+  else PROVEEDORES.push(prov);
+  saveProviders();
+  cancelProvForm();
+  renderProviders();
+}
+
+function deleteProvider(id){
+  if(!confirm('¿Eliminar este proveedor?')) return;
+  PROVEEDORES=PROVEEDORES.filter(p=>p.id!==id);
+  saveProviders(); renderProviders();
+}
+
+function editProvider(id){
+  const p=PROVEEDORES.find(x=>x.id===id); if(!p) return;
+  openNewProvForm();
+  document.getElementById('prov-form-title').textContent='Editar proveedor';
+  document.getElementById('pf-edit-id').value=p.id;
+  document.getElementById('pf-nombre').value=p.nombre||'';
+  document.getElementById('pf-empresa').value=p.empresa||'';
+  document.getElementById('pf-ciudad').value=p.ciudad||'';
+  document.getElementById('pf-pais').value=p.pais||'China';
+  document.getElementById('pf-contacto').value=p.contacto||'';
+  document.getElementById('pf-wechat').value=p.wechat||'';
+  document.getElementById('pf-email').value=p.email||'';
+  document.getElementById('pf-tel').value=p.tel||'';
+  document.getElementById('pf-web').value=p.web||'';
+  document.getElementById('pf-moq').value=p.moq||'';
+  document.getElementById('pf-plazo').value=p.plazo||'';
+  document.getElementById('pf-pago').value=p.pago||'';
+  document.getElementById('pf-notas').value=p.notas||'';
+  if(document.getElementById('pf-feria')) document.getElementById('pf-feria').value=p.feria||'';
+  if(document.getElementById('pf-stand')) document.getElementById('pf-stand').value=p.stand||'';
+  if(document.getElementById('pf-visita')) document.getElementById('pf-visita').value=p.visita||'';
+  provFormTags=[...(p.tags||[])];
+  provFormPhotos=[...(p.photos||[])];
+  provFormAvatar=p.avatar||'';
+  if(provFormAvatar){
+    document.getElementById('pf-avatar-img').src=provFormAvatar;
+    document.getElementById('pf-avatar-img').style.display='';
+    document.getElementById('pf-avatar-placeholder').style.display='none';
+  }
+  setRating(p.rating||0);
+  renderFormTags();
+  renderFormPhotos();
+}
+
+function renderProviders(){
+  const list=document.getElementById('prov-list'); if(!list) return;
+  if(PROVEEDORES.length===0){
+    list.innerHTML=`<div class="pv-empty"><div class="pv-empty-icon">🏭</div><div>No hay proveedores cargados.</div><div style="font-size:11px;margin-top:6px;color:var(--dim)">Tocá "+ Agregar proveedor" para empezar.</div></div>`;
+    return;
+  }
+  list.innerHTML=PROVEEDORES.map(p=>{
+    const stars='⭐'.repeat(p.rating||0)+'☆'.repeat(5-(p.rating||0));
+    const tags=(p.tags||[]).map(t=>`<span class="pv-tag">${t}</span>`).join('');
+    const avatar=p.avatar
+      ? `<img class="pv-avatar" src="${p.avatar}" alt="">`
+      : `<div class="pv-avatar-placeholder">🏭</div>`;
+    const photos=(p.photos||[]).slice(0,4).map((src,i)=>
+      `<img class="pv-photo" src="${src}" onclick="openPhotoModal('${src}')" alt="foto ${i+1}">`
+    ).join('');
+    const hasPhotos=(p.photos||[]).length>0;
+    return `
+    <div class="pv-card" id="pvc-${p.id}">
+      <div class="pv-card-head" onclick="toggleProvCard('${p.id}')">
+        ${avatar}
+        <div class="pv-head-info">
+          <div class="pv-name">${p.nombre}</div>
+          <div class="pv-cat">${p.empresa?p.empresa+' · ':''}${p.ciudad||''}${p.pais?' ('+p.pais+')':''}</div>
+          <div class="pv-rating" title="${p.rating||0}/5 estrellas">${stars}</div>
+        </div>
+        <div class="pv-actions">
+          <div class="pv-btn" onclick="event.stopPropagation();editProvider('${p.id}')" title="Editar">✏️</div>
+          <div class="pv-btn del" onclick="event.stopPropagation();deleteProvider('${p.id}')" title="Eliminar">🗑</div>
+        </div>
+      </div>
+      <div class="pv-body" id="pvb-${p.id}">
+        ${hasPhotos?`<div class="pv-photo-row">${photos}${(p.photos||[]).length>4?`<div style="width:60px;height:80px;border-radius:8px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--muted);flex-shrink:0">+${(p.photos||[]).length-4}</div>`:''}
+        </div>`:''}
+        ${tags?`<div class="pv-tags" style="margin-bottom:10px">${tags}</div>`:''}
+        <div style="background:var(--surface);border-radius:8px;overflow:hidden;border:1px solid var(--border);margin-bottom:10px">
+          ${p.contacto?`<div class="pv-contact-row"><div class="pv-contact-icon">👤</div><div class="pv-contact-val">${p.contacto}</div></div>`:''}
+          ${p.wechat?`<div class="pv-contact-row"><div class="pv-contact-icon">💬</div><div class="pv-contact-val">${p.wechat}</div></div>`:''}
+          ${p.tel?`<div class="pv-contact-row"><div class="pv-contact-icon">📱</div><div class="pv-contact-val">${p.tel}</div></div>`:''}
+          ${p.email?`<div class="pv-contact-row"><div class="pv-contact-icon">📧</div><div class="pv-contact-val">${p.email}</div></div>`:''}
+          ${p.web?`<div class="pv-contact-row"><div class="pv-contact-icon">🔗</div><div class="pv-contact-val">${p.web}</div></div>`:''}
+          ${!p.contacto&&!p.wechat&&!p.tel&&!p.email&&!p.web?`<div class="pv-contact-row"><div class="pv-contact-val muted">Sin datos de contacto</div></div>`:''}
+        </div>
+        ${(p.feria||p.stand||p.visita)?`
+        <div class="pv-section-lbl">🏭 Dónde lo encontré</div>
+        <div style="background:var(--surface);border-radius:8px;overflow:hidden;border:1px solid var(--border);margin-bottom:10px">
+          ${p.feria?`<div class="pv-contact-row"><div class="pv-contact-icon">🎪</div><div class="pv-contact-val">${p.feria}</div></div>`:''}
+          ${p.stand?`<div class="pv-contact-row"><div class="pv-contact-icon">📍</div><div class="pv-contact-val">${p.stand}</div></div>`:''}
+          ${p.visita?`<div class="pv-contact-row"><div class="pv-contact-icon">📅</div><div class="pv-contact-val">${p.visita}</div></div>`:''}
+        </div>`:''}`
+        + `${(p.moq||p.plazo||p.pago)?`
+        <div class="pv-section-lbl">💰 Condiciones</div>
+        <div style="background:var(--surface);border-radius:8px;overflow:hidden;border:1px solid var(--border);margin-bottom:10px">
+          ${p.moq?`<div class="pv-contact-row"><div class="pv-contact-icon">📦</div><div class="pv-contact-val">MOQ: ${p.moq}</div></div>`:''}
+          ${p.plazo?`<div class="pv-contact-row"><div class="pv-contact-icon">⏱</div><div class="pv-contact-val">Entrega: ${p.plazo}</div></div>`:''}
+          ${p.pago?`<div class="pv-contact-row"><div class="pv-contact-icon">💳</div><div class="pv-contact-val">${p.pago}</div></div>`:''}
+        </div>`:''}
+        ${p.notas?`<div class="pv-section-lbl">📝 Notas</div><div style="background:var(--amber-bg);border:1px solid var(--amber-bdr);border-radius:8px;padding:9px 12px;font-size:11px;color:var(--amber);line-height:1.6;margin-bottom:8px">${p.notas}</div>`:''}
+        <div style="font-size:10px;color:var(--dim);text-align:right;font-family:var(--mono)">Agregado: ${p.fecha||'—'}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function toggleProvCard(id){
+  const body=document.getElementById('pvb-'+id); if(!body) return;
+  body.classList.toggle('open');
+}
+
+function openPhotoModal(src){
+  const m=document.getElementById('photo-modal');
+  const img=document.getElementById('photo-modal-img');
+  if(m&&img){ img.src=src; m.classList.add('open'); }
+}
+function closePhotoModal(){
+  const m=document.getElementById('photo-modal');
+  if(m){ m.classList.remove('open'); document.getElementById('photo-modal-img').src=''; }
+}
+
+</script>
+<!-- PHOTO MODAL -->
+<div class="photo-modal" id="photo-modal" onclick="closePhotoModal()">
+  <div class="photo-modal-close">✕</div>
+  <img id="photo-modal-img" src="" alt="">
+</div>
+</body>
+</html>
