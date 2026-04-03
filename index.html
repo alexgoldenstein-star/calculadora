@@ -41,31 +41,6 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14
 .tab.tm.on{color:var(--orange);border-bottom-color:var(--orange)}
 .tab.tw.on{color:var(--teal);border-bottom-color:var(--teal)}
 .tab.tdb.on{color:var(--green);border-bottom-color:var(--green)}
-/* SIDEBAR */
-.hamburger{background:none;border:none;cursor:pointer;padding:4px 6px;font-size:20px;color:var(--text);line-height:1}
-.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:300}
-.sidebar-overlay.open{display:block}
-.sidebar{position:fixed;top:0;left:-280px;width:272px;height:100vh;background:var(--white);z-index:301;display:flex;flex-direction:column;transition:left .22s cubic-bezier(.4,0,.2,1);box-shadow:4px 0 20px rgba(0,0,0,.15);overflow-y:auto}
-.sidebar.open{left:0}
-.sb-head{padding:16px 18px 12px;border-bottom:1.5px solid var(--border);display:flex;align-items:center;gap:10px}
-.sb-logo{font-family:var(--mono);font-weight:700;font-size:15px;color:var(--text)}
-.sb-logo em{color:var(--red);font-style:normal}
-.sb-close{margin-left:auto;background:none;border:none;font-size:20px;cursor:pointer;color:var(--muted);padding:2px 6px}
-.sb-section{padding:8px 10px 4px;font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--dim);font-family:var(--mono)}
-.sb-item{display:flex;align-items:center;gap:10px;padding:10px 18px;cursor:pointer;transition:background .12s;border:none;background:none;width:100%;text-align:left}
-.sb-item:active{background:var(--gray-bg)}
-.sb-item.on{background:var(--red-bg)}
-.sb-item.on .sb-label{color:var(--red);font-weight:700}
-.sb-item.on.tc{background:var(--purple-bg)}.sb-item.on.tc .sb-label{color:var(--purple)}
-.sb-item.on.tm{background:var(--orange-bg)}.sb-item.on.tm .sb-label{color:var(--orange)}
-.sb-item.on.tw{background:var(--teal-bg)}.sb-item.on.tw .sb-label{color:var(--teal)}
-.sb-item.on.tdb{background:var(--green-bg)}.sb-item.on.tdb .sb-label{color:var(--green)}
-.sb-item.on.tpv{background:var(--indigo-bg)}.sb-item.on.tpv .sb-label{color:#7c3aed}
-.sb-item.on.tbc{background:var(--sky-bg)}.sb-item.on.tbc .sb-label{color:var(--sky)}
-.sb-item.on.tren{background:var(--amber-bg)}.sb-item.on.tren .sb-label{color:var(--amber)}
-.sb-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;background:var(--gray-bg)}
-.sb-label{font-size:13px;font-weight:500;color:var(--text);font-family:var(--sans)}
-.sb-badge{margin-left:auto;font-size:9px;background:var(--red-bg);color:var(--red);border-radius:10px;padding:2px 7px;font-weight:700;font-family:var(--mono)}
 .tab.tpv.on{color:#7c3aed;border-bottom-color:#7c3aed}
 
 /* PROVIDER CARDS */
@@ -326,21 +301,6 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14
 .panel.on>*:nth-child(5){animation-delay:.12s}
 @keyframes up{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
 .offline-bar{display:none;position:fixed;top:0;left:0;right:0;z-index:999;background:var(--amber);color:#fff;font-size:11px;font-family:var(--mono);font-weight:600;text-align:center;padding:5px;letter-spacing:.5px}
-.tab.tbc.on{color:#0369a1;border-bottom-color:#0369a1}
-:root{--sky:#0369a1;--sky-bg:#f0f9ff;--sky-bdr:#bae6fd;}
-.cost-table{width:100%;border-collapse:collapse;font-size:11px;background:var(--white);border-radius:var(--r);overflow:hidden;border:1.5px solid var(--border)}
-.cost-table th{padding:8px 10px;text-align:left;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);background:var(--gray-bg);border-bottom:1px solid var(--border);white-space:nowrap}
-.cost-table td{padding:8px 10px;border-bottom:1px solid var(--border);vertical-align:middle;color:var(--text)}
-.cost-table tr:last-child td{border-bottom:none}
-.cost-table tr:hover td{background:var(--surface)}
-.cost-badge{display:inline-block;padding:2px 7px;border-radius:4px;font-size:9px;font-weight:700;font-family:var(--mono)}
-.costo-form{background:var(--white);border:1.5px solid var(--border);border-radius:var(--r);padding:14px;margin-bottom:10px;display:none}
-.btn-sky{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;padding:11px;background:var(--sky-bg);border:1.5px solid var(--sky-bdr);border-radius:10px;color:var(--sky);font-family:var(--sans);font-size:13px;font-weight:700;cursor:pointer;margin-bottom:10px}
-.btn-sky:active{background:var(--sky);color:#fff}
-.cost-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:10px}
-.ck{background:var(--white);border:1.5px solid var(--border);border-radius:8px;padding:9px 10px;text-align:center}
-.ck-lbl{font-size:9px;color:var(--muted);font-family:var(--mono);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px}
-.ck-val{font-size:15px;font-weight:700;font-family:var(--mono);color:var(--sky)}
 </style>
   <!-- PWA -->
   <link rel="manifest" href="manifest.json">
@@ -359,63 +319,21 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14
     <div><div class="logo">NIVIKO <em>·</em> CHINA</div><div class="logo-sub">Calc. Importación v7</div></div>
     <div style="display:flex;align-items:center;gap:7px">
       <button id="install-btn" onclick="installApp()" style="display:none;align-items:center;gap:5px;padding:4px 10px;background:var(--blue-bg);border:1px solid var(--blue-bdr);border-radius:20px;color:var(--blue);font-size:9px;font-family:var(--mono);font-weight:600;cursor:pointer;letter-spacing:.5px">⬇ INSTALAR</button>
-      <button class="hamburger" onclick="toggleSidebar()" title="Menú">☰</button>
       <div class="live"><div class="live-dot"></div>LIVE</div>
     </div>
   </div>
 </div>
 
-<!-- SIDEBAR OVERLAY -->
-<div class="sidebar-overlay" id="sb-overlay" onclick="toggleSidebar()"></div>
-
-<!-- SIDEBAR -->
-<nav class="sidebar" id="sidebar">
-  <div class="sb-head">
-    <div class="sb-logo">NIVIKO <em>·</em> CHINA</div>
-    <button class="sb-close" onclick="toggleSidebar()">✕</button>
-  </div>
-
-  <div class="sb-section">Importación</div>
-  <button class="sb-item on" id="sb-cont" onclick="showTab('cont',this);toggleSidebar()">
-    <div class="sb-icon">🚢</div><div class="sb-label">Container</div>
-  </button>
-  <button class="sb-item tc" id="sb-multi" onclick="showTab('multi',this);toggleSidebar()">
-    <div class="sb-icon">📦</div><div class="sb-label">Multi-container</div>
-  </button>
-  <button class="sb-item tc" id="sb-cour" onclick="showTab('cour',this);toggleSidebar()">
-    <div class="sb-icon">✈</div><div class="sb-label">Courier</div>
-  </button>
-  <button class="sb-item tc" id="sb-kgo" onclick="showTab('kgo',this);toggleSidebar()">
-    <div class="sb-icon">⚖</div><div class="sb-label">Solo kg</div>
-  </button>
-
-  <div class="sb-section">Venta</div>
-  <button class="sb-item tm" id="sb-meli" onclick="showTab('meli',this);toggleSidebar()">
-    <div class="sb-icon">🛒</div><div class="sb-label">MercadoLibre</div>
-  </button>
-  <button class="sb-item tw" id="sb-may" onclick="showTab('may',this);toggleSidebar()">
-    <div class="sb-icon">🏪</div><div class="sb-label">Mayorista</div>
-  </button>
-
-  <div class="sb-section">Análisis</div>
-  <button class="sb-item tren" id="sb-rent" onclick="showTab('rent',this);toggleSidebar()">
-    <div class="sb-icon">📊</div><div class="sb-label">Rentabilidad</div><div class="sb-badge">NEW</div>
-  </button>
-
-  <div class="sb-section">Gestión</div>
-  <button class="sb-item tpv" id="sb-prov" onclick="showTab('prov',this);toggleSidebar()">
-    <div class="sb-icon">👥</div><div class="sb-label">Proveedores</div>
-  </button>
-  <button class="sb-item tbc" id="sb-costos" onclick="showTab('costos',this);toggleSidebar()">
-    <div class="sb-icon">📋</div><div class="sb-label">Base de costos</div>
-  </button>
-  <button class="sb-item tdb" id="sb-db" onclick="showTab('db',this);toggleSidebar()">
-    <div class="sb-icon">🗂</div><div class="sb-label">Historial</div>
-  </button>
-</nav>
-
-<!-- current tab indicator in header -->
-<div style="padding:3px 14px 6px;font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;font-family:var(--mono);background:var(--white);border-bottom:1.5px solid var(--border)" id="current-tab-label">🚢 Container</div>
+<div class="tabs">
+  <button class="tab on"  onclick="showTab('cont',this)">🚢 Container</button>
+  <button class="tab tc"  onclick="showTab('multi',this)">📦 Multi</button>
+  <button class="tab tc"  onclick="showTab('cour',this)">✈ Courier</button>
+  <button class="tab tc"  onclick="showTab('kgo',this)">⚖ Solo kg</button>
+  <button class="tab tm"  onclick="showTab('meli',this)">🛒 ML</button>
+  <button class="tab tw"  onclick="showTab('may',this)">🏪 Mayor.</button>
+  <button class="tab tdb" onclick="showTab('db',this)">🗂 Historial</button>
+  <button class="tab tpv"  onclick="showTab('prov',this)">👥 Proveedores</button>
+</div>
 
 <div class="content">
 
@@ -780,17 +698,11 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14
       <div class="irow"><div><div class="il">Costo total (ARS)</div><div class="in">Sin IVA ni impuestos internos</div></div><input type="number" id="ml_costo" placeholder="0" oninput="recalcMeli()"></div>
       <div style="padding:6px 14px 8px;border-bottom:1px solid var(--border)">
         <div style="font-size:9px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px;font-family:var(--mono)">O importar desde historial de importación</div>
-        <div style="display:flex;gap:6px;margin-bottom:6px">
-          <select id="ml_import_sel" style="flex:1;padding:7px 10px;border:1.5px solid var(--border2);border-radius:7px;background:var(--surface);color:var(--text);font-family:var(--sans);font-size:11px;outline:none;appearance:none">
-            <option value="">— Desde historial de importación —</option>
-          </select>
-          <button onclick="importCostoToMeli()" style="padding:7px 12px;background:var(--orange-bg);color:var(--orange);border:1.5px solid var(--orange-bdr);border-radius:7px;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:var(--sans)">↑</button>
-        </div>
         <div style="display:flex;gap:6px">
-          <select id="ml_cost_sel" style="flex:1;padding:7px 10px;border:1.5px solid var(--border2);border-radius:7px;background:var(--surface);color:var(--text);font-family:var(--sans);font-size:11px;outline:none;appearance:none">
-            <option value="">— Desde base de costos —</option>
+          <select id="ml_import_sel" style="flex:1;padding:7px 10px;border:1.5px solid var(--border2);border-radius:7px;background:var(--surface);color:var(--text);font-family:var(--sans);font-size:11px;outline:none;appearance:none">
+            <option value="">— Seleccioná un cálculo guardado —</option>
           </select>
-          <button onclick="importFromCostBase('meli')" style="padding:7px 12px;background:var(--green-bg);color:var(--green);border:1.5px solid var(--green-bdr);border-radius:7px;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:var(--sans)">↑</button>
+          <button onclick="importCostoToMeli()" style="padding:7px 12px;background:var(--orange-bg);color:var(--orange);border:1.5px solid var(--orange-bdr);border-radius:7px;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:var(--sans)">Importar</button>
         </div>
       </div>
       <div class="irow"><div><div class="il">Precio publicación ML (c/IVA)</div></div><input type="number" id="ml_pvp" placeholder="0" oninput="recalcMeli()"></div>
@@ -914,17 +826,11 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14
       <div class="irow"><div><div class="il">Costo total (USD)</div><div class="in">Sin IVA ni impuestos</div></div><input type="number" id="w_costo_usd" placeholder="0" step="0.01" oninput="recalcMay()"></div>
       <div style="padding:6px 14px 8px;border-bottom:1px solid var(--border)">
         <div style="font-size:9px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px;font-family:var(--mono)">O importar desde historial de importación</div>
-        <div style="display:flex;gap:6px;margin-bottom:6px">
-          <select id="may_import_sel" style="flex:1;padding:7px 10px;border:1.5px solid var(--border2);border-radius:7px;background:var(--surface);color:var(--text);font-family:var(--sans);font-size:11px;outline:none;appearance:none">
-            <option value="">— Desde historial de importación —</option>
-          </select>
-          <button onclick="importCostoToMay()" style="padding:7px 12px;background:var(--teal-bg);color:var(--teal);border:1.5px solid var(--teal-bdr);border-radius:7px;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:var(--sans)">↑</button>
-        </div>
         <div style="display:flex;gap:6px">
-          <select id="may_cost_sel" style="flex:1;padding:7px 10px;border:1.5px solid var(--border2);border-radius:7px;background:var(--surface);color:var(--text);font-family:var(--sans);font-size:11px;outline:none;appearance:none">
-            <option value="">— Desde base de costos —</option>
+          <select id="may_import_sel" style="flex:1;padding:7px 10px;border:1.5px solid var(--border2);border-radius:7px;background:var(--surface);color:var(--text);font-family:var(--sans);font-size:11px;outline:none;appearance:none">
+            <option value="">— Seleccioná un cálculo guardado —</option>
           </select>
-          <button onclick="importFromCostBase('may')" style="padding:7px 12px;background:var(--green-bg);color:var(--green);border:1.5px solid var(--green-bdr);border-radius:7px;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:var(--sans)">↑</button>
+          <button onclick="importCostoToMay()" style="padding:7px 12px;background:var(--teal-bg);color:var(--teal);border:1.5px solid var(--teal-bdr);border-radius:7px;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:var(--sans)">Importar</button>
         </div>
       </div>
       <div class="irow"><div><div class="il">Dólar BNA</div></div><input type="number" id="w_bna" placeholder="0" oninput="recalcMay()"></div>
@@ -1125,196 +1031,6 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14
   <div id="prov-list"></div>
 
 </div><!-- /prov -->
-
-
-<!-- ══════════════════════ BASE DE COSTOS ══════════════════════ -->
-<div id="panel-costos" class="panel">
-
-  <!-- KPIs resumen -->
-  <div class="cost-kpis">
-    <div class="ck"><div class="ck-lbl">Productos</div><div class="ck-val" id="ck-total">0</div></div>
-    <div class="ck"><div class="ck-lbl">Costo prom.</div><div class="ck-val" id="ck-prom">—</div></div>
-    <div class="ck"><div class="ck-lbl">Última carga</div><div class="ck-val" id="ck-fecha" style="font-size:11px">—</div></div>
-  </div>
-
-  <button class="btn-sky" onclick="openCostoForm()">+ Cargar producto</button>
-
-  <!-- Formulario -->
-  <div class="costo-form" id="costo-form">
-    <div style="font-size:11px;font-weight:700;color:var(--sky);text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px" id="costo-form-title">Nuevo producto</div>
-    <div class="pv-fields">
-      <div class="pv-field full"><div class="pv-flbl">Nombre del producto *</div><input class="pv-finp" id="cf-nombre" type="text" placeholder="Ej: Silla gamer negra"></div>
-      <div class="pv-field"><div class="pv-flbl">SKU / Código</div><input class="pv-finp" id="cf-sku" type="text" placeholder="Ej: SG-001"></div>
-      <div class="pv-field"><div class="pv-flbl">Categoría</div>
-        <select class="pv-finp" id="cf-cat">
-          <option>Sillas</option><option>Muebles</option><option>Tecnología</option>
-          <option>Hogar</option><option>Exterior</option><option>Otro</option>
-        </select>
-      </div>
-      <div class="pv-field"><div class="pv-flbl">Costo s/IVA (USD)</div><input class="pv-finp" id="cf-costo-usd" type="number" placeholder="0.00" step="0.01" oninput="calcCostoForm()"></div>
-      <div class="pv-field"><div class="pv-flbl">Dólar BNA</div><input class="pv-finp" id="cf-bna" type="number" placeholder="0" oninput="calcCostoForm()"></div>
-      <div class="pv-field"><div class="pv-flbl">Costo s/IVA (ARS)</div><input class="pv-finp" id="cf-costo-ars" type="number" placeholder="Calculado" oninput="calcCostoFormInv()"></div>
-      <div class="pv-field"><div class="pv-flbl">IVA producto</div>
-        <select class="pv-finp" id="cf-iva">
-          <option value="0.21">21%</option><option value="0.105">10.5%</option>
-        </select>
-      </div>
-      <div class="pv-field"><div class="pv-flbl">Costo c/IVA (ARS)</div><input class="pv-finp" id="cf-costo-civa" type="number" placeholder="Calculado" readonly style="background:var(--gray-bg)"></div>
-      <div class="pv-field full"><div class="pv-flbl">Proveedor</div>
-        <select class="pv-finp" id="cf-prov">
-          <option value="">— Sin proveedor —</option>
-        </select>
-      </div>
-      <div class="pv-field full"><div class="pv-flbl">Origen del costo</div>
-        <select class="pv-finp" id="cf-origen" onchange="toggleCostoHistorial()">
-          <option value="manual">Ingreso manual</option>
-          <option value="historial">Desde historial</option>
-        </select>
-      </div>
-      <div class="pv-field full" id="cf-hist-wrap" style="display:none">
-        <div class="pv-flbl">Cálculo del historial</div>
-        <select class="pv-finp" id="cf-hist-sel" onchange="importCostoFromHist()">
-          <option value="">— Seleccioná —</option>
-        </select>
-      </div>
-      <div class="pv-field full"><div class="pv-flbl">Notas</div><input class="pv-finp" id="cf-notas" type="text" placeholder="Observaciones"></div>
-    </div>
-    <input type="hidden" id="cf-edit-id" value="">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px">
-      <button onclick="closeCostoForm()" style="padding:10px;background:var(--surface);border:1.5px solid var(--border2);border-radius:8px;color:var(--muted);font-family:var(--sans);font-size:12px;font-weight:600;cursor:pointer">Cancelar</button>
-      <button onclick="saveCosto()" style="padding:10px;background:var(--sky);color:#fff;border:none;border-radius:8px;font-family:var(--sans);font-size:12px;font-weight:700;cursor:pointer">💾 Guardar</button>
-    </div>
-  </div>
-
-  <!-- Buscador -->
-  <div style="position:relative;margin-bottom:10px">
-    <input type="text" id="costos-search" placeholder="🔍 Buscar producto..." oninput="renderCostos()"
-      style="width:100%;padding:9px 12px;border:1.5px solid var(--border2);border-radius:8px;background:var(--surface);font-family:var(--sans);font-size:13px;outline:none">
-  </div>
-
-  <!-- Tabla -->
-  <div style="overflow-x:auto;margin-bottom:10px">
-    <table class="cost-table">
-      <thead>
-        <tr>
-          <th>Producto</th>
-          <th>SKU</th>
-          <th>Cat.</th>
-          <th>Costo USD</th>
-          <th>Costo ARS s/IVA</th>
-          <th>Costo ARS c/IVA</th>
-          <th>Proveedor</th>
-          <th>Fecha</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody id="costos-body">
-        <tr><td colspan="9" class="db-empty">No hay productos cargados aún.</td></tr>
-      </tbody>
-    </table>
-  </div>
-
-  <button class="btn-reset" onclick="if(confirm('¿Borrar toda la base de costos?')){COSTOS=[];saveCostos();renderCostos();}">✕ &nbsp;Limpiar base de costos</button>
-</div><!-- /costos -->
-
-
-<!-- ══════════════════════ RENTABILIDAD ══════════════════════ -->
-<div id="panel-rent" class="panel">
-  <div class="notice na">📊 <strong>Analizador de rentabilidad.</strong> Entendé si un producto realmente conviene antes de comprarlo.</div>
-
-  <!-- PRODUCTO -->
-  <div class="sec">
-    <div class="sec-hdr" onclick="toggleSec(this)"><div class="ic ic-am">📦</div><div class="sec-title">Producto a analizar</div><div class="sec-chev">▾</div></div>
-    <div class="sec-body">
-      <div class="irow"><div><div class="il">Producto</div></div><input class="txt" id="rn_nombre" type="text" placeholder="Nombre" oninput="recalcRent()"></div>
-      <div class="irow"><div><div class="il">O seleccioná de base de costos</div></div>
-        <select id="rn_prod_sel" onchange="importRentFromBase()" style="width:100%;padding:6px 8px;border:1.5px solid var(--border2);border-radius:6px;background:var(--surface);color:var(--text);font-family:var(--sans);font-size:12px;outline:none;appearance:none">
-          <option value="">— Seleccioná —</option>
-        </select>
-      </div>
-      <div class="irow"><div><div class="il">Costo landed s/IVA (USD/u)</div><div class="in">Costo puesto acá sin IVA</div></div><input type="number" id="rn_costo_usd" placeholder="0" step="0.01" oninput="recalcRent()"></div>
-      <div class="irow"><div><div class="il">Dólar BNA</div></div><input type="number" id="rn_bna" placeholder="0" oninput="recalcRent()"></div>
-      <div class="irow"><div><div class="il">Cantidad del lote (u)</div></div><input type="number" id="rn_lote" placeholder="0" oninput="recalcRent()"></div>
-    </div>
-  </div>
-
-  <!-- VENTA -->
-  <div class="sec">
-    <div class="sec-hdr" onclick="toggleSec(this)"><div class="ic ic-or">💰</div><div class="sec-title">Precio de venta</div><div class="sec-chev">▾</div></div>
-    <div class="sec-body">
-      <div class="irow"><div><div class="il">Canal de venta</div></div>
-        <select id="rn_canal" onchange="recalcRent()" style="width:100%;padding:6px 8px;border:1.5px solid var(--border2);border-radius:6px;background:var(--surface);color:var(--text);font-family:var(--sans);font-size:12px;outline:none;appearance:none">
-          <option value="ml">MercadoLibre</option>
-          <option value="may">Mayorista</option>
-          <option value="ambos">Ambos (promedio)</option>
-        </select>
-      </div>
-      <div class="irow"><div><div class="il">PVP ML c/IVA (ARS)</div></div><input type="number" id="rn_pvp_ml" placeholder="0" oninput="recalcRent()"></div>
-      <div class="irow"><div><div class="il">% Comisión ML total</div></div><input type="number" id="rn_com_ml" placeholder="14" value="14" step="0.5" oninput="recalcRent()"></div>
-      <div class="irow"><div><div class="il">Envío Flex (ARS)</div><div class="in">CABA / 1er / 2do cordón</div></div>
-        <select id="rn_flex" onchange="recalcRent()" style="width:100%;padding:6px 8px;border:1.5px solid var(--border2);border-radius:6px;background:var(--surface);color:var(--text);font-family:var(--sans);font-size:12px;outline:none;appearance:none">
-          <option value="3330">CABA — $3.330</option>
-          <option value="5355">1er Cordón — $5.355</option>
-          <option value="6600" selected>2do Cordón — $6.600</option>
-        </select>
-      </div>
-      <div class="irow"><div><div class="il">Publicidad % (ML)</div></div><input type="number" id="rn_pub" placeholder="5" value="5" step="0.5" oninput="recalcRent()"></div>
-      <div class="irow"><div><div class="il">PVP Mayorista s/IVA (ARS)</div></div><input type="number" id="rn_pvp_may" placeholder="0" oninput="recalcRent()"></div>
-      <div class="irow"><div><div class="il">% Costo venta mayorista</div></div><input type="number" id="rn_may_gasto" placeholder="10" value="10" step="0.5" oninput="recalcRent()"></div>
-    </div>
-  </div>
-
-  <!-- FINANCIERO -->
-  <div class="sec">
-    <div class="sec-hdr" onclick="toggleSec(this)"><div class="ic ic-bl">🏦</div><div class="sec-title">Financiamiento (opcional)</div><div class="sec-chev">▾</div></div>
-    <div class="sec-body">
-      <div class="irow"><div><div class="il">¿Comprás con préstamo?</div></div>
-        <select id="rn_prestamo" onchange="recalcRent()" style="width:100%;padding:6px 8px;border:1.5px solid var(--border2);border-radius:6px;background:var(--surface);color:var(--text);font-family:var(--sans);font-size:12px;outline:none;appearance:none">
-          <option value="0">No, capital propio</option>
-          <option value="1">Sí, con préstamo</option>
-        </select>
-      </div>
-      <div class="irow"><div><div class="il">TNA del préstamo (%)</div></div><input type="number" id="rn_tna" placeholder="60" value="60" step="1" oninput="recalcRent()"></div>
-      <div class="irow"><div><div class="il">Plazo (meses)</div></div><input type="number" id="rn_plazo_fin" placeholder="6" value="6" step="1" oninput="recalcRent()"></div>
-    </div>
-  </div>
-
-  <!-- ROTACIÓN -->
-  <div class="sec">
-    <div class="sec-hdr" onclick="toggleSec(this)"><div class="ic ic-gn">📅</div><div class="sec-title">Velocidad de venta estimada</div><div class="sec-chev">▾</div></div>
-    <div class="sec-body">
-      <div class="irow"><div><div class="il">Unidades vendidas por mes</div><div class="in">Estimado histórico o proyección</div></div><input type="number" id="rn_upm" placeholder="0" oninput="recalcRent()"></div>
-    </div>
-  </div>
-
-  <!-- RESULTADO -->
-  <div class="sec" id="rent-result" style="display:none">
-    <div class="sec-hdr" onclick="toggleSec(this)"><div class="ic ic-rd">≡</div><div class="sec-title">Análisis completo</div><div class="sec-chev">▾</div></div>
-    <div class="sec-body">
-      <div class="rrow"><div class="rl">Costo landed s/IVA (ARS/u)</div><div class="rv amber" id="rn_r_costo_ars">—</div></div>
-      <div class="rrow"><div class="rl">Inversión total del lote (ARS)</div><div class="rv amber" id="rn_r_inversion">—</div></div>
-      <div class="rrow"><div class="rl">Ingreso neto por unidad (ML)</div><div class="rv orange" id="rn_r_neto_ml">—</div></div>
-      <div class="rrow"><div class="rl">Ingreso neto por unidad (May.)</div><div class="rv teal" id="rn_r_neto_may">—</div></div>
-      <div class="rrow hi"><div class="rl">Ganancia / unidad</div><div class="rv" id="rn_r_gan_u">—</div></div>
-      <div class="rrow hi"><div class="rl">Margen sobre costo</div><div class="rv" id="rn_r_margen">—</div></div>
-      <div class="rrow"><div class="rl">Costo financiero (préstamo)</div><div class="rv red" id="rn_r_fin">—</div></div>
-      <div class="rrow"><div class="rl">Ganancia / u después del préstamo</div><div class="rv" id="rn_r_gan_fin">—</div></div>
-      <div class="rrow hi"><div class="rl">Días para vender el lote</div><div class="rv blue" id="rn_r_dias">—</div></div>
-      <div class="rrow"><div class="rl">Punto de equilibrio (u mín a vender)</div><div class="rv" id="rn_r_break">—</div></div>
-      <div class="rrow hi2"><div class="rl">Ganancia total del lote</div><div class="rv red" id="rn_r_gan_total">—</div></div>
-      <div class="rrow hi3"><div class="rl">ROI del lote</div><div class="rv green" id="rn_r_roi">—</div></div>
-    </div>
-  </div>
-
-  <!-- SEMÁFORO -->
-  <div id="rent-semaforo" style="display:none;border-radius:var(--r);padding:16px;text-align:center;margin-bottom:10px;border:2px solid">
-    <div style="font-size:36px;margin-bottom:6px" id="rn_emoji">—</div>
-    <div style="font-size:15px;font-weight:700;margin-bottom:4px" id="rn_veredicto">—</div>
-    <div style="font-size:12px;opacity:.8;line-height:1.5" id="rn_detalle">—</div>
-  </div>
-
-  <button class="btn-reset" onclick="resetRent()">✕ &nbsp;Limpiar análisis</button>
-</div><!-- /rent -->
 
 </div><!-- /content -->
 
@@ -1914,29 +1630,27 @@ function resetMeli(){
 function recalcMay(){
   const costo_usd=g('w_costo_usd'), bna=g('w_bna');
   const costo_ars = costo_usd*bna;
-  const pvp_siva  = g('w_pvp_siva');                 // precio lista SIN IVA (base)
+  const pvp_siva  = g('w_pvp_siva');
   const iva_rate  = parseFloat(document.getElementById('w_iva_tipo').value)||0.21;
-  const pvp_civa  = pvp_siva*(1+iva_rate);            // precio con IVA (info)
+  const pvp_civa  = pvp_siva*(1+iva_rate);
   const dco_pct   = g('w_dco')/100, dof_pct=g('w_dof')/100, dpago_pct=g('w_dpago')/100;
 
-  // Descuentos sobre precio SIN IVA
-  const dco_m     = pvp_siva * dco_pct;
+  const dco_m     = pvp_siva*dco_pct;
   const tras_dco  = pvp_siva - dco_m;
-  const dof_m     = tras_dco * dof_pct;
+  const dof_m     = tras_dco*dof_pct;
   const tras_dof  = tras_dco - dof_m;
-  const dpago_m   = tras_dof * dpago_pct;
-  const neto      = tras_dof - dpago_m;              // precio neto s/IVA que cobrás
+  const dpago_m   = tras_dof*dpago_pct;
+  const neto      = tras_dof - dpago_m;             // precio neto cobrado
 
-  // Sobre el neto s/IVA se calculan todos los gastos
-  const iva_m     = neto * iva_rate;                 // IVA que debés pagar (sobre el neto)
-  const iibb_m    = neto * (g('w_iibb')/100);
-  const com_m     = neto * (g('w_com')/100);
+  const iva_m     = neto * iva_rate/(1+iva_rate);   // IVA incluido en el neto
+  const iibb_m    = neto*(g('w_iibb')/100);
+  const com_m     = neto*(g('w_com')/100);
   const total_costos = dco_m+dof_m+dpago_m+iva_m+iibb_m+com_m+costo_ars;
   const ganancia  = neto - iva_m - iibb_m - com_m - costo_ars;
   const m_costo   = costo_ars>0?ganancia/costo_ars:0;
-  const m_pvp     = pvp_siva>0?ganancia/pvp_siva:0;
+  const m_pvp     = neto>0?ganancia/neto:0;
 
-  st('w_pvp_siva_disp',fA(pvp_siva));  // precio lista s/IVA
+  st('w_pvp_siva_disp',fA(pvp_siva));
   st('w_pvp_civa',fA(pvp_civa));
   st('w_r_dco',fA(dco_m));
   st('w_tras_dco',fA(tras_dco));
@@ -2204,16 +1918,6 @@ function importCostoToMay(){
 //  NAVEGACIÓN
 // ══════════════════════════════════════════════════════════
 function showTab(name,btn){
-  // Update sidebar active state
-  document.querySelectorAll('.sb-item').forEach(el=>el.classList.remove('on'));
-  const sbEl = document.getElementById('sb-'+name);
-  if(sbEl) sbEl.classList.add('on');
-  // Update label
-  const labels = {cont:'🚢 Container',multi:'📦 Multi-container',cour:'✈ Courier',
-    kgo:'⚖ Solo kg',meli:'🛒 MercadoLibre',may:'🏪 Mayorista',
-    rent:'📊 Rentabilidad',prov:'👥 Proveedores',costos:'📋 Base de costos',db:'🗂 Historial'};
-  const lbl = document.getElementById('current-tab-label');
-  if(lbl) lbl.textContent = labels[name] || name;
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
   document.getElementById('panel-'+name).classList.add('on');
@@ -2227,18 +1931,14 @@ function showTab(name,btn){
   else if(name==='meli'){recalcMeli();document.getElementById('bar1_lbl').textContent='S/IVA';document.getElementById('bar2_lbl').textContent='Ingreso neto';document.getElementById('bar3_lbl').textContent='Ganancia';}
   else if(name==='may'){recalcMay();document.getElementById('bar1_lbl').textContent='Neto cobrado';document.getElementById('bar2_lbl').textContent='PVP c/IVA';document.getElementById('bar3_lbl').textContent='Ganancia';}
   else if(name==='db') renderDb();
-  if(name==='meli'||name==='may'){ refreshImportSelectors(); refreshMeliCostSel(); refreshMayCostSel(); }
+  if(name==='meli'||name==='may') refreshImportSelectors();
   else if(name==='prov'){ renderProviders(); document.getElementById('prov-form').style.display='none'; }
-  else if(name==='costos'){ renderCostos(); refreshCostoProvSel(); refreshCostoHistSel(); }
-  else if(name==='rent'){ refreshRentSel(); }
 }
 function toggleSec(hdr){hdr.parentElement.classList.toggle('closed');}
 
 // ── INIT ──
 loadDb();
 loadProviders();
-loadCostos();
-initCostosFromBase();
 buildOptions('prod-select');
 buildOptions('c_prod_select');
 recalc(); recalcCourier(); recalcKgo();
@@ -2544,589 +2244,11 @@ function closePhotoModal(){
   if(m){ m.classList.remove('open'); document.getElementById('photo-modal-img').src=''; }
 }
 
-
-// ══════════════════════════════════════════════════════════
-//  BASE DE COSTOS
-// ══════════════════════════════════════════════════════════
-let COSTOS = [];
-function loadCostos(){ try{ const s=localStorage.getItem('niviko_costos'); if(s) COSTOS=JSON.parse(s); }catch(e){} }
-function saveCostos(){ try{ localStorage.setItem('niviko_costos', JSON.stringify(COSTOS)); }catch(e){} }
-
-function openCostoForm(){
-  document.getElementById('cf-edit-id').value='';
-  document.getElementById('costo-form-title').textContent='Nuevo producto';
-  ['cf-nombre','cf-sku','cf-costo-usd','cf-bna','cf-costo-ars','cf-costo-civa','cf-notas'].forEach(id=>{
-    const e=document.getElementById(id); if(e)e.value='';
-  });
-  document.getElementById('cf-hist-wrap').style.display='none';
-  document.getElementById('cf-origen').value='manual';
-  refreshCostoProvSel();
-  refreshCostoHistSel();
-  document.getElementById('costo-form').style.display='';
-  document.getElementById('costo-form').scrollIntoView({behavior:'smooth'});
-}
-function closeCostoForm(){ document.getElementById('costo-form').style.display='none'; }
-
-function calcCostoForm(){
-  const usd=parseFloat(document.getElementById('cf-costo-usd').value)||0;
-  const bna=parseFloat(document.getElementById('cf-bna').value)||0;
-  const iva=parseFloat(document.getElementById('cf-iva').value)||0.21;
-  if(usd&&bna){
-    const ars=usd*bna;
-    document.getElementById('cf-costo-ars').value=ars.toFixed(0);
-    document.getElementById('cf-costo-civa').value=(ars*(1+iva)).toFixed(0);
-  }
-}
-function calcCostoFormInv(){
-  const ars=parseFloat(document.getElementById('cf-costo-ars').value)||0;
-  const bna=parseFloat(document.getElementById('cf-bna').value)||0;
-  const iva=parseFloat(document.getElementById('cf-iva').value)||0.21;
-  if(ars){ document.getElementById('cf-costo-civa').value=(ars*(1+iva)).toFixed(0); }
-  if(ars&&bna){ document.getElementById('cf-costo-usd').value=(ars/bna).toFixed(2); }
-}
-
-function toggleCostoHistorial(){
-  const origen=document.getElementById('cf-origen').value;
-  document.getElementById('cf-hist-wrap').style.display=origen==='historial'?'':'none';
-  if(origen==='historial') refreshCostoHistSel();
-}
-
-function refreshCostoProvSel(){
-  const sel=document.getElementById('cf-prov'); if(!sel) return;
-  sel.innerHTML='<option value="">— Sin proveedor —</option>';
-  PROVEEDORES.forEach(p=>{
-    const opt=document.createElement('option'); opt.value=p.id; opt.textContent=p.nombre; sel.appendChild(opt);
-  });
-}
-function refreshCostoHistSel(){
-  const sel=document.getElementById('cf-hist-sel'); if(!sel) return;
-  const importable=DB.filter(r=>r.snap&&(r.tipo==='container'||r.tipo==='courier'||r.tipo==='kgonly'));
-  sel.innerHTML='<option value="">— Seleccioná —</option>';
-  importable.forEach(r=>{
-    const opt=document.createElement('option'); opt.value=r.id;
-    opt.textContent=`[${r.label}] ${r.producto} — ${r.display_usd} (${r.fecha})`; sel.appendChild(opt);
-  });
-}
-
-function importCostoFromHist(){
-  const id=parseInt(document.getElementById('cf-hist-sel').value); if(!id) return;
-  const rec=DB.find(r=>r.id===id); if(!rec||!rec.snap) return;
-  let costo_usd=0;
-  const s=rec.snap;
-  if(rec.tipo==='container'){
-    const cant=parseFloat(s.cantidad)||1,bna_s=parseFloat(s.dolar_bna)||1;
-    const r=calcContainer(cant,bna_s,parseFloat(s.dolar_blue)||0,
-      parseFloat(s.fob_flete)||0,parseFloat(s.fob_producto)||0,parseFloat(s.fob_invoice)||0,
-      (parseFloat(s.t_maury)||0)/100,(parseFloat(s.t_derecho)||0)/100,(parseFloat(s.t_estadistica)||0)/100,
-      (parseFloat(s.t_iva)||0)/100,(parseFloat(s.t_iva_ad)||0)/100,(parseFloat(s.t_ganancias)||0)/100,
-      parseFloat(s.cbm_total)||1,parseFloat(s.costo_flete)||0,parseFloat(s.terminal)||0,parseFloat(s.despachante)||0,
-      parseFloat(s.gasto_extra1)||0,(parseFloat(s.gasto_extra2)||0)/100);
-    costo_usd=r.ab_siva_usd;
-    document.getElementById('cf-bna').value=s.dolar_bna||'';
-  } else if(rec.tipo==='courier'){
-    const rate=s._origen==='miami'?(parseFloat(s.c_rate_miami)||12):(parseFloat(s.c_rate_china)||16);
-    const flete_u=(parseFloat(s.c_peso)||0)*rate;
-    const base=(parseFloat(s.c_fob_inv)||0)+flete_u;
-    const der_u=base*(parseFloat(s.c_derecho)||0)/100;
-    const estad_u=base*(parseFloat(s.c_estadistica)||0)/100;
-    const gcias_u=(base+der_u+estad_u)*(parseFloat(s.c_ganancias)||0)/100;
-    const gg_u=base*(parseFloat(s.c_gg)||5)/100;
-    costo_usd=(base+der_u+estad_u+gcias_u+gg_u)+((parseFloat(s.c_fob_real)||0)-(parseFloat(s.c_fob_inv)||0))*1.05;
-    document.getElementById('cf-bna').value=s.c_bna||'';
-  } else if(rec.tipo==='kgonly'){
-    costo_usd=(parseFloat(s.k_precio)||0)+(parseFloat(s.k_peso)||0)*(parseFloat(s.k_rate)||16);
-    document.getElementById('cf-bna').value=s.k_bna||'';
-  }
-  document.getElementById('cf-costo-usd').value=costo_usd.toFixed(2);
-  if(!document.getElementById('cf-nombre').value) document.getElementById('cf-nombre').value=rec.producto;
-  calcCostoForm();
-}
-
-function saveCosto(){
-  const nombre=document.getElementById('cf-nombre').value.trim();
-  if(!nombre){alert('El nombre es obligatorio');return;}
-  const editId=document.getElementById('cf-edit-id').value;
-  const provSel=document.getElementById('cf-prov');
-  const provId=provSel?.value||'';
-  const provNombre=provId?PROVEEDORES.find(p=>p.id===provId)?.nombre||'':'';
-  const costo={
-    id:editId||Date.now().toString(),
-    nombre, sku:document.getElementById('cf-sku').value.trim(),
-    cat:document.getElementById('cf-cat').value,
-    costo_usd:parseFloat(document.getElementById('cf-costo-usd').value)||0,
-    bna:parseFloat(document.getElementById('cf-bna').value)||0,
-    costo_ars:parseFloat(document.getElementById('cf-costo-ars').value)||0,
-    costo_civa:parseFloat(document.getElementById('cf-costo-civa').value)||0,
-    iva:parseFloat(document.getElementById('cf-iva').value)||0.21,
-    prov_id:provId, prov_nombre:provNombre,
-    origen:document.getElementById('cf-origen').value,
-    notas:document.getElementById('cf-notas').value.trim(),
-    fecha:new Date().toLocaleDateString('es-AR')
-  };
-  if(editId){ const idx=COSTOS.findIndex(c=>c.id===editId); if(idx>=0) COSTOS[idx]=costo; else COSTOS.push(costo); }
-  else COSTOS.push(costo);
-  saveCostos(); closeCostoForm(); renderCostos();
-  refreshMeliCostSel(); refreshMayCostSel();
-}
-
-function deleteCosto(id){ if(!confirm('¿Eliminar este producto?')) return; COSTOS=COSTOS.filter(c=>c.id!==id); saveCostos(); renderCostos(); }
-
-function editCosto(id){
-  const c=COSTOS.find(x=>x.id===id); if(!c) return;
-  openCostoForm();
-  document.getElementById('costo-form-title').textContent='Editar producto';
-  document.getElementById('cf-edit-id').value=c.id;
-  document.getElementById('cf-nombre').value=c.nombre||'';
-  document.getElementById('cf-sku').value=c.sku||'';
-  document.getElementById('cf-cat').value=c.cat||'Otro';
-  document.getElementById('cf-costo-usd').value=c.costo_usd||'';
-  document.getElementById('cf-bna').value=c.bna||'';
-  document.getElementById('cf-costo-ars').value=c.costo_ars||'';
-  document.getElementById('cf-costo-civa').value=c.costo_civa||'';
-  document.getElementById('cf-iva').value=c.iva||0.21;
-  document.getElementById('cf-notas').value=c.notas||'';
-  if(c.prov_id) document.getElementById('cf-prov').value=c.prov_id;
-}
-
-function renderCostos(){
-  const q=(document.getElementById('costos-search')?.value||'').toLowerCase();
-  const filtered=COSTOS.filter(c=>!q||c.nombre.toLowerCase().includes(q)||(c.sku||'').toLowerCase().includes(q)||(c.cat||'').toLowerCase().includes(q));
-  const tbody=document.getElementById('costos-body'); if(!tbody) return;
-  const total=document.getElementById('ck-total'); if(total) total.textContent=COSTOS.length;
-  const prom=document.getElementById('ck-prom');
-  if(prom&&COSTOS.length){ const avg=COSTOS.reduce((s,c)=>s+(c.costo_usd||0),0)/COSTOS.length; prom.textContent='US$'+avg.toFixed(2); }
-  const uf=document.getElementById('ck-fecha');
-  if(uf&&COSTOS.length) uf.textContent=COSTOS[COSTOS.length-1].fecha;
-  if(filtered.length===0){ tbody.innerHTML='<tr><td colspan="9" class="db-empty">Sin resultados.</td></tr>'; return; }
-  tbody.innerHTML=filtered.slice().reverse().map(c=>`
-    <tr>
-      <td style="font-weight:600;min-width:120px">${c.nombre}</td>
-      <td style="font-family:var(--mono);font-size:10px;color:var(--muted)">${c.sku||'—'}</td>
-      <td><span class="cost-badge" style="background:var(--sky-bg);color:var(--sky);border:1px solid var(--sky-bdr)">${c.cat||'—'}</span></td>
-      <td style="font-family:var(--mono);font-size:11px;color:var(--amber)">US$${(c.costo_usd||0).toFixed(2)}</td>
-      <td style="font-family:var(--mono);font-size:11px;color:var(--green)">$${Math.round(c.costo_ars||0).toLocaleString('es-AR')}</td>
-      <td style="font-family:var(--mono);font-size:11px;color:var(--blue)">$${Math.round(c.costo_civa||0).toLocaleString('es-AR')}</td>
-      <td style="font-size:11px;color:var(--muted)">${c.prov_nombre||'—'}</td>
-      <td style="font-size:10px;color:var(--dim)">${c.fecha}</td>
-      <td style="white-space:nowrap">
-        <button style="background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-bdr);border-radius:4px;padding:2px 6px;font-size:10px;font-weight:600;cursor:pointer;margin-right:3px" onclick="editCosto('${c.id}')">✏</button>
-        <button class="db-del" onclick="deleteCosto('${c.id}')">✕</button>
-      </td>
-    </tr>`).join('');
-}
-
-// Refresh cost selectors in ML/May
-function refreshMeliCostSel(){
-  const sel=document.getElementById('ml_cost_sel'); if(!sel) return;
-  sel.innerHTML='<option value="">— Seleccioná producto —</option>';
-  COSTOS.forEach(c=>{ const opt=document.createElement('option'); opt.value=c.id; opt.textContent=c.nombre+(c.sku?' ('+c.sku+')':''); sel.appendChild(opt); });
-}
-function refreshMayCostSel(){
-  const sel=document.getElementById('may_cost_sel'); if(!sel) return;
-  sel.innerHTML='<option value="">— Seleccioná producto —</option>';
-  COSTOS.forEach(c=>{ const opt=document.createElement('option'); opt.value=c.id; opt.textContent=c.nombre+(c.sku?' ('+c.sku+')':''); sel.appendChild(opt); });
-}
-
-function importFromCostBase(dest){
-  const selId=dest==='meli'?'ml_cost_sel':'may_cost_sel';
-  const id=document.getElementById(selId)?.value; if(!id) return;
-  const c=COSTOS.find(x=>x.id===id); if(!c) return;
-  if(dest==='meli'){
-    document.getElementById('ml_costo').value=c.costo_ars||'';
-    if(!document.getElementById('ml_desc').value) document.getElementById('ml_desc').value=c.nombre;
-    const bnaField=document.getElementById('ml_bna_override');
-    if(bnaField&&c.bna) bnaField.value=c.bna;
-    recalcMeli();
-  } else {
-    document.getElementById('w_costo_usd').value=c.costo_usd||'';
-    if(c.bna) document.getElementById('w_bna').value=c.bna;
-    if(!document.getElementById('w_desc').value) document.getElementById('w_desc').value=c.nombre;
-    recalcMay();
-  }
-  const btn=event.target, orig=btn.textContent;
-  btn.textContent='✓'; setTimeout(()=>{ btn.textContent=orig; },1200);
-}
-
-// ══════════════════════════════════════════════════════════
-//  CHAT CLAUDE — asistente integrado
-// ══════════════════════════════════════════════════════════
-let chatHistory = [];
-let chatOpen = false;
-
-function toggleChat(){
-  chatOpen = !chatOpen;
-  document.getElementById('chat-panel').style.display = chatOpen ? 'flex' : 'none';
-  if(chatOpen && chatHistory.length===0){
-    addChatMsg('assistant','¡Hola! Soy tu asistente NIVIKO. Puedo ayudarte con:\n• Cálculos de importación\n• Análisis de márgenes\n• Estrategias de precio para ML\n• Dudas sobre aranceles NCM\n• Cualquier consulta de tu negocio\n\n¿En qué te ayudo hoy?');
-  }
-}
-
-function addChatMsg(role, text){
-  chatHistory.push({role, content: text});
-  renderChat();
-}
-
-function renderChat(){
-  const body = document.getElementById('chat-body'); if(!body) return;
-  body.innerHTML = chatHistory.map(m => {
-    const isUser = m.role==='user';
-    const lines = m.content.replace(/
-/g,'<br>');
-    return `<div style="display:flex;justify-content:${isUser?'flex-end':'flex-start'};margin-bottom:8px">
-      <div style="max-width:85%;padding:9px 12px;border-radius:${isUser?'12px 12px 2px 12px':'12px 12px 12px 2px'};background:${isUser?'#7c3aed':'var(--white)'};color:${isUser?'#fff':'var(--text)'};font-size:12px;line-height:1.5;border:${isUser?'none':'1.5px solid var(--border)'};font-family:var(--sans)">${lines}</div>
-    </div>`;
-  }).join('');
-  body.scrollTop = body.scrollHeight;
-}
-
-async function sendChat(){
-  const inp = document.getElementById('chat-inp'); if(!inp) return;
-  const text = inp.value.trim(); if(!text) return;
-  inp.value='';
-  addChatMsg('user', text);
-  const typingId = 'typing-'+Date.now();
-  const body = document.getElementById('chat-body');
-  body.innerHTML += `<div id="${typingId}" style="display:flex;justify-content:flex-start;margin-bottom:8px"><div style="padding:9px 12px;border-radius:12px 12px 12px 2px;background:var(--white);border:1.5px solid var(--border);font-size:12px;color:var(--muted)">✦ escribiendo...</div></div>`;
-  body.scrollTop = body.scrollHeight;
-  try {
-    const resp = await fetch('https://api.anthropic.com/v1/messages',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({
-        model:'claude-sonnet-4-20250514',
-        max_tokens:1000,
-        system:`Sos el asistente de NIVIKO, empresa de importación y distribución en Argentina. Ayudás a Alex y Brian con:\n- Cálculos de importación desde China\n- Análisis de márgenes para MercadoLibre y canal mayorista\n- Aranceles y posiciones NCM\n- Estrategias de precios\n- Todo lo relacionado con el negocio de NIVIKO\nSé conciso, práctico y directo. Respondé en español argentino.`,
-        messages: chatHistory.map(m=>({role:m.role,content:m.content}))
-      })
-    });
-    const data = await resp.json();
-    document.getElementById(typingId)?.remove();
-    const reply = data?.content?.[0]?.text || 'No pude obtener respuesta.';
-    addChatMsg('assistant', reply);
-  } catch(e){
-    document.getElementById(typingId)?.remove();
-    addChatMsg('assistant','Error al conectar. Verificá tu conexión a internet.');
-  }
-}
-
-
-// ══════════════════════════════════════════════════════════
-//  DATOS: BASE DE PRODUCTOS NIVIKO + FLEX
-// ══════════════════════════════════════════════════════════
-const PRODUCTOS_BASE = [{"sku": "", "desc": "Cable De Audio Rca A Rca 1,8 Metros Tv Led Lcd Equipo Musica", "costo_usd": 3.0}, {"sku": "15-FD0095WM", "desc": "NOTEBOOK HP", "costo_usd": 300.0}, {"sku": "29P387", "desc": "Inflador De Pie Jilong 38 Cm Pileta, Pelota Colchon Inflable Color Negro", "costo_usd": 2.0}, {"sku": "29P390", "desc": "Inflador Doble Accion 30cm Pileta Pelota Colchon Inflable Color Negro", "costo_usd": 3.0}, {"sku": "37213", "desc": "Ballena Gigante Inflable Flotador Jilong Pileta Para Agua", "costo_usd": 3.5}, {"sku": "37262", "desc": "Flotador Bebé Asiento Jilong Kiddie Salvavidas Pileta 2-4 Años", "costo_usd": 3.5}, {"sku": "37275", "desc": "Colchoneta Flotadora Sillon Con Techo Red Inflable Jilong", "costo_usd": 8.0}, {"sku": "37342", "desc": "Colchoneta Flotadora Jilong Inflable Aro Frutilla Grande", "costo_usd": 5.0}, {"sku": "37346", "desc": "INFLABLE JILONG", "costo_usd": 12.0}, {"sku": "37347", "desc": "Colchoneta Inflable Media Sandía 180cm Para Pileta Flotador", "costo_usd": 9.0}, {"sku": "37348", "desc": "Colchoneta Flotadora Inflable Jilong Anana Piña Gigante", "costo_usd": 9.4}, {"sku": "37351", "desc": "Colchoneta Flotadora Jilong Inflable Palito Paleta Helado", "costo_usd": 6.35}, {"sku": "37423", "desc": "Colchoneta Flotadora Inflable Jilong Paleta Lolli Pop Multicolor", "costo_usd": 7.5}, {"sku": "37425", "desc": "Colchoneta Flotadora Jilong Inflable Papas Fritas Mc Burger", "costo_usd": 8.1}, {"sku": "37426", "desc": "Colchoneta Flotadora Jilong Inflable Cactus", "costo_usd": 7.5}, {"sku": "37428", "desc": "Colchoneta Flotadora Jilong Inflable Unicornio Gigante Blanco", "costo_usd": 29.4}, {"sku": "37430", "desc": "Colchoneta Flotadora Jilong Inflable Pelicano Gigante", "costo_usd": 14.75}, {"sku": "6004-", "desc": "Tendedero Tender Slim Mor Compact, Retráctil Y Reforzado Sin Alas Color Blanco", "costo_usd": 5.0}, {"sku": "6005", "desc": "Tender Para Ropa Mor  Plegable Acero Color Blanco", "costo_usd": 6.0}, {"sku": "6104", "desc": "Tender Para Ropa Mor 6104 Plegable Acero Color Blanco", "costo_usd": 5.0}, {"sku": "6608", "desc": "Coche Bebe Recién Nacido Paseo Cuna Paraguita", "costo_usd": 35.0}, {"sku": "6920388616164", "desc": "CENTRO DE JUEGOS INFLABLE JILONG", "costo_usd": 21.0}, {"sku": "7220", "desc": "Salvavidas Jilong Bote Para Chicos Pileta 100 X 70 Cm", "costo_usd": 3.0}, {"sku": "82QD00DHUS", "desc": "NOTEBOOK LENOVO", "costo_usd": 300.0}, {"sku": "8629", "desc": "Coche Bebe Recién Nacido Paseo Cuna Mecedor 3 Pos Toing", "costo_usd": 45.0}, {"sku": "97224", "desc": "Centro De Juego C/ Tobogan Y Tiro Aro Inflable Pileta Jilong", "costo_usd": 18.95}, {"sku": "A-5120", "desc": "RELOJ SMARTWATCH", "costo_usd": 2.6}, {"sku": "A-6700-B", "desc": "AURICULARES IN EAR", "costo_usd": 2.8}, {"sku": "A-6700-N", "desc": "AURICULARES IN EAR", "costo_usd": 2.8}, {"sku": "A6S", "desc": "Auriculares In-ear Inalámbricos Bluetooth A6s Negro Zhome", "costo_usd": 2.8}, {"sku": "Araguaia", "desc": "Parrilla Móvil Mor Araguaia 44cm De Ancho 75cm De Alto 72cm De Profundidad Negra", "costo_usd": 5.0}, {"sku": "AUSTIN", "desc": "Silla de Oficina Austin Negra", "costo_usd": 22.0}, {"sku": "BOSTON-B", "desc": "Silla De Oficina Escritorio Ejecutiva Lumba Zhome Color Negro Y Blanco Material Del Tapizado Mesh Z-2106-b", "costo_usd": 26.0}, {"sku": "Boston-N", "desc": "Silla Sillon Oficina Gerencial Smart Tech Ws6119 Color Negro Material Del Tapizado Cuero Sintético", "costo_usd": 25.0}, {"sku": "DORAL", "desc": "Silla De Oficina Alta Escritorio Ejecutiva Gerencial Zhome Color Gris Material Del Tapizado Mesh", "costo_usd": 53.0}, {"sku": "DORAL-N", "desc": "Silla De Oficina Alta Escritorio Ejecutiva Gerencial Zhome Color Negro Material Del Tapizado Mesh", "costo_usd": 50.0}, {"sku": "DORAL-SB", "desc": "Silla De Oficina Alta Escritorio Ejecutiva Gerencial Zhome Color Blanco Material Del Tapizado Mesh", "costo_usd": 53.0}, {"sku": "DS-2CD1023G0E-I", "desc": "CAMARA DE SEGURIDAD HIKVISION", "costo_usd": 10.0}, {"sku": "DT70/32GB", "desc": "Pendrive Kingston Datatraveler 70 Dt70 32gb 3.2 Gen 1 Tipo C", "costo_usd": 3.0}, {"sku": "DTX/64GB", "desc": "Pendrive Kingston Datatraveler Exodia Dtx/64 64gb 3.2 Gen Color Negro", "costo_usd": 3.4}, {"sku": "DTXM/128GB", "desc": "Pendrive Unidad Flash Kingston Datatraveler Exodia M De 128 Gb Dtxm 3.2 Color Rojo", "costo_usd": 6.0}, {"sku": "F9-5", "desc": "Auriculares Inalámbricos Tws F9-5 Plus", "costo_usd": 2.0}, {"sku": "FITACTPROBK", "desc": "Auriculares In-ear Inalámbricos Bluetooth Iluv Fit Active", "costo_usd": 10.0}, {"sku": "FITACTPROMT", "desc": "Auriculares In-ear Inalámbricos Bluetooth Iluv Fit Active Color Verde", "costo_usd": 10.0}, {"sku": "FITACTPROWH", "desc": "Auriculares In-ear Inalámbricos Bluetooth Iluv Fit Active Color Blanco", "costo_usd": 10.0}, {"sku": "GE-V09", "desc": "Cassette Limpia Cabezal De Video Vhs Seco Humedo Con Liquido", "costo_usd": 0.01}, {"sku": "KF432C16BB/8", "desc": "MEMORIA RAM", "costo_usd": 10.0}, {"sku": "KF432C16BBA/8", "desc": "Memoria Ram Fury Beast Ddr4 Rgb Color Negro 8gb 1 Kingston", "costo_usd": 20.0}, {"sku": "kl21g-44t", "desc": "Soporte De Tv Led Lcd C/ Inclinación 32 37 39 40 42 49 50 55", "costo_usd": 4.0}, {"sku": "KL22-22F", "desc": "Soporte Universal Fijo De Tv Led Lcd Zhome 14 23 24 32 40 45 Negro", "costo_usd": 1.05}, {"sku": "kl22-22t", "desc": "Soporte Universal Fijo Tv Inclinación Led Lcd 23 24 32 40 42 Zhome Color Negro", "costo_usd": 1.7}, {"sku": "kl22-44f", "desc": "Soporte Vt-bracket Kl22-44f De Pared Para Tv/monitor De 55 Color Negro", "costo_usd": 1.8}, {"sku": "kl22-44t", "desc": "Soporte Universal Fijo De Tv Led Lcd 32 37 39 40 42 49 50 55 Zhome Color Negro", "costo_usd": 2.0}, {"sku": "KL22G-22F", "desc": "Soporte Universal Fijo Tv Led Lcd 23 24 32 40 42 Zhome Color Negro", "costo_usd": 1.0}, {"sku": "KL22G-22T", "desc": "Soporte Universal Fijo Tv Inclinación Led Lcd 23 24 32 40 42 Zhome Color Negro", "costo_usd": 1.7}, {"sku": "KL22G-44F", "desc": "Soporte Universal Fijo De Tv Led Lcd 32 37 39 40 42 49 50 55 Zhome Color Negro", "costo_usd": 1.8}, {"sku": "KL22G-44T", "desc": "Soporte Universal Fijo De Tv Led Lcd 32 37 39 40 42 49 50 55 Zhome Color Negro", "costo_usd": 2.0}, {"sku": "KL22G-64F", "desc": "Soporte Universal Fijo De Tv Led Lcd Zhome 37 40 42 49 50 55 65 70 Color Negro", "costo_usd": 3.0}, {"sku": "KL22G-64T", "desc": "Soporte De Tv Universal Fijo De Pared Con Inclinación Lcd Led Smart 37 42 50 55 65 70 Niviko Color Negro", "costo_usd": 3.2}, {"sku": "LPA68-221", "desc": "Soporte De Tv Led Lcd Brazo Extensible 23 24 32 40 42 Niviko", "costo_usd": 4.2}, {"sku": "LPA68-441", "desc": "Soporte De Tv Universal Led Lcd Brazo 23 24 32 40 42 50 55", "costo_usd": 5.0}, {"sku": "LPA68-443", "desc": "Soporte De Tv De Pared Con Brazo Articulado Movil Led Lcd Smart Niviko 32 37 40 42 49 50 55 Soporta 35 Kg Color Negro", "costo_usd": 9.5}, {"sku": "LPA78-443", "desc": "Soporte De Tv Universal De Pared Niviko Led Lcd Smart 32 37 40 42 49 50 55 Movil Brazo 35 Kg Color Negro", "costo_usd": 10.0}, {"sku": "m3007", "desc": "Parrilla Portátil Carbón Balcon Mor", "costo_usd": 10.0}, {"sku": "M3009", "desc": "Parrilla Portatil Camping Mor Amazonas Estructura Acero", "costo_usd": 20.0}, {"sku": "M3011", "desc": "Parrilla Portátil Carbón Balcon Mor California Plegable Mesa", "costo_usd": 15.0}, {"sku": "M6021", "desc": "TENDER PLEGABLE EXTENSIBLE", "costo_usd": 5.0}, {"sku": "M6022", "desc": "TENDER PLEGABLE EXTENSIBLE", "costo_usd": 5.0}, {"sku": "m6023", "desc": "Tendedero Tender Mor De Pared Ropa Plegable 1,2 Metros Acero", "costo_usd": 5.0}, {"sku": "M6045", "desc": "Tender De Piso Ropa Aluminio Slim Mor 6045 Color Aluminio Mor", "costo_usd": 8.0}, {"sku": "Montana", "desc": "Parrilla Portátil Carbón Balcon Mor", "costo_usd": 6.0}, {"sku": "NVK-007-B-X4", "desc": "Silla Living Comedor Cocina Nordica Niviko Plastica Set X4 Estructura De La Silla Marrón Claro Asiento Blanco Diseño De La Tela Blanco", "costo_usd": 40.0}, {"sku": "NVK-007-N-X4", "desc": "Silla Living Comedor Cocina Nordica Niviko Plastica Set X4 Estructura De La Silla Marrón Claro Asiento Negro Diseño De La Tela Negro", "costo_usd": 40.0}, {"sku": "NVK-008-B-X4", "desc": "Set 4 Silla Sillon Niviko Dublin Plastica Living Comedor Cocina Color Blanco Con Patas Marrón Claro", "costo_usd": 90.0}, {"sku": "NVK-008-N-X4", "desc": "Silla Sillon Living Comedor Cocina Niviko Plastica Set X4 Estructura De La Silla Marrón Claro Asiento Negro Diseño De La Tela Negro", "costo_usd": 90.0}, {"sku": "NVK-011-B", "desc": "Silla Living Comedor Cocina Tulip Eames Almohadón Niviko X4 Estructura De La Silla Marrón Claro Asiento Blanco Diseño De La Tela Cuerina", "costo_usd": 40.0}, {"sku": "NVK-011-N", "desc": "Silla Living Comedor Cocina Tulip Eames Almohadón Niviko X4 Estructura De La Silla Marrón Claro Asiento Negro Diseño De La Tela Cuerina", "costo_usd": 40.0}, {"sku": "NVK-011-NX6", "desc": "Silla Living Comedor Cocina Tulip Eames Almohadón Niviko X6 Estructura De La Silla Marrón Claro Asiento Blanco Diseño De La Tela Cuerina", "costo_usd": 60.0}, {"sku": "NVK-033-B-X4", "desc": "Silla Living Comedor Cocina Windsor Niviko X4 Estructura De La Silla Marrón Claro Asiento Blanco", "costo_usd": 60.0}, {"sku": "NVK-033-B-X6", "desc": "Silla Living Comedor Cocina Windsor Niviko X6 Estructura De La Silla Marrón Claro Asiento Blanco", "costo_usd": 60.0}, {"sku": "NVK-033-N-X4", "desc": "Silla Living Comedor Cocina Windsor Niviko X4 Estructura De La Silla Marrón Claro Asiento Negro", "costo_usd": 40.0}, {"sku": "NVK-097-G", "desc": "Silla De Oficina Alta Escritorio Ejecutiva Lino Gris Niviko", "costo_usd": 22.0}, {"sku": "NVK-097-N", "desc": "Silla De Oficina Alta Escritorio Ejecutiva Negra Niviko Color Negro", "costo_usd": 20.0}, {"sku": "NVK-117-B-X4", "desc": "Silla Living Comedor Cocina Set X4 Tapizada Reforzada Niviko", "costo_usd": 42.0}, {"sku": "nvk-117-bx6", "desc": "Silla Living Comedor Cocina Set X6 Tapizada Niviko Reforzada Estructura De La Silla Blanco Asiento Blanco Diseño De La Tela Cuero Sintético", "costo_usd": 66.0}, {"sku": "NVK-117-B-x6", "desc": "Silla Living Comedor Cocina Set X6 Tapizada Reforzada Niviko", "costo_usd": 66.0}, {"sku": "NVK-117-N-X4", "desc": "Silla Living Comedor Cocina Set X4 Tapizada Reforzada Niviko", "costo_usd": 42.0}, {"sku": "NVK-120-B-X4", "desc": "Silla Niviko Living Comedor Jardin Set X4 Plastica Apilable Estructura De La Silla Blanco Asiento Blanco Diseño De La Tela Polipropileno", "costo_usd": 56.0}, {"sku": "NVK-120-N-X4", "desc": "Silla Niviko Living Comedor Jardin Set X4 Plastica Apilable Estructura De La Silla Blanco Asiento Blanco Diseño De La Tela Polipropileno", "costo_usd": 56.0}, {"sku": "NVK-1428-G-X4", "desc": "Silla Living Comedor Set X4 Tela Tapizada Niviko Diseño Estructura De La Silla Marrón Claro Asiento Gris Diseño De La Tela", "costo_usd": 72.0}, {"sku": "NVK-1428-N-X4", "desc": "Silla Living Comedor Set X4 Tela Tapizada Niviko Diseño Estructura De La Silla Marrón Claro Asiento Negro", "costo_usd": 72.0}, {"sku": "NVK-1516-B-X2", "desc": "Silla Living Comedor Cocina Set X2 Tapizada Niviko Reforzada", "costo_usd": 50.0}, {"sku": "NVK-1516-N-X2", "desc": "Silla Living Comedor Cocina Set X2 Tapizada Niviko Reforzada", "costo_usd": 50.0}, {"sku": "NVK-1614-B-X4", "desc": "Silla Living Comedor Cocina Set X4 Tapizada Niviko Reforzada Estructura De La Silla Blanco Asiento Blanco Diseño De La Tela Cuero Sintético", "costo_usd": 52.0}, {"sku": "nvk-1614-bx6", "desc": "Silla Living Comedor Cocina Set X6 Tapizada Niviko Reforzada Estructura De La Silla Blanco Asiento Blanco Diseño De La Tela Cuero Sintético", "costo_usd": 84.0}, {"sku": "NVK-1614-N-X4", "desc": "Silla Living Comedor Cocina Set X4 Tapizada Niviko Reforzada Estructura De La Silla Negro Asiento Negro Diseño De La Tela Cuero Sintético", "costo_usd": 52.0}, {"sku": "NVK-1614-N-X6", "desc": "Silla Living Comedor Cocina Set X6 Tapizada Niviko Reforzada Estructura De La Silla Negro Asiento Negro Diseño De La Tela Cuero Sintético", "costo_usd": 84.0}, {"sku": "NVK-1812-GO-X4", "desc": "Silla Living Comedor Cocina Set X4 Tapizada Niviko Reforzada Estructura De La Silla Negro Asiento Gris Oscuro Diseño De La Tela Terciopelo", "costo_usd": 120.0}, {"sku": "NVK-1824-G-X4", "desc": "Silla Living Comedor Cocina Set X4 Tapizada Niviko Reforzada Estructura De La Silla Gris Asiento Gris Diseño De La Tela Cuero Sintético", "costo_usd": 120.0}, {"sku": "NVK-1939-GC-X4", "desc": "Silla Living Comedor Cocina Set X4 Tapizada Niviko Reforzada Estructura De La Silla Negro Asiento Gris Diseño De La Tela Velvet", "costo_usd": 41.2}, {"sku": "NVK-1939-GO-X4", "desc": "Silla Living Comedor Cocina Set X4 Tapizada Niviko Reforzada Estructura De La Silla Negro Asiento Gris Oscuro Diseño De La Tela Terciopelo", "costo_usd": 41.2}, {"sku": "NVK-211A-B-X2", "desc": "Taburete Banqueta Alta Set X2 Reforzada Metal Tolix Zhome Acabado De La Estructura Chapa Color Blanco", "costo_usd": 24.0}, {"sku": "NVK-211A-B-X4", "desc": "Taburete Banqueta Alta Set X4 Reforzada Metal Tolix Zhome Acabado De La Estructura Chapa Color Blanco", "costo_usd": 48.0}, {"sku": "NVK-211A-G-X2", "desc": "Taburete Banqueta Alta Set X2 Reforzada Zhome Metal Tolix Acabado De La Estructura Chapa Color Gris Oscuro", "costo_usd": 24.0}, {"sku": "NVK-211A-N-X2", "desc": "Taburete Banqueta Alta Set X2 Reforzada Zhome Tolix Metal Acabado De La Estructura Chapa Color Negro", "costo_usd": 24.0}, {"sku": "NVK-211A-N-X4", "desc": "Taburete Banqueta Alta Set X4 Reforzada Tolix Metal Zhome", "costo_usd": 48.0}, {"sku": "NVK-211A-R-X2", "desc": "Taburete Banqueta Alta Set X2 Reforzada Zhome Metal Tolix Acabado De La Estructura Chapa Color Rojo", "costo_usd": 24.0}, {"sku": "NVK-211A-R-X4", "desc": "Taburete Banqueta Alta Set X4 Reforzada Tolix Metal Zhome", "costo_usd": 48.0}, {"sku": "NVK-211-B-X4", "desc": "Taburete Banqueta Alta Set X4 Reforzada Tolix Metal Niviko Acabado De La Estructura Laqueado Color Blanco", "costo_usd": 48.0}, {"sku": "NVK-211-N-X4", "desc": "Taburete Banqueta Alta Set X4 Reforzada Tolix Metal Niviko Acabado De La Estructura Laqueado Color Negro", "costo_usd": 48.0}, {"sku": "NVK-211-R-X4", "desc": "Taburete Banqueta Alta Set X4 Reforzada Tolix Metal Zhome", "costo_usd": 48.0}, {"sku": "NVK-222", "desc": "SILLA TOLIX POR UNIDAD", "costo_usd": 12.75}, {"sku": "NVK22-22T", "desc": "Soporte De Tv Led Lcd C/ Inclinación Zhome 15 23 32 40 42 Negro", "costo_usd": 1.7}, {"sku": "NVK-222-B", "desc": "Silla De Comedor Tolix De Hierro 4 Unidades Niviko Reforzada", "costo_usd": 51.0}, {"sku": "NVK-222-BX2", "desc": "Silla De Comedor Tolix Reforzada De Hierro 2 Unidades Niviko Estructura De La Silla Blanco Asiento Blanco Diseño De La Tela Metal", "costo_usd": 25.5}, {"sku": "NVK-222-B-X2", "desc": "Silla De Comedor Cocina Tolix Reforzada De Hierro X2 Zhome", "costo_usd": 25.5}, {"sku": "NVK-222-BX4", "desc": "Silla De Comedor Tolix De Hierro 4 Unidades Niviko Reforzada", "costo_usd": 51.0}, {"sku": "NVK-222-B-X4", "desc": "Silla De Comedor Tolix Reforzada De Hierro 4 Unidades Niviko Estructura De La Silla Blanco Asiento Blanco", "costo_usd": 51.0}, {"sku": "NVK-222-BX6", "desc": "Silla De Comedor Tolix De Hierro 6 Unidades Niviko Reforzada", "costo_usd": 76.5}, {"sku": "NVK-222-B-X6", "desc": "Silla De Comedor Tolix De Hierro 6 Unidades Niviko Reforzada", "costo_usd": 76.5}, {"sku": "NVK-222-GX2", "desc": "Silla De Comedor Tolix De Hierro 2 Unidades Niviko Reforzada", "costo_usd": 25.5}, {"sku": "NVK-222-G-X2", "desc": "Silla De Comedor Cocina Tolix Reforzada De Hierro X2 Zhome", "costo_usd": 25.5}, {"sku": "NVK-222-G-X4", "desc": "Silla De Comedor Cocina Tolix Reforzada De Hierro X4 Zhome", "costo_usd": 51.0}, {"sku": "NVK-222-GX6", "desc": "Silla De Comedor Tolix Reforzada De Hierro 6 Unidades Niviko Estructura De La Silla Gris Asiento Gris Diseño De La Tela Metal", "costo_usd": 76.5}, {"sku": "NVK-222-G-X6", "desc": "Silla De Comedor Tolix Reforzada De Hierro 6 Unidades Niviko Estructura De La Silla Gris Asiento Gris Diseño De La Tela Metal", "costo_usd": 76.5}, {"sku": "NVK-222-NX2", "desc": "Silla De Comedor Tolix De Hierro 2 Unidades Niviko Reforzada Estructura De La Silla Negro Asiento Negro Diseño De La Tela Metal", "costo_usd": 25.5}, {"sku": "NVK-222-N-X2", "desc": "Silla De Comedor Tolix De Hierro 2 Unidades Niviko Reforzada Estructura De La Silla Negro Asiento Negro Diseño De La Tela Metal", "costo_usd": 25.5}, {"sku": "NVK-222-NX4", "desc": "Silla De Comedor Tolix Reforzada De Hierro 4 Unidades Niviko Estructura De La Silla Negro Asiento Negro", "costo_usd": 51.0}, {"sku": "NVK-222-N-X4", "desc": "Silla De Comedor Tolix Reforzada De Hierro 4 Unidades Niviko Estructura De La Silla Negro Asiento Negro", "costo_usd": 51.0}, {"sku": "NVK-222-NX6", "desc": "Silla Manchester De Comedor Tolix De Hierro 6 Unidades Niviko Reforzada Estructura De La Silla Negro Asiento Negro Diseño De La Tela Metal", "costo_usd": 76.5}, {"sku": "NVK-222-N-X6", "desc": "Silla De Comedor Tolix Reforzada De Hierro 6 Unidades Niviko Estructura De La Silla Negro Asiento Negro Diseño De La Tela Metal", "costo_usd": 76.5}, {"sku": "NVK-222-RX2", "desc": "Silla De Comedor Tolix De Hierro 2 Unidades Niviko Reforzada Estructura De La Silla Rojo Asiento Rojo Manchester", "costo_usd": 25.5}, {"sku": "NVK-222-R-X2", "desc": "Silla De Comedor Cocina Tolix Reforzada De Hierro X2 Zhome", "costo_usd": 25.5}, {"sku": "NVK-222-RX4", "desc": "Silla De Comedor Tolix De Hierro 4 Unidades Niviko Reforzada Estructura De La Silla Rojo Asiento Rojo Manchester", "costo_usd": 51.0}, {"sku": "NVK-222-R-X4", "desc": "Silla De Comedor Tolix Reforzada De Hierro 4 Unidades Niviko Estructura De La Silla Rojo Asiento Rojo Manchester", "costo_usd": 51.0}, {"sku": "NVK-222-RX6", "desc": "Silla De Comedor Tolix De Hierro 6 Unidades Niviko Reforzada", "costo_usd": 76.5}, {"sku": "NVK22-44F", "desc": "Soporte Universal Fijo De Tv Led Lcd  26 32 43 50 55 65 70", "costo_usd": 1.8}, {"sku": "NVK22-44T", "desc": "Soporte De Tv Led Lcd C/ Inclinación 32 37 39 40 42 49 50 55 Negro", "costo_usd": 2.0}, {"sku": "NVK22-64F", "desc": "Soporte Universal Fijo De Tv Led Lcd 32 43 50 55 65 70 75 85 Negro", "costo_usd": 3.0}, {"sku": "NVK22-64T", "desc": "Soporte De Tv Led Lcd C/ Inclinación 32 37 43 49 50 55 65 70 Negro", "costo_usd": 3.2}, {"sku": "NVK22G-44T", "desc": "Soporte De Tv Led Lcd C/ Inclinación 32 37 39 40 42 49 50 55 Color Negro", "costo_usd": 1.96}, {"sku": "NVK22G-64T", "desc": "Soporte De Tv Led Lcd C/ Inclinación 32 37 43 49 50 55 65 70 Negro", "costo_usd": 3.2}, {"sku": "NVK-233-B-X2", "desc": "Silla Comedor Apoyabrazo Tolix Reforzada De Hierro Zhome X2", "costo_usd": 28.4}, {"sku": "NVK-233-B-X4", "desc": "Silla Comedor Apoyabrazo Tolix Reforzada De Hierro X4 Zhome", "costo_usd": 56.8}, {"sku": "NVK-233-B-X6", "desc": "Silla De Comedor Con Apoyabrazo Tolix X6 Reforzada De Hierro Zhome Estructura De La Silla Blanco Asiento Blanco Diseño De La Tela Metal", "costo_usd": 85.2}, {"sku": "NVK-233-G-X2", "desc": "Silla Comedor Apoyabrazo Tolix Reforzada De Hierro Zhome X2", "costo_usd": 28.4}, {"sku": "NVK-233-G-X4", "desc": "Silla Comedor Apoyabrazo Tolix Reforzada De Hierro X4 Zhome", "costo_usd": 28.0}, {"sku": "NVK-233-G-X6", "desc": "Silla De Comedor Con Apoyabrazo Tolix Zhome X6 Reforzada De Hierro Estructura De La Silla Gris Oscuro Asiento Gris Oscuro Diseño De La Tela Metal", "costo_usd": 85.2}, {"sku": "NVK-233-N-X2", "desc": "Silla Comedor Apoyabrazo Tolix Reforzada De Hierro Zhome X2", "costo_usd": 28.4}, {"sku": "NVK-233-NX4", "desc": "Silla De Comedor Tolix Reforzada De Hierro 4 Unidades Niviko Estructura De La Silla Negro Asiento Negro", "costo_usd": 56.8}, {"sku": "NVK-233-N-X4", "desc": "Silla De Comedor Con Apoyabrazo Tolix Zhome X4 Reforzada De Hierro Estructura De La Silla Negro Asiento Negro Diseño De La Tela Metal", "costo_usd": 56.8}, {"sku": "NVK-233-R-X2", "desc": "Silla Comedor Apoyabrazo Tolix Reforzada De Hierro Zhome X2", "costo_usd": 28.4}, {"sku": "NVK-233-R-X4", "desc": "Silla De Comedor Con Apoyabrazo Tolix Reforzada De Hierro Zhome X4 Estructura De La Silla Rojo Asiento Rojo Diseño De La Tela Metal", "costo_usd": 56.8}, {"sku": "NVK-233-R-X6", "desc": "Silla Comedor Apoyabrazo Tolix Reforzada De Hierro Zhome X6", "costo_usd": 85.2}, {"sku": "NVK-244A-B-X2", "desc": "Banqueta Con Respaldo Tolix Alta Set X2 Reforzada Metal Zhome Acabado De La Estructura Chapa Color Blanco", "costo_usd": 26.4}, {"sku": "NVK-244A-B-X4", "desc": "Banqueta C/respaldo Alta Set X4 Reforzada Metal Tolix Zhome", "costo_usd": 52.8}, {"sku": "NVK-244A-G-X4", "desc": "Banqueta Con Respaldo Tolix Alta Set X2 Reforzada Metal Zhome Acabado De La Estructura Chapa Color Gris", "costo_usd": 52.8}, {"sku": "NVK-244A-N-X2", "desc": "Banqueta C/respaldo Alta Set X2 Reforzada Metal Tolix Zhome", "costo_usd": 26.4}, {"sku": "NVK-244A-N-X4", "desc": "Banqueta Con Respaldo Alta Set X4 Reforzada Metal Tolix Zhome Acabado De La Estructura Chapa Color Negro", "costo_usd": 52.8}, {"sku": "NVK-244A-R-X2", "desc": "Banqueta C/respaldo Alta Set X2 Reforzada Metal Tolix Zhome", "costo_usd": 26.4}, {"sku": "NVK-244A-R-X4", "desc": "Banqueta C/respaldo Alta Set X4 Reforzada Metal Tolix Zhome Z-244 Acabado De La Estructura Chapa Color Rojo", "costo_usd": 52.8}, {"sku": "NVK-3000-A", "desc": "Silla Gamer Oficina Pc Zhome Ergonómica Reclinable Alta Color Azul Material Del Tapizado Cuero Sintético", "costo_usd": 40.8}, {"sku": "NVK-3000-B", "desc": "Silla Gamer Oficina Zhome Alta Ergonómica Pc Reclinable Color Blanco Material Del Tapizado Cuero Sintético", "costo_usd": 40.8}, {"sku": "NVK-3000-N", "desc": "Silla Gamer Oficina Pc Zhome Ergonómica Reclinable Alta Color Negro Material Del Tapizado Cuero Sintético", "costo_usd": 40.8}, {"sku": "NVK-3000-R", "desc": "Silla Gamer Oficina Pc Zhome Ergonómica Reclinable Alta Color Roja Material Del Tapizado Cuero Sintético", "costo_usd": 40.8}, {"sku": "NVK-3068-N", "desc": "Silla De Oficina Reclinable Sillon Gerencial Ecocuero Negro Negro Cuero Sintético", "costo_usd": 40.0}, {"sku": "NVK-333-B-X4", "desc": "Sillon Silla Eames Tulip Niviko Set X4 Comedor Living Estructura De La Silla Marrón Claro Asiento Blanco Diseño De La Tela Blanco", "costo_usd": 42.0}, {"sku": "NVK-333-N-X2", "desc": "Sillon Silla Eames Tulip Niviko Set X2 Comedor Living", "costo_usd": 21.0}, {"sku": "NVK-333-N-X4", "desc": "Sillon Silla Eames Tulip Niviko Set X4 Comedor Living", "costo_usd": 42.0}, {"sku": "NVK-337-B-X4", "desc": "Silla Living Comedor Cocina Set X4 Eames Niviko Reforzada Estructura De La Silla Marrón Claro Asiento Blanco", "costo_usd": 32.0}, {"sku": "NVK-337-G-X4", "desc": "Silla Living Comedor Cocina Set X4 Eames Niviko Reforzada Estructura De La Silla Marrón Claro Asiento Gris", "costo_usd": 32.0}, {"sku": "NVK-337-N-X2", "desc": "Silla Living Comedor Cocina Set X2 Eames Niviko Reforzada Estructura De La Silla Marrón Claro Asiento Negro", "costo_usd": 16.0}, {"sku": "NVK-337-N-X4", "desc": "Silla Living Comedor Cocina Set X4 Eames Niviko Reforzada Estructura De La Silla Marrón Claro Asiento Negro", "costo_usd": 32.0}, {"sku": "NVK-344-B-X4", "desc": "Silla Living Comedor Cocina Set X4 Wishbone Niviko Reforzada Estructura De La Silla Marrón Claro Asiento Blanco", "costo_usd": 68.8}, {"sku": "NVK-344-N-X4", "desc": "Silla Living Comedor Cocina Wishbone Niviko Plastica Set X4 Estructura De La Silla Marrón Claro Asiento Negro Diseño De La Tela Negro", "costo_usd": 68.8}, {"sku": "NVK-3555-B", "desc": "Silla Oficina Alta Escritorio Ejecutiva Blanca Zhome Cabezal Color Blanco Material Del Tapizado Mesh", "costo_usd": 49.0}, {"sku": "NVK-3555-G", "desc": "Silla Oficina Alta Escritorio Ejecutiva Gris Zhome Cabezal Material Del Tapizado Mesh", "costo_usd": 49.0}, {"sku": "NVK-3555-N", "desc": "Silla Oficina Alta Escritorio Ejecutiva Negra Zhome Cabezal Color Negro Material Del Tapizado Mesh", "costo_usd": 47.0}, {"sku": "NVK-3785-B", "desc": "Silla De Oficina Escritorio Alta Ergonomica Blanca Zhome Color Blanco Material Del Tapizado Mesh Apoyacabeza Apoyabrazos Moviles", "costo_usd": 34.0}, {"sku": "NVK-3785-N", "desc": "Silla De Oficina Escritorio Alta Ergonomica Negra Zhome Z-3785-n Color Negro Material Del Tapizado Mesh Apoyacabeza Apoyabrazos Moviles", "costo_usd": 31.5}, {"sku": "NVK-4068-N", "desc": "Silla De Oficina Reclinable Sillon Gerencial Ecocuero Negro Negro Cuero Sintético", "costo_usd": 42.0}, {"sku": "NVK-444-B", "desc": "Silla Living Comedor Cocina Set X4 Eames Niviko Reforzada Estructura De La Silla Marrón Claro Asiento Blanco", "costo_usd": 48.0}, {"sku": "NVK-444-N", "desc": "Silla Cuerina Living Comedor Cocina Eames Tulip Niviko X4 Estructura De La Silla Marrón Claro Asiento Negro", "costo_usd": 48.0}, {"sku": "NVK-6180-BX2", "desc": "Banqueta Taburete Alta Desayunador Barra Cromada X2 Zhome Cromado Blanco", "costo_usd": 33.5}, {"sku": "NVK-6180-NX2", "desc": "Banqueta Taburete Alta Desayunador Barra Cromada X2 Zhome Cromado Negro", "costo_usd": 33.5}, {"sku": "NVK-6180-N-X2", "desc": "Banqueta Taburete Alta Desayunador Barra Cromada X2 Zhome Acabado De La Estructura Cromado Color Negro", "costo_usd": 33.5}, {"sku": "NVK-6190-BX2", "desc": "Banqueta Taburete Alta Desayunador Barra Cromada X2 Zhome Cromado Blanco", "costo_usd": 44.5}, {"sku": "NVK-6190-NX2", "desc": "Banqueta Taburete Alta Desayunador Barra Cromada X2 Zhome Acabado De La Estructura Cromado Color Negro", "costo_usd": 44.5}, {"sku": "NVK-6700-B", "desc": "Auriculares In-ear Inalámbricos Bluetooth Zhome Tws Tactil Color", "costo_usd": 3.0}, {"sku": "NVK68-223", "desc": "Soporte De Tv Led Lcd Brazo Extensible Zhome 14 24 32 40 42", "costo_usd": 3.46}, {"sku": "NVK68-443", "desc": "Soporte De Tv Led Lcd Brazo Extensible Zhome 26 32 43 50 52 Negro", "costo_usd": 3.85}, {"sku": "NVK-697-B", "desc": "Silla De Oficina Escritorio Alta Ergonomica Apoyacabeza Blanca Zhome Blanco Mesh", "costo_usd": 19.0}, {"sku": "NVK-697-N", "desc": "Silla De Oficina Escritorio Alta Ergonomica Negra Zhome", "costo_usd": 17.5}, {"sku": "NVK78-446", "desc": "Soporte De Tv Led Brazo Extensible Zhome 32 43 50 55 65 75 Negro", "costo_usd": 9.85}, {"sku": "NVK-8092-G", "desc": "Silla De Oficina Escritorio Pc Gerencial Ejecutiva Soporte Lumbar Gris Lino Zhome", "costo_usd": 34.0}, {"sku": "NVK-860-B-X4", "desc": "Silla Living Comedor Set X4 Eames Tulip C/ Almohadon Niviko Color De La Estructura De La Silla Marrón Claro Color Del Asiento Blanco Diseño De La Tela Cuerina", "costo_usd": 42.0}, {"sku": "NVK-860-N-X4", "desc": "Silla Living Comedor Set X4 Eames Tulip C/ Almohadon Relieve Niviko Color De La Estructura De La Silla Marrón Claro Color Del Asiento Negro Diseño De La Tela Cuerina", "costo_usd": 42.0}, {"sku": "NVK-9055-N", "desc": "Silla De Escritorio Tulip Oficina Ruedas Giratoria Pc Zhome Color Negro Material Del Tapizado Cuero Sintético", "costo_usd": 20.6}, {"sku": "NVK-9085-B-X2", "desc": "Banqueta Taburete Tulip Alta Regulable Cromada Set X2 Zhome Acabado De La Estructura Cromado Color Blanco", "costo_usd": 35.5}, {"sku": "NVK-9085-N-X2", "desc": "Zhome Z-9085 Banqueta Taburete Tulip Alta Regulable Cromada Set X2 Acabado De La Estructura Cromado Color Negro Zhome", "costo_usd": 35.5}, {"sku": "NVK-A337-B-X4", "desc": "Silla Living Comedor Set X4 Eames Tulip Moderno Niviko Color De La Estructura De La Silla Marrón Oscuro Color Del Asiento Blanco", "costo_usd": 50.0}, {"sku": "NVK-A337-N-X4", "desc": "Silla Living Comedor Set X4 Eames Tulip Moderno Niviko Color De La Estructura De La Silla Marrón Oscuro Color Del Asiento Negro", "costo_usd": 50.0}, {"sku": "NVK-A5120", "desc": "Reloj Smartwatch Smartband Zhome Deportivo Negro 0.96 Z5120 Negro Negro", "costo_usd": 2.5}, {"sku": "NVK-A5130", "desc": "Reloj Smartwatch Smartband Zhome Deportivo Negro 0.96 Z5130 Negro Negro", "costo_usd": 2.7}, {"sku": "NVK-A6600-B", "desc": "Auriculares In-ear Inalámbricos Bluetooth Zhome Tws Tactil Color Blanco Z6600", "costo_usd": 2.5}, {"sku": "NVK-A6600-N", "desc": "Auriculares In-ear Inalámbricos Bluetooth A6s Negro Zhome", "costo_usd": 2.5}, {"sku": "NVK-A6700", "desc": "Auriculares In-ear Inalámbricos Bluetooth Zhome Tws Tactil Color", "costo_usd": 2.5}, {"sku": "NVK-A6700-B", "desc": "Auriculares In-ear Inalámbricos Bluetooth Zhome Tws Tactil Color Blanco", "costo_usd": 2.5}, {"sku": "NVK-A6700-N", "desc": "Auriculares In-ear Inalámbricos Bluetooth A6s Negro Zhome", "costo_usd": 2.5}, {"sku": "NVK-A6790", "desc": "Auriculares Bluetooth Niviko Tws In Ear Buds Nvk-a6790 Negro Luz Blanco", "costo_usd": 8.0}, {"sku": "NVK-A6900", "desc": "Reloj Smartwatch 1.99 Smartband Zhome Deportivo Negro Ultra Negro Silicona Negro Negro", "costo_usd": 4.3}, {"sku": "NVK-A8590", "desc": "Auriculares Bluetooth Niviko Tws In Ear Buds Nvk-a8590 Negro Luz Verde", "costo_usd": 12.0}, {"sku": "NVK-A9760", "desc": "Auriculares Inalámbricos Niviko Tws Earbuds Nvk-a9760 Negro Luz Verde", "costo_usd": 10.0}, {"sku": "NVK-A9800-B", "desc": "Auriculares In-ear Inalámbricos Bluetooth Zhome Tws Tactil Blanco", "costo_usd": 4.0}, {"sku": "NVK-A9800-N", "desc": "Auriculares In-ear Inalámbricos Bluetooth Zhome Tws Tactil Color Negro", "costo_usd": 3.0}, {"sku": "NVK-AF501", "desc": "Freidora De Aire Digital Sin Aceite Zhome 3.8l 1500w Negro Negro", "costo_usd": 15.35}, {"sku": "NVK-AF502", "desc": "Freidora De Aire Digital Sin Aceite Zhome 5.5l 1500w Negro", "costo_usd": 17.9}, {"sku": "NVK-AN101", "desc": "Anafe Electrico Zhome Cocina 1 Hornallas 1000w Negro", "costo_usd": 4.8}, {"sku": "NVK-AN102", "desc": "Anafe Electrico Niviko Cocina 2 Hornallas 2000w Negro Negro", "costo_usd": 7.2}, {"sku": "NVK-CF101", "desc": "Cafetera Electrica De Filtro Zhome 750ml Automatica 6 Tazas", "costo_usd": 8.0}, {"sku": "NVK-MP180", "desc": "Mesa Plegable 180x74x74cm Exterior Camping Reforzada Niviko Blanco", "costo_usd": 19.3}, {"sku": "NVK-MP180-N", "desc": "Mesa Plegable 180x70x74cm Exterior Camping Reforzada Zhome Negro", "costo_usd": 19.6}, {"sku": "NVK-MP180-N-MADERA", "desc": "Mesa Plegable 180x74x74cm Exterior Camping Reforzada Niviko Negro/madera", "costo_usd": 25.0}, {"sku": "NVK-MP180-N-RATAN", "desc": "Mesa Plegable Zhome 180x74cm Exterior Camping Ratan Negro 10 Personas Negro Ratan", "costo_usd": 25.0}, {"sku": "NVK-P5120", "desc": "Parlante 12'' Portátil Bluetooth Karaoke Usb Led Zhome Color Negro", "costo_usd": 30.0}, {"sku": "NVK-P8280", "desc": "Parlante 8'' Portátil Bluetooth Karaoke Usb Aux Led Zhome Color Negro", "costo_usd": 16.5}, {"sku": "NVK-P9000", "desc": "Auriculares Vincha Inalámbricos Bluetooth Zhome Negro Zp9000 Negro", "costo_usd": 3.9}, {"sku": "NVK-P9820", "desc": "Parlante 8'' Doble Portátil Bluetooth Usb Karaoke Led Zhome", "costo_usd": 26.0}, {"sku": "NVK-PE1001", "desc": "Jarra Pava Eléctrica Niviko Hervidora Acero Inox 1.8l Color Acero Inoxidable", "costo_usd": 7.0}, {"sku": "NVK-PE1005", "desc": "Jarra Pava Eléctrica Zhome Con Corte Cafe Mate 220v 1.8l", "costo_usd": 7.5}, {"sku": "NVK-R3490", "desc": "Reloj Smartwatch Smartband Niviko Deportivo 1.83'' Nvk-r3490 Caja Negro Malla Negro Bisel Negro Diseño De La Malla Lisa", "costo_usd": 10.0}, {"sku": "NVK-R3590", "desc": "Reloj Smartwatch Smartband Niviko Deportivo 1.83'' Nvk-r3590 Caja Negro Malla Negro Bisel Negro Diseño De La Malla Silicona", "costo_usd": 9.0}, {"sku": "NVK-SM103", "desc": "Sandwichera Electrica Grill Zhome 750w Compacta Acero Negro Negro", "costo_usd": 7.3}, {"sku": "NVK-SM107", "desc": "Sandwichera Zhome 3 En 1 Negro 750w Grill Waffles Sandwich", "costo_usd": 12.0}, {"sku": "NVK-TS102", "desc": "Tostadora Electrica Zhome 2 Rebanadas 7 Niveles 700w Negra Negro", "costo_usd": 6.6}, {"sku": "NVK-YG106", "desc": "Yogurtera Yogurt Electrica Niviko Acero Inoxidable 4 Jarros 720ml 20w Color Gris", "costo_usd": 7.5}, {"sku": "Pack x6-Acetico-Negra", "desc": "SILICONAS EDDY", "costo_usd": 0.5}, {"sku": "Pack x6-Acetico-Transpare", "desc": "SILICONAS EDDY", "costo_usd": 0.5}, {"sku": "PS5 DIGITAL", "desc": "Consola Sony Playstation 5 Slim Blanco 4k 1tb Digital", "costo_usd": 460.0}, {"sku": "PS5 DISCO", "desc": "Consola Sony Playstation 5 Slim Standard 1tb", "costo_usd": 460.0}, {"sku": "QCY-T1CB", "desc": "Auriculares In-ear Bluetooth Qcy T1c Color Blanco", "costo_usd": 5.0}, {"sku": "sd128gb", "desc": "Tarjeta De Memoria Kingston Sdcs2sp Canvas Select Plus Con Adaptador Sd 128gb", "costo_usd": 7.28}, {"sku": "sd64gb", "desc": "Tarjeta De Memoria Kingston Sdcs2/64gb Canvas Select Plus Con Adaptador Sd 64gb", "costo_usd": 5.0}, {"sku": "TAMPA", "desc": "Silla De Oficina Pc Ejecutiva Escritorio Lumbar Negro Zhome Material Del Tapizado Malla", "costo_usd": 14.8}, {"sku": "TAMPA-B", "desc": "Silla De Oficina Pc Ejecutiva Escritorio Lumbar Blanca Zhome Color Blanco Material Del Tapizado Malla Z-103-b", "costo_usd": 15.7}, {"sku": "TRUEBTAIRWH", "desc": "Auriculares In-ear Inalámbricos Bluetooth Iluv True Wireless", "costo_usd": 10.0}, {"sku": "Z-AF501", "desc": "Freidora De Aire Digital Sin Aceite Zhome 3.8l 1500w Negro Negro", "costo_usd": 15.35}, {"sku": "Z-AF502", "desc": "Freidora De Aire Digital Sin Aceite Zhome 5.5l 1500w Negro Negro", "costo_usd": 17.9}, {"sku": "Z-AN101", "desc": "Anafe Electrico Zhome Cocina 1 Hornallas 1000w Negro Negro", "costo_usd": 4.4}, {"sku": "ZL02C", "desc": "Smartband Lige Zl02d Display De 1.39  Con Correa De Silicona Con Correa Color Negro", "costo_usd": 10.0}, {"sku": "Z-TS102", "desc": "Tostadora Electrica Niviko 2 Rebanadas 7 Niveles 700w Negra Negro", "costo_usd": 6.6}, {"sku": "Z-YG106", "desc": "Yogurtera Electrica Zhome Acero Inoxidable 4 Jarros 720ml Gris", "costo_usd": 7.5}, {"sku": "NVK-6190-N-X2", "desc": "Banqueta Taburete Alta Desayunador Barra Cromada X2 Zhome Acabado De La Estructura Cromado Color Negro", "costo_usd": 44.5}, {"sku": "NVK78-446", "desc": "Soporte De Tv Led Brazo Extensible Zhome 32 43 50 55 65 75 Negro", "costo_usd": 9.5}, {"sku": "NVK-233-N-X6", "desc": "Silla Comedor Apoyabrazo Tolix Reforzada De Hierro Zhome X6", "costo_usd": 85.2}, {"sku": "NVK-6190-B-X2", "desc": "Banqueta Taburete Alta Desayunador Barra Cromada X2 Zhome Cromado Blanco", "costo_usd": 44.5}, {"sku": "NVK-6180-B-X2", "desc": "Banqueta Alta Zhome Cromada Blanca 75cm Set X2 Rotación 360° Cromado Blanco", "costo_usd": 33.6}, {"sku": "NVK-160-B-X4", "desc": "Silla Living Comedor Jardin Set X4 Niviko Plastica Apilable Estructura De La Silla Blanco Asiento Blanco Diseño De La Tela", "costo_usd": 40.0}, {"sku": "29P385", "desc": "Inflador Manual Jilong 30cm Negro Para Colchones Piletas Pelotas Portátil", "costo_usd": 1.4}, {"sku": "NVK-233-R", "desc": "Silla De Comedor Tolix Reforzada De Hierro 4 Unidades Niviko", "costo_usd": 56.8}, {"sku": "37433", "desc": "Colchoneta Flotadora Inflable Jilong Ojota Gigante", "costo_usd": 7.9}, {"sku": "8613", "desc": "Coche Bebe Recién Nacido Paseo Cuna 2 Pos Toing", "costo_usd": 25.0}, {"sku": "NVK-MP180-N-OPENBOX", "desc": "Mesa Plegable 180x70x74cm Reforzada Con Detalles Open Box Negro", "costo_usd": 20.8}, {"sku": "NVK-MP180-OPENBOX", "desc": "Mesa Plegable 180x70x74cm Reforzada Con Detalles Open Box Blanco", "costo_usd": 19.0}, {"sku": "NVK-222-GX4", "desc": "Silla De Comedor Tolix Reforzada De Hierro 4 Unidades Niviko", "costo_usd": 51.0}, {"sku": "NVK-222-R-X6", "desc": "Silla De Comedor Cocina Tolix Reforzada De Hierro X6 Zhome", "costo_usd": 76.5}];
-const FLEX_ZONAS = {"11 de septiembre": 3, "9 de abril": 3, "abasto": 3, "acassuso": 2, "adolf sourdeaux": 3, "adrogue": 3, "adrogué": 3, "aeropuerto ezeiza": 3, "aeropuerto internacional ezeiza": 3, "alberti pilar": 3, "aldo bonzi": 3, "alejandro korn": 3, "almirante brown": 3, "almirante brown san josé": 3, "alto los cardales": 3, "altos de san lorenzo": 3, "argentina": 3, "arturo segui": 3, "avellaneda": 2, "avellaneda dock sud": 2, "avellaneda m": 2, "banfield": 2, "banfield (villa centenario)": 2, "banfield barrio sitra": 2, "barrio el cazador": 3, "barrio san josé (almirante brown)": 3, "beccar": 2, "béccar": 2, "belén de escobar": 3, "bella vista": 3, "bella vista san miguel": 3, "benavidez": 3, "benavídez": 3, "berazategui": 3, "berazategui (barrio gutierrez)": 3, "berazategui oeste": 3, "berisso": 3, "bernal": 3, "bernal este": 3, "bernal oeste": 3, "billinghurst": 3, "bosques": 3, "boulogne": 2, "boulogne sur mer": 2, "brerazategui": 3, "bs as": 3, "buenos aire": 3, "buenos aires": 3, "buenosaires": 3, "bulogne": 2, "burzaco": 2, "c. a. el pato": 3, "campana": 3, "campana bo. las lomadas": 3, "campo de mayo": 3, "canning": 3, "canning ezeiza": 3, "canning-e. echeverria": 3, "cañuelas": 3, "carapachay": 2, "carlos spegazzini": 3, "caseros": 2, "castelar": 2, "castelar sur": 2, "centro agricola el pato": 3, "centro agrícola el pato": 3, "chilavert": 2, "city bell": 3, "ciudad del libertador general san martin": 2, "ciudad evita": 2, "ciudad jardín": 3, "ciudad jardin del palomar": 3, "ciudad jardín lomas del palomar": 3, "ciudad madero": 2, "ciudadela": 2, "claypole": 2, "crucesita": 3, "cuartel v": 3, "cuidad evita": 2, "del viso": 3, "dique lujan": 3, "dique luján": 3, "dique lujan tigre": 3, "dock sud": 3, "dock sud avellaneda": 3, "don bosco": 3, "don torcuato": 3, "el jaguel": 3, "el jagüel": 3, "el palomar": 2, "el palomar- moron": 2, "el pato": 3, "el pato berazategui": 3, "el pato, berazategui.": 3, "el talar": 3, "enrique hudson": 3, "ensenada": 3, "escobar": 3, "espeleta": 3, "esteban echeverría": 3, "esteban echeverria-canning": 3, "estevan echeverria": 3, "ezeiza": 3, "ezeiza barrio vecinal": 3, "ezeiza centro": 3, "ezeiza tristan suarez": 3, "ezpeleta": 3, "ezpeleta este": 3, "ezpeleta oeste": 3, "ezpeleta, quilmes": 3, "ezpeleta/quilmes": 3, "fatima": 3, "florencio varela": 3, "florencio varela barrio luján": 3, "florencio varela ingeniero allan": 3, "florencio varela martin fierro": 3, "florida": 2, "florida oeste": 2, "florida oeste - munro": 2, "francisco alvarez": 3, "francisco álvarez": 3, "garín": 3, "gdl": 3, "general pacheco": 3, "general pacheco ( barrio las tunas)": 3, "general rodríguez": 2, "general san martin": 2, "general san martín": 2, "gerli": 2, "glew": 3, "glew gendarmeria": 3, "gonnet": 3, "gonzalez catal": 3, "gonzalez catan": 3, "gonzález catan": 3, "gonzález catán": 3, "gral pacheco": 3, "gral san martin": 2, "gral san martín- billinghurst": 2, "grand bourg": 3, "grand bourg ( buenos aires)": 3, "grandbourg": 3, "gregorio de laferrere": 3, "guernica": 3, "guernica barrio privado el rebenque": 3, "guernica, presidente peron": 3, "guillermo e hudson": 3, "guillermo e. hudson": 3, "guillermo hudson": 3, "guillermo hudson. barrio maritimo": 3, "haedo": 2, "hudson": 3, "hudson sarmiento": 3, "hurlingham": 2, "hurlinghan": 2, "ing. adolfo sourdeaux": 2, "ingeniero adolfo sourdeaux": 3, "ingeniero allan": 3, "ingeniero budge": 3, "ingeniero maschwitz": 3, "ingeniero maschwitz (escobar)": 3, "isidro casanova": 3, "ituzaingi": 2, "ituzaingo": 2, "ituzaingó": 2, "ituzaingo - villa udaondo": 2, "ituzaingo centro": 3, "j448rm zelaya, provincia de buenos aires": 3, "jauregui": 3, "jáuregui josé maría": 3, "jose c paz": 3, "jose c paz barrio vucetich": 3, "josé c. paz": 3, "jose clemente paz": 3, "josé clemente paz": 3, "josé ingenieros": 3, "jose leon suarez": 2, "josé león suarez": 2, "josé león suárez": 2, "jose marmol": 3, "josé marmol": 3, "josé mármol": 3, "jose marnol": 3, "josé.c.paz": 3, "juan maria gutierrez": 3, "juan maría gutiérrez": 3, "la florida": 2, "la lonja": 3, "la lonja,pilar": 3, "la lucila": 2, "la matanza": 3, "la plata": 3, "la plata / gonnet": 3, "la plata- los hornos": 3, "la plata ringuelet": 3, "la quebrada": 2, "la reja": 3, "la tablada": 2, "la union": 2, "la unión": 3, "la unión - ezeiza": 2, "la unión ezeiza": 3, "la unión, ezeiza": 3, "laferrere": 2, "lagomarsino": 3, "lanus": 2, "lanús": 2, "lanus - gerli": 2, "lanus este": 2, "lanús este": 2, "lanus este, monte chingolo": 2, "lanus oeste": 2, "lanús oeste": 2, "lavallol": 2, "libertad": 2, "libertad merlo gomez": 2, "lisandro olmos": 3, "llavallol": 3, "loma del mirador (villa insuperable)": 2, "loma hermosa": 2, "loma hermosa san martín": 2, "lomas de zamora": 2, "lomas de zamora. villa fiorito": 2, "lomas del mirador": 2, "lomasdezamora": 2, "longchamps": 3, "los hornos": 3, "los polvorines": 3, "los troncos": 3, "los troncos del talar pacheco": 3, "luis guillon": 3, "luján": 3, "malvinas argentinas": 3, "malvinas argentinas adrogue": 3, "manuel alberdi": 3, "manuel alberti": 3, "manuel b gonnet": 3, "manzanares": 3, "maquinista f savio": 3, "maquinista savio": 3, "marcos paz": 3, "mariano acosta": 3, "marilo": 3, "martin coronado": 2, "martín coronado": 2, "martinez": 2, "martínez": 2, "matheu": 3, "melchor romero": 3, "merlo": 3, "merlo pontevedra": 3, "monte chingolo": 3, "monte grande": 3, "monte grande .barrio grande": 3, "montegrande": 3, "moreno": 3, "moreno  country san diego": 2, "moreno centro": 3, "moreno la reja cortejarena": 3, "moreno trujui": 3, "moreno trujuy villanueva": 3, "moron": 2, "morón": 2, "munro": 2, "muñiz": 3, "nordelta": 3, "nordelta barrio el palmar": 3, "olivos": 2, "open door": 3, "pablo nogues": 3, "pablo nogués": 3, "pablo podesta": 3, "pablo podestá": 3, "pacheco": 3, "palomar": 2, "parque leloir": 3, "parque san martin": 2, "paso del rey": 2, "pilar": 3, "piñeyro": 2, "platanos": 2, "pontevedra": 2, "presidente derqui": 3, "presidente perón": 3, "primero de mayo 832": 3, "punta lara": 3, "purtos de escobar": 3, "quilmes": 3, "quilmes oeste": 3, "rafael calzada": 3, "rafael castillo": 3, "ramos meja": 2, "ramos mejia": 2, "ramos mejía": 2, "ranelagh": 3, "remedio de escalada": 2, "remedios de escalada": 2, "ricardo rojas": 3, "ricardo rojas (tigre)": 3, "rincon de milberg": 3, "rincón de milberg": 3, "saenz pena": 2, "saenz peña": 2, "sáenz peña": 2, "san andres": 2, "san andrés": 2, "san antonio de padua": 3, "san damian": 3, "san fco.solano": 3, "san fernando": 3, "san francisco solano": 3, "san isidro": 2, "san isidro - boulogne": 2, "san jose": 3, "san justo": 2, "san martin": 2, "san martín": 2, "san martin lanzone": 2, "san miguel": 3, "san miguel arcángel": 3, "san vicente": 3, "sanmartin": 2, "santa maria": 3, "santa rosa": 3, "santos lugares": 2, "sarandi": 2, "sarandí": 2, "sarandí avellaneda": 2, "sol y verde": 3, "solano": 3, "sourigues": 3, "st thomas este oeste": 3, "tablada": 3, "talar bro. alte. brown": 3, "talar tigre": 3, "tapiales": 3, "temperley": 2, "tierras altas": 3, "tigre": 3, "tigre, rincón de milberg": 3, "tolosa": 3, "tres de febrero": 2, "tres de febrero-saenz peña": 2, "tristan suarez": 3, "tristán suarez": 3, "tristán suárez": 3, "troncos del talar": 2, "trujui": 3, "trujui moreno": 3, "trujuy moreno": 3, "turdera": 2, "turdera lomas de zamora": 3, "v dominico": 3, "v luzuriaga": 3, "valentin alsina": 3, "valentín alsina": 2, "valentin alsina, lanus oeste": 2, "vicente lopez": 2, "vicente lópez": 2, "vicente lópez carapachay": 2, "victoria": 2, "villa adelina": 2, "villa ballester": 2, "villa bosch": 3, "villa bosch (estación juan maría bosch)": 2, "villa celina": 2, "villa centenario": 3, "villa de mayo": 3, "villa dominico": 3, "villa domínico": 3, "villa elisa": 3, "villa españa": 3, "villa fiorito": 2, "villa gobernador udaondo": 3, "villa la florida": 3, "villa luzuriaga": 3, "villa lynch": 2, "villa madero": 2, "villa maipu": 2, "villa maipú": 2, "villa martelli": 2, "villa mertelli": 2, "villa raffo": 2, "villa rosa": 3, "villa sáenz peña": 3, "villa santos tesei": 2, "villa sarmiento": 3, "villa tesei": 2, "villa tesey": 2, "villa tessei": 2, "villa vatteone": 3, "virrey del pino": 3, "virreyes": 3, "wilde": 2, "wilde avellaneda": 3, "william c. morris": 3, "william morris": 3, "zárate": 3, "zeballos": 3, "zelaya": 3, "lomchamps": 3, "gonzáles catan": 3, "dique luján": 3, "garin": 3, "alejandro petión": 3, "ringuelet": 3, "san isidro martinez": 3, "los cardales": 3, "plátanos": 3, "malvinas argentinas barrio la cabana": 3, "jauregui josé maria": 3, "campana los pioneros": 3, "el sol": 3, "de vicenzo grande": 3, "pacheco tigre buenos aires": 3, "san carlos": 3, "quimes oeste": 3, "c.a.b.a.": 1, "san antonio de paua": 3, "la reja - moreno": 3, "pilar del este": 3, "villa udaondo": 2, "marti coronado": 2, "avellaneda, dock sud": 2, "once": 1, "loma verde": 2, "fátima": 3, "luis guillón": 3, "villa astolfi": 3, "maswhitz": 3, "maschwitz": 3, "pilar_ villa rosa": 3, "manuel b. gonnet": 2, "arturo seguí": 2, "caba": 1, "el triángulo": 3, "ballester": 2, "baradero": 3, "villa verde": 3, "pueblo nuevo": 3, "merlo-pontevedra": 3, "barrio los jazmines -villa rosa - pilar": 3, "lanus oeste, valentin alsina": 3, "merlo san antonio de padua": 3, "máximo paz": 3, "general rodrigez": 3, "monte grande.": 3, "el encuentro": 3, "ángel etcheverry": 3, "kilometro 61": 3, "belen de escobar": 3, "villa numancia": 3, "ciudadela /  localidad jose ingeniero": 3, "ituzaingo norte": 3, "santa maría": 3, "melchor romeros": 3, "campana villanueva": 3, "billinghurst  san martín": 3, "marcos paz b el zorzal": 3, "villa bonich": 3, "maximo paz": 3, "josé hernández": 2, "gobernador costa": 3, "villa rosa pilar": 3, "joaquín gorina": 3, "villa elvira": 2, "lomasde zamora,fiorito": 2};
-const FLEX_COSTOS = {"1": 3330, "2": 5355, "3": 6600};
-
-
-// Inicializar base de costos con productos NIVIKO si está vacía
-function initCostosFromBase(){
-  if(COSTOS.length > 0) return; // ya tiene datos
-  const bna = 1400; // BNA del Excel
-  COSTOS = PRODUCTOS_BASE.filter(p => p.sku && p.desc && p.costo_usd > 0).map(p => ({
-    id: 'base_' + p.sku.replace(/[^a-zA-Z0-9]/g,'_'),
-    nombre: p.desc,
-    sku: p.sku,
-    cat: detectCat(p.desc),
-    costo_usd: p.costo_usd,
-    bna: bna,
-    costo_ars: Math.round(p.costo_usd * bna),
-    costo_civa: Math.round(p.costo_usd * bna * 1.21),
-    iva: 0.21,
-    prov_id: '', prov_nombre: '',
-    origen: 'base_niviko',
-    notas: 'Importado desde planilla NIVIKO',
-    fecha: new Date().toLocaleDateString('es-AR')
-  }));
-  saveCostos();
-}
-
-function detectCat(desc){
-  desc = desc.toLowerCase();
-  if(desc.includes('silla')||desc.includes('taburete')||desc.includes('banqueta')) return 'Sillas';
-  if(desc.includes('soporte')||desc.includes('tv')) return 'Tecnología';
-  if(desc.includes('notebook')||desc.includes('pendrive')||desc.includes('memoria')||desc.includes('auricular')) return 'Tecnología';
-  if(desc.includes('tender')||desc.includes('tendedero')) return 'Hogar';
-  if(desc.includes('parrilla')) return 'Hogar';
-  if(desc.includes('inflable')||desc.includes('jilong')||desc.includes('pileta')||desc.includes('colchoneta')) return 'Exterior';
-  if(desc.includes('coche')||desc.includes('bebe')) return 'Bebés';
-  if(desc.includes('smartwatch')||desc.includes('reloj')) return 'Tecnología';
-  if(desc.includes('camara')) return 'Tecnología';
-  if(desc.includes('mesa')) return 'Muebles';
-  return 'Otro';
-}
-
-// ══════════════════════════════════════════════════════════
-//  FLEX — calculadora de envío
-// ══════════════════════════════════════════════════════════
-function calcFlex(localidad){
-  if(!localidad) return null;
-  const key = localidad.toLowerCase().trim();
-  const zona = FLEX_ZONAS[key];
-  if(!zona) return null;
-  const costo = FLEX_COSTOS[zona.toString()];
-  return { zona, costo, label: zona===1?'CABA':zona===2?'1er Cordón':'2do Cordón' };
-}
-
-// ══════════════════════════════════════════════════════════
-//  RENTABILIDAD
-// ══════════════════════════════════════════════════════════
-function importRentFromBase(){
-  const id = document.getElementById('rn_prod_sel')?.value; if(!id) return;
-  const c = COSTOS.find(x=>x.id===id); if(!c) return;
-  document.getElementById('rn_nombre').value = c.nombre;
-  document.getElementById('rn_costo_usd').value = c.costo_usd || '';
-  if(c.bna) document.getElementById('rn_bna').value = c.bna;
-  recalcRent();
-}
-
-function refreshRentSel(){
-  const sel = document.getElementById('rn_prod_sel'); if(!sel) return;
-  sel.innerHTML = '<option value="">— Seleccioná de base de costos —</option>';
-  COSTOS.forEach(c => {
-    const opt = document.createElement('option');
-    opt.value = c.id;
-    opt.textContent = (c.sku?c.sku+' — ':'')+c.nombre.substring(0,50);
-    sel.appendChild(opt);
-  });
-}
-
-function recalcRent(){
-  const costo_usd = g('rn_costo_usd');
-  const bna = g('rn_bna') || 1;
-  const lote = g('rn_lote') || 1;
-  const pvp_ml = g('rn_pvp_ml');
-  const com_ml = g('rn_com_ml')/100;
-  const flex = g('rn_flex');
-  const pub = g('rn_pub')/100;
-  const pvp_may = g('rn_pvp_may');
-  const may_gasto = g('rn_may_gasto')/100;
-  const upm = g('rn_upm') || 1;
-  const canal = document.getElementById('rn_canal')?.value || 'ml';
-  const con_prestamo = document.getElementById('rn_prestamo')?.value === '1';
-  const tna = g('rn_tna')/100;
-  const plazo_meses = g('rn_plazo_fin') || 6;
-
-  if(!costo_usd || !bna) return;
-
-  const costo_ars = costo_usd * bna;
-  const inversion = costo_ars * lote;
-
-  // Ingreso neto ML
-  const iva_div = 1.21;
-  const pvp_ml_siva = pvp_ml / iva_div;
-  const neto_ml = pvp_ml_siva - (pvp_ml_siva * com_ml) - flex - (pvp_ml_siva * pub) - (pvp_ml_siva * 0.05) - (costo_ars * 0.05);
-
-  // Ingreso neto Mayorista
-  const neto_may = pvp_may - (pvp_may * may_gasto) - (pvp_may * 0.05);
-
-  // Ganancia por canal
-  let gan_u = 0;
-  let neto_display = 0;
-  if(canal === 'ml') { gan_u = neto_ml - costo_ars; neto_display = neto_ml; }
-  else if(canal === 'may') { gan_u = neto_may - costo_ars; neto_display = neto_may; }
-  else { neto_display = (neto_ml + neto_may) / 2; gan_u = neto_display - costo_ars; }
-
-  const margen = costo_ars > 0 ? gan_u / costo_ars : 0;
-
-  // Costo financiero
-  let costo_fin = 0;
-  let gan_fin = gan_u;
-  if(con_prestamo && tna > 0){
-    const tasa_mensual = tna / 12;
-    const cuota = inversion * (tasa_mensual * Math.pow(1+tasa_mensual, plazo_meses)) / (Math.pow(1+tasa_mensual, plazo_meses) - 1);
-    const total_prestamo = cuota * plazo_meses;
-    costo_fin = total_prestamo - inversion;
-    gan_fin = gan_u - (costo_fin / lote);
-  }
-
-  // Rotación
-  const dias = upm > 0 ? Math.round((lote / upm) * 30) : null;
-
-  // Punto de equilibrio
-  const break_even = gan_u !== 0 ? Math.ceil(inversion / (neto_display || 1)) : null;
-
-  // Ganancia total
-  const gan_total = gan_u * lote - costo_fin;
-  const roi = inversion > 0 ? gan_total / inversion : 0;
-
-  // Display
-  st('rn_r_costo_ars', fA(costo_ars));
-  st('rn_r_inversion', fA(inversion));
-  st('rn_r_neto_ml', pvp_ml ? fA(neto_ml) : '—');
-  st('rn_r_neto_may', pvp_may ? fA(neto_may) : '—');
-  st('rn_r_gan_u', fA(gan_u));
-  st('rn_r_margen', fP(margen));
-  st('rn_r_fin', con_prestamo ? fA(costo_fin) : 'No aplica');
-  st('rn_r_gan_fin', fA(gan_fin));
-  st('rn_r_dias', dias !== null ? dias + ' días' : '—');
-  st('rn_r_break', break_even !== null ? break_even + ' u' : '—');
-  st('rn_r_gan_total', fA(gan_total));
-  st('rn_r_roi', fP(roi));
-
-  // Color ganancia
-  ['rn_r_gan_u','rn_r_gan_fin','rn_r_gan_total'].forEach(id=>{
-    const e = document.getElementById(id);
-    if(e) e.style.color = gan_u >= 0 ? 'var(--green)' : 'var(--red)';
-  });
-
-  // Show sections
-  document.getElementById('rent-result').style.display = '';
-
-  // Semáforo
-  const sem = document.getElementById('rent-semaforo');
-  const emoji_el = document.getElementById('rn_emoji');
-  const verd_el = document.getElementById('rn_veredicto');
-  const det_el = document.getElementById('rn_detalle');
-  if(sem && emoji_el && verd_el && det_el){
-    sem.style.display = '';
-    if(margen >= 0.30 && (dias===null||dias<=90)){
-      sem.style.background='var(--green-bg)'; sem.style.borderColor='var(--green-bdr)'; sem.style.color='var(--green)';
-      emoji_el.textContent='🟢'; verd_el.textContent='PRODUCTO RENTABLE';
-      det_el.textContent=`Margen ${fP(margen)} sobre costo. ${dias?'Rotación estimada '+dias+' días.':''} Excelente para continuar.`;
-    } else if(margen >= 0.15){
-      sem.style.background='var(--amber-bg)'; sem.style.borderColor='var(--amber-bdr)'; sem.style.color='var(--amber)';
-      emoji_el.textContent='🟡'; verd_el.textContent='ANALIZAR CON CUIDADO';
-      det_el.textContent=`Margen ${fP(margen)}. ${dias&&dias>90?'Rotación lenta ('+dias+' días). ':''}Revisá si podés bajar el costo o subir el precio.`;
-    } else {
-      sem.style.background='var(--red-bg)'; sem.style.borderColor='var(--red-bdr)'; sem.style.color='var(--red)';
-      emoji_el.textContent='🔴'; verd_el.textContent='NO CONVIENE EN ESTE MOMENTO';
-      det_el.textContent=`Margen ${fP(margen)} sobre costo. ${gan_u<0?'La venta no cubre el costo. ':''}Revisá precio, canal de venta o costo de importación.`;
-    }
-  }
-}
-
-function resetRent(){
-  ['rn_nombre','rn_costo_usd','rn_bna','rn_lote','rn_pvp_ml','rn_pvp_may','rn_upm'].forEach(id=>{
-    const e=document.getElementById(id); if(e) e.value='';
-  });
-  document.getElementById('rn_prod_sel').value='';
-  document.getElementById('rent-result').style.display='none';
-  document.getElementById('rent-semaforo').style.display='none';
-}
-
-// ══════════════════════════════════════════════════════════
-//  SIDEBAR
-// ══════════════════════════════════════════════════════════
-function toggleSidebar(){
-  document.getElementById('sidebar').classList.toggle('open');
-  document.getElementById('sb-overlay').classList.toggle('open');
-}
-
-// ══════════════════════════════════════════════════════════
-//  FIX MULTI-CONTAINER: misma lógica que container simple
-//  FOB invoice vs FOB real + maury + Parte B
-// ══════════════════════════════════════════════════════════
-// Override addMultiProduct to add fob_real and maury fields (already done above)
-// Override recalcMulti to use calcContainer properly
-function recalcMultiFixed(){
-  const cbm_total_cont = g('m_cbm_total')||68;
-  const flete_tot = g('m_flete'), term_tot=g('m_terminal'), desp_tot=g('m_despachante');
-  const ge1_tot = g('m_ge1'), ge2_pct=g('m_ge2')/100;
-  const bna=g('m_bna'), blue=g('m_blue');
-
-  // Gather all products
-  const rows=[];
-  let totalCBM=0;
-  document.querySelectorAll('[id^="mp_fob_"]').forEach(el=>{
-    const i=el.id.split('_').pop();
-    const cant=g('mp_cant_'+i)||1, cbm_u=g('mp_cbm_'+i);
-    const cbm_prod=cbm_u*cant; totalCBM+=cbm_prod;
-    rows.push({i, cant, cbm_u, cbm_prod,
-      fprod: g('mp_fprod_'+i),   // FOB real
-      finv:  g('mp_fob_'+i),     // FOB invoice
-      maury: g('mp_maury_'+i)/100,
-      der:   g('mp_der_'+i)/100,
-      estad: g('mp_estad_'+i)/100,
-      iva:   g('mp_iva_'+i)/100,
-      ivaad: g('mp_ivaad_'+i)/100,
-      gcias: g('mp_gcias_'+i)/100});
-  });
-
-  let summaryHtml='';
-  rows.forEach(r=>{
-    const prop = totalCBM>0 ? r.cbm_prod/totalCBM : 0;
-    // Distribute fixed costs proportionally by CBM
-    const flete_share  = flete_tot * prop;   // FOB flete asignado
-    const term_share   = term_tot  * prop;
-    const desp_share   = desp_tot  * prop;
-    const ge1_share    = ge1_tot   * prop;
-
-    // Use calcContainer with the correct split:
-    // fflet = flete_tot (the total container freight for CBM calculation)
-    // fprod = FOB real, finv = FOB invoice
-    // logistics: we pass flete_tot and cbm_total_cont so CBM proportion is recalculated inside
-    const result = calcContainer(
-      r.cant, bna, blue,
-      flete_tot,   // total container freight (calcContainer divides by cant and by CBM)
-      r.fprod,     // FOB real
-      r.finv,      // FOB invoice
-      r.maury, r.der, r.estad,
-      r.iva, r.ivaad, r.gcias,
-      cbm_total_cont / prop,  // trick: normalize so CBM proportion gives this product's share
-      flete_tot, term_tot, desp_tot,
-      ge1_tot * prop, ge2_pct
-    );
-
-    st('mp_r_cbm_'+r.i, r.cbm_prod.toFixed(3)+' m³');
-    st('mp_r_siva_'+r.i, fU(result.ab_siva_usd));
-    st('mp_r_civa_'+r.i, fU(result.ab_civa_usd));
-
-    const nm = gs('mp_name_'+r.i)||'Prod #'+r.i;
-    summaryHtml+=`<div class="rrow">
-      <div class="rl">${nm} × ${r.cant}u · <span style="font-size:10px;color:var(--muted)">${r.cbm_prod.toFixed(3)}m³ (${(prop*100).toFixed(1)}%)</span></div>
-      <div style="text-align:right">
-        <div class="rv blue" style="font-size:12px">${fU(result.ab_civa_usd)}/u c/IVA</div>
-        <div style="font-size:10px;color:var(--green);font-family:var(--mono)">${fU(result.ab_siva_usd)}/u s/IVA</div>
-        <div style="font-size:10px;color:var(--muted);font-family:var(--mono)">Parte B: ${fU(result.pb_usd)}</div>
-      </div>
-    </div>`;
-  });
-
-  const sum_sec=document.getElementById('multi-summary');
-  const sum_body=document.getElementById('multi-summary-body');
-  if(rows.length>0){
-    sum_sec.style.display='';
-    sum_body.innerHTML = summaryHtml +
-      `<div class="rrow hi"><div class="rl">CBM total ocupado / container</div><div class="rv">${totalCBM.toFixed(3)} / ${cbm_total_cont} m³</div></div>` +
-      `<div class="rrow"><div class="rl">CBM libre restante</div><div class="rv green">${(cbm_total_cont-totalCBM).toFixed(3)} m³</div></div>`;
-  } else sum_sec.style.display='none';
-}
-// Override the old recalcMulti
-recalcMulti = recalcMultiFixed;
-
 </script>
 <!-- PHOTO MODAL -->
 <div class="photo-modal" id="photo-modal" onclick="closePhotoModal()">
   <div class="photo-modal-close">✕</div>
   <img id="photo-modal-img" src="" alt="">
-</div>
-
-<!-- ══════════════════════ CHAT CLAUDE ══════════════════════ -->
-<!-- Floating button -->
-<button onclick="toggleChat()" style="position:fixed;bottom:90px;right:14px;width:50px;height:50px;border-radius:50%;background:#7c3aed;color:#fff;border:none;font-size:22px;cursor:pointer;z-index:200;box-shadow:0 4px 16px rgba(124,58,237,.4);display:flex;align-items:center;justify-content:center" title="Asistente NIVIKO">✦</button>
-
-<!-- Chat panel -->
-<div id="chat-panel" style="display:none;position:fixed;bottom:90px;right:14px;width:calc(100vw - 28px);max-width:380px;height:480px;background:var(--white);border:1.5px solid var(--border);border-radius:16px;box-shadow:0 8px 32px rgba(0,0,0,.15);z-index:199;flex-direction:column;overflow:hidden">
-  <!-- Header -->
-  <div style="padding:12px 14px;background:#7c3aed;color:#fff;display:flex;align-items:center;justify-content:space-between;flex-shrink:0">
-    <div style="display:flex;align-items:center;gap:8px">
-      <div style="width:28px;height:28px;background:rgba(255,255,255,.2);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px">✦</div>
-      <div>
-        <div style="font-size:13px;font-weight:700;font-family:var(--sans)">Asistente NIVIKO</div>
-        <div style="font-size:9px;opacity:.7;font-family:var(--mono);letter-spacing:.5px">Powered by Claude</div>
-      </div>
-    </div>
-    <button onclick="toggleChat()" style="background:rgba(255,255,255,.2);border:none;color:#fff;width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center">✕</button>
-  </div>
-  <!-- Messages -->
-  <div id="chat-body" style="flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:4px;background:var(--bg)"></div>
-  <!-- Input -->
-  <div style="padding:10px 12px;border-top:1.5px solid var(--border);display:flex;gap:8px;flex-shrink:0;background:var(--white)">
-    <input id="chat-inp" type="text" placeholder="Preguntá lo que quieras..."
-      style="flex:1;padding:8px 12px;border:1.5px solid var(--border2);border-radius:20px;background:var(--surface);font-family:var(--sans);font-size:12px;outline:none"
-      onkeydown="if(event.key==='Enter')sendChat()">
-    <button onclick="sendChat()" style="width:36px;height:36px;background:#7c3aed;color:#fff;border:none;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0">↑</button>
-  </div>
 </div>
 </body>
 </html>
