@@ -689,7 +689,10 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14
     <div class="sec-body" id="multi-summary-body"></div>
   </div>
 
-  <button class="btn-reset" onclick="resetMulti()">✕ &nbsp;Limpiar container mixto</button>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px">
+    <button onclick="saveToDb('multi')" style="padding:10px;background:var(--blue-bg);border:1.5px solid var(--blue-bdr);border-radius:8px;color:var(--blue);font-family:var(--sans);font-size:12px;font-weight:700;cursor:pointer">💾 Guardar en historial</button>
+    <button class="btn-reset" onclick="resetMulti()">✕ Limpiar container mixto</button>
+  </div>
 </div>
 
 
@@ -1531,6 +1534,12 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14
           <option value="false">No paga</option>
         </select>
       </div>
+      <div class="pv-field"><div class="pv-flbl">IIBB</div>
+        <select class="pv-finp" id="ar-iibb">
+          <option value="true">Paga IIBB</option>
+          <option value="false">No paga IIBB</option>
+        </select>
+      </div>
       <div class="pv-field full"><div class="pv-flbl">Notas</div><input class="pv-finp" id="ar-nota" type="text" placeholder="Observaciones"></div>
     </div>
     <input type="hidden" id="ar-edit-idx" value="">
@@ -1601,6 +1610,8 @@ let COSTOS = [];
 let PRODUCTOS_CUSTOM = null;
 let deferredPrompt;
 let multiCount = 0;
+let origenCourier = 'china';
+let kgoOrigen = 'china';
 
 // ── Datos ──────────────────────────────────────────────────────────────────
 const PRODUCTOS = [
@@ -2107,17 +2118,23 @@ function recalcMultiFixed(){
     const pb_label = result.pb_usd > 0
       ? `<div style="font-size:10px;color:var(--amber);font-family:var(--mono)">Parte B: ${fU(result.pb_usd)}/u</div>`
       : '';
-    const flete_info = `FOB flete decl: ${fU(fflet_prod/r.cant)}/u | Costo flete: ${fU(result.flete_u)}/u`;
-    summaryHtml += `<div class="rrow">
-      <div class="rl">
-        <strong>${nm}</strong> × ${r.cant}u
-        <span style="font-size:10px;color:var(--muted);display:block">${r.cbm_prod.toFixed(3)}m³ (${(prop*100).toFixed(1)}% del container)</span>
-        <span style="font-size:9px;color:var(--dim);font-family:var(--mono)">${flete_info}</span>
+    summaryHtml += `<div class="rrow" style="flex-direction:column;align-items:stretch;gap:4px">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <strong>${nm}</strong> × ${r.cant}u
+          <span style="font-size:10px;color:var(--muted);margin-left:8px">${r.cbm_prod.toFixed(3)}m³ · ${(prop*100).toFixed(1)}% del container</span>
+        </div>
+        <div style="text-align:right">
+          <div class="rv blue" style="font-size:13px">${fU(result.ab_civa_usd)}/u c/IVA</div>
+          <div style="font-size:11px;color:var(--green);font-family:var(--mono)">${fU(result.ab_siva_usd)}/u s/IVA</div>
+          ${pb_label}
+        </div>
       </div>
-      <div style="text-align:right">
-        <div class="rv blue" style="font-size:13px">${fU(result.ab_civa_usd)}/u c/IVA</div>
-        <div style="font-size:11px;color:var(--green);font-family:var(--mono)">${fU(result.ab_siva_usd)}/u s/IVA</div>
-        ${pb_label}
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:3px;background:var(--gray-bg);border-radius:6px;padding:6px 8px;font-size:9px;font-family:var(--mono)">
+        <div><span style="color:var(--muted)">FOB inv/u</span><br><strong>${fU(r.finv)}</strong></div>
+        <div><span style="color:var(--muted)">FOB flete/u</span><br><strong>${fU(fflet_prod/r.cant)}</strong></div>
+        <div><span style="color:var(--muted)">Derechos/u</span><br><strong style="color:var(--red)">${fU(result.der_u)}</strong></div>
+        <div><span style="color:var(--muted)">Costo flete/u</span><br><strong>${fU(result.flete_u)}</strong></div>
       </div>
     </div>`;
   });
@@ -2377,14 +2394,19 @@ function recalcRent(){
   const det_el = document.getElementById('rn_detalle');
   if(sem && emoji_el && verd_el && det_el){
     sem.style.display = '';
+    // Criterio NIVIKO: margen = (ingreso neto - costo) / costo
+    // 🟢 ≥30%: Buen margen — cubre merma, devoluciones y ganancia real
+    // 🟡 15-29%: Ajustado — conviene pero sin colchón
+    // 🟠 1-14%: Muy bajo — riesgo alto
+    // 🔴 <0%: Pérdida neta
     if(margen >= 0.30 && (dias===null||dias<=90)){
       sem.style.background='var(--green-bg)'; sem.style.borderColor='var(--green-bdr)'; sem.style.color='var(--green)';
-      emoji_el.textContent='🟢'; verd_el.textContent='PRODUCTO RENTABLE';
-      det_el.textContent=`Margen ${fP(margen)} sobre costo. ${dias?'Rotación estimada '+dias+' días.':''} Excelente para continuar.`;
+      emoji_el.textContent='🟢'; verd_el.textContent='✓ RENTABLE — BUEN MARGEN';
+      det_el.textContent=`Margen ${fP(margen)} sobre costo puesto acá. El umbral mínimo es 30% (cubre merma ~5%, devoluciones ~3%, y deja ganancia real). ${dias?'Rotación estimada: '+dias+' días.':''} Todo OK.`;
     } else if(margen >= 0.15){
       sem.style.background='var(--amber-bg)'; sem.style.borderColor='var(--amber-bdr)'; sem.style.color='var(--amber)';
-      emoji_el.textContent='🟡'; verd_el.textContent='ANALIZAR CON CUIDADO';
-      det_el.textContent=`Margen ${fP(margen)}. ${dias&&dias>90?'Rotación lenta ('+dias+' días). ':''}Revisá si podés bajar el costo o subir el precio.`;
+      emoji_el.textContent='🟡'; verd_el.textContent='⚠ MARGEN AJUSTADO (15-29%)';
+      det_el.textContent=`Margen ${fP(margen)} sobre costo. Conviene pero sin colchón: cualquier descuento, devolución o suba de costos lo elimina. Intentá llegar a 30%+. ${dias&&dias>90?'Además rotación lenta ('+dias+' días). ':''}`;
     } else {
       sem.style.background='var(--red-bg)'; sem.style.borderColor='var(--red-bdr)'; sem.style.color='var(--red)';
       emoji_el.textContent='🔴'; verd_el.textContent='NO CONVIENE EN ESTE MOMENTO';
@@ -2483,7 +2505,7 @@ function saveToDb(tipo){
       producto:gs('producto')||'—',proveedor:gs('prov_nombre')||'—',
       display_usd:document.getElementById('d_ab_usd')?.textContent||'—',
       display_ars:document.getElementById('d_ab_ars')?.textContent||'—',
-      extra:'s/IVA: '+(document.getElementById('d_ab_siva_usd')?.textContent||'—'),
+      extra:'c/IVA: '+(document.getElementById('d_ab_usd')?.textContent||'—'),
       snap, costo_u_usd: parseFloat(document.getElementById('d_ab_siva_usd')?.textContent?.replace(/[^0-9.]/g,'')||0)};
   } else if(tipo==='courier'){
     const snap=snapshotFields(['c_producto','c_cantidad','c_peso','c_fob_real','c_fob_inv','c_bna','c_blue',
@@ -2493,7 +2515,7 @@ function saveToDb(tipo){
       producto:gs('c_producto')||'—',proveedor:gs('c_prov')||'—',
       display_usd:document.getElementById('cr_ab_usd')?.textContent||'—',
       display_ars:document.getElementById('cr_ab_ars')?.textContent||'—',
-      extra:'s/IVA: '+(document.getElementById('cr_ab_siva_usd')?.textContent||'—'),
+      extra:'c/IVA: '+(document.getElementById('cr_ab_usd')?.textContent||'—'),
       snap, costo_u_usd: parseFloat(document.getElementById('cr_ab_siva_usd')?.textContent?.replace(/[^0-9.]/g,'')||0)};
   } else if(tipo==='meli'){
     const snap=snapshotFields(['ml_desc','ml_costo','ml_pvp','ml_com','ml_envio','ml_pub','ml_iibb','ml_iva_tipo','ml_cuotas']);
@@ -2507,6 +2529,32 @@ function saveToDb(tipo){
       producto:gs('w_desc')||'—',proveedor:'—',
       display_usd:'—',display_ars:document.getElementById('w_ganancia')?.textContent||'—',
       extra:'Margen: '+(document.getElementById('w_m_pvp')?.textContent||'—')+' / PVP', snap};
+  } else if(tipo==='multi'){
+    // Guardar estado del multi-container
+    const rows = [];
+    document.querySelectorAll('[id^="mp_fob_"]').forEach(el => {
+      const i = el.id.split('_').pop();
+      rows.push({
+        nombre: gs('mp_name_'+i) || 'Prod #'+i,
+        cant: g('mp_cant_'+i), cbm_u: g('mp_cbm_'+i),
+        fob_inv: g('mp_fob_'+i), fob_real: g('mp_fprod_'+i),
+        der: g('mp_der_'+i), iva: g('mp_iva_'+i),
+        ab_siva: document.getElementById('mp_r_siva_'+i)?.textContent || '—',
+        ab_civa: document.getElementById('mp_r_civa_'+i)?.textContent || '—',
+      });
+    });
+    const snap = {
+      rows, cbm_total: g('m_cbm_total'), flete: g('m_flete'),
+      costo_flete: g('m_costo_flete'), terminal: g('m_terminal'),
+      despachante: g('m_despachante'), bna: g('m_bna'), blue: g('m_blue'),
+    };
+    const nombres = rows.map(r=>r.nombre).join(', ').slice(0,60);
+    rec={...rec, tipo:'multi', badge:'db-container', label:'Multi-Container',
+      producto: nombres || 'Container mixto',
+      proveedor: gs('m_prov_nombre') || '—',
+      display_usd:'Ver detalle', display_ars:'Ver detalle',
+      extra: rows.length+' productos — CBM: '+(g('m_cbm_total')||68)+' m³',
+      snap, costo_u_usd: 0};
   } else if(tipo==='kgonly'){
     const snap=snapshotFields(['k_producto','k_cant','k_peso','k_precio','k_rate','k_bna']);
     snap._origen=kgoOrigen;
@@ -2518,28 +2566,28 @@ function saveToDb(tipo){
   DB.push(rec);
   saveDb();
   renderDb();
-  // Auto-guardar en Base de Costos si tiene nombre y costo
-  if(rec.producto && rec.ab_siva_usd > 0){
+  // Auto-guardar en Base de Costos
+  if(rec.producto && rec.costo_u_usd > 0){
     const existingCosto = COSTOS.find(c => c.nombre === rec.producto);
     if(!existingCosto){
+      const bnaVal = g('dolar_bna') || g('c_bna') || g('rn_bna') || 1400;
       const newCosto = {
         id: 'hist_'+rec.id,
         nombre: rec.producto,
         sku: '',
-        cat: 'Importado',
-        costo_usd: rec.ab_siva_usd,
-        bna: rec.bna || 1400,
-        costo_ars: Math.round(rec.ab_siva_usd * (rec.bna || 1400)),
-        costo_civa: Math.round(rec.ab_civa_usd * (rec.bna || 1400)),
+        cat: rec.tipo === 'courier' ? 'Courier' : rec.tipo === 'container' ? 'Container' : 'Importado',
+        costo_usd: rec.costo_u_usd,
+        bna: bnaVal,
+        costo_ars: Math.round(rec.costo_u_usd * bnaVal),
+        costo_civa: Math.round(rec.costo_u_usd * bnaVal * 1.21),
         iva: 0.21,
-        prov_id: '', prov_nombre: '',
+        prov_id: '', prov_nombre: rec.proveedor || '',
         origen: 'historial',
-        notas: 'Importado desde cálculo container',
+        notas: 'Auto-importado desde ' + rec.label,
         fecha: new Date().toLocaleDateString('es-AR')
       };
       COSTOS.push(newCosto);
       saveCostos();
-      console.log('Auto-guardado en Costos:', rec.producto);
     }
   }
   refreshImportSelectors();
